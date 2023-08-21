@@ -1,0 +1,28 @@
+/* Dans votre fichier App.css ou un fichier de styles séparé */
+.navbar {
+    display: flex;
+    justify-content: flex-end; /* Place les éléments à droite */
+    list-style: none; /* Supprime les puces */
+    padding: 0;
+  }
+  
+  .navbar-item {
+    margin-left: 60px; /* Espacement entre les éléments */
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 2%;
+    overflow: hidden;
+    margin-right: 5%; /* Ajoute de la marge à droite */
+  }
+  
+  li {
+    float: right;
+  }
+  
+  li a {
+    display: block;
+    padding: 10%;
+  }
