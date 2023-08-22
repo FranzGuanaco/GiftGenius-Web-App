@@ -9,30 +9,46 @@ import account_icon from './account_icon.png'
 import category_icon from './category_icon.png'
 import filter_icon from './filter_icon.webp'
 import './Navbar.css';
+import Searchbar from './SearchBar';
 
-function Navbar() {
+function Navbar(props) {
     return (
         <nav className="navbar">
-        <ul className="navbar-list">
-          <li className="navbar-item">
-            <Link to="/">
-              <img src={account_icon} alt="Accueil" style={{ width: '30px' }}/>
-            </Link>
-          </li>
-          <li className="navbar-item">
-            <Link to="/quiz">
-              <img src={category_icon} alt="Quiz" style={{ width: '30px' }}/>
-            </Link>
-          </li>
-          <li className="navbar-item">
-            <Link to="/result">
-              <img src={filter_icon} alt="Résultat" style={{ width: '30px' }}/>
-            </Link>
-          </li>
-          {/* ... Ajoutez d'autres liens avec des images ici */}
-        </ul>
-      </nav>
+            <ul className="navbar-list">
+                <li className="navbar-item-center">
+                    <Searchbar/>
+                </li>
+                <li className="navbar-item">
+                    <Link to="/">
+                        <img src={props.accountIcon} alt="Accueil" style={{ width: '30px' }}/>
+                    </Link>
+                </li>
+                <li className="navbar-item">
+                    <Link to="/quiz">
+                        <img src={props.categoryIcon} alt="Quiz" style={{ width: '30px' }}/>
+                    </Link>
+                </li>
+                <li className="navbar-item">
+                    <Link to="/result">
+                        <img src={props.filterIcon} alt="Résultat" style={{ width: '30px' }}/>
+                    </Link>
+                </li>
+                <li className="navbar-item">
+                    <Link to="/result">
+                        <img src={filter_icon} alt="Résultat" style={{ width: '30px' }}/>
+                    </Link>
+                </li>
+            </ul>
+        </nav>
     );
+}
+
+Navbar.defaultProps = {
+    accountIcon: account_icon,
+    filterIcon: filter_icon,
+    categoryIcon: category_icon,
+   
   }
-  
-  export default Navbar;
+
+export default Navbar;
+

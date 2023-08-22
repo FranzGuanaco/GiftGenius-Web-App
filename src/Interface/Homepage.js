@@ -5,7 +5,6 @@ import Proposal from './Proposal';
 import Productdetails from './Productdetails';
 import Categorydetails from './Categorydetails';
 import Navbar from './Navbar/navbar';
-import '../App.css';
 
 export default function Homepage() {
   return (
