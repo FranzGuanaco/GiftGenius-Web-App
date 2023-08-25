@@ -14,32 +14,33 @@ import Searchbar from './SearchBar';
 function Navbar(props) {
     return (
         <nav className="navbar">
-            <ul className="navbar-list">
-                <li className="navbar-item-center">
-                    <Searchbar/>
-                </li>
-                <li className="navbar-item">
-                    <Link to="/">
-                        <img src={props.accountIcon} alt="Accueil" style={{ width: '30px' }}/>
-                    </Link>
-                </li>
-                <li className="navbar-item">
-                    <Link to="/quiz">
-                        <img src={props.categoryIcon} alt="Quiz" style={{ width: '30px' }}/>
-                    </Link>
-                </li>
-                <li className="navbar-item">
-                    <Link to="/result">
-                        <img src={props.filterIcon} alt="Résultat" style={{ width: '30px' }}/>
-                    </Link>
-                </li>
-                <li className="navbar-item">
-                    <Link to="/result">
-                        <img src={filter_icon} alt="Résultat" style={{ width: '30px' }}/>
-                    </Link>
-                </li>
-            </ul>
-        </nav>
+           <div className="navbar-center">
+                <div className="position" style={{paddingLeft: "30%", position:"relative"}}>
+                <Searchbar />
+            </div>
+            </div>
+        <div className="left" style={{paddingRight: "10%"}}> 
+    <ul className="navbar-list">
+        <li className="navbar-item">
+         <Link to="/">
+         <img src={props.accountIcon} alt="Accueil" style={{ width: '30px' }} />
+        </Link>
+        </li>
+        <li className="navbar-item">
+         <Link to="/quiz">
+         <img src={props.categoryIcon} alt="Quiz" style={{ width: '30px' }} />
+         </Link>
+        </li>
+        <li className="navbar-item">
+         <Link to="/result">
+         <img src={props.filterIcon} alt="Résultat" style={{ width: '30px' }} />
+         </Link>
+        </li>
+        </ul>
+        </div>
+        
+    </nav>
+
     );
 }
 

@@ -1,26 +1,24 @@
-/* Dans votre fichier App.css ou un fichier de styles séparé */
 .navbar {
     display: flex;
-    justify-content: center; /* Centre horizontalement */
+    justify-content: space-between;; /* Centre horizontalement */
     align-items: center; /* Centre verticalement */
     list-style: none; /* Supprime les puces */
     padding: 0;
-    background-color: #ffffff; /* Ajoutez la couleur de fond souhaitée */
-}
-
-/* Pour centrer horizontalement la Searchbar */
-.navbar-list {
+    background-color: #ffffff; /* Ajoutez la couleur de fond souhaitée */}
+  
+  .navbar-list {
     display: flex;
-    align-items: center;
-    margin-left: auto; /* Déplace les trois premières images vers la droite */
-}
+    justify-content: flex-end; /* Aligner les icônes à droite */
+    padding-right: 10px; /* Ajout d'un espace à droite des icônes */
+   
+  }
   
   .navbar-item {
-    margin-right: 50px; /* Espacement entre les éléments */
+    margin-left: 35px;
   }
-
-  .navbar-item-center {
-    margin-right: 300px; /* Espacement entre les éléments */
+  
+  .navbar-center {
+    width: 100%; /* Occuper toute la largeur disponible */
   }
 
   ul {
@@ -28,7 +26,6 @@
     margin: 0;
     padding: 2%;
     overflow: hidden;
-    margin-right: 1%; /* Ajoute de la marge à droite */
   }
   
   li {
@@ -38,4 +35,25 @@
   li a {
     display: block;
     padding: 10%;
+  }
+  
+  /* ... Autres règles CSS ... */
+  
+  @media (max-width: 768px) {
+   
+  
+    .navbar-item {
+      margin: 15px;
+      margin-bottom: 35px;
+    }
+  
+    .navbar-center {
+      margin-top: 100px;
+    }
+
+    .navbar-list {
+        width: 100%; /* Occuper toute la largeur disponible */
+        padding-right: 40px; /* Ajout d'un espace à droite des icônes */
+       
+      }
   }
