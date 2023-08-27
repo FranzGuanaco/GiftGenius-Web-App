@@ -21,7 +21,7 @@
     position: absolute;
     left: 0;
     padding: 0.5em;
-    margin-left: 0.5em;
+    margin-left: 0.9em;
     pointer-events: none;
     transition: all 0.3s ease;
     color: rgb(100, 100, 100);
@@ -40,11 +40,10 @@
   }
 
 
-  @media (max-width: 768px) {
-  .inputGroup input {
+  @media (max-width: 810px) {
 
+  .inputGroup input {
     padding: 0.9em;
- 
   }
 
   .inputGroup label {

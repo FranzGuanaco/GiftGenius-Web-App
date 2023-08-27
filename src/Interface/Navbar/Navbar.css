@@ -14,7 +14,7 @@
   }
   
   .navbar-item {
-    margin-left: 35px;
+    margin-left: 55px;
   }
   
   .navbar-center {
@@ -39,12 +39,12 @@
   
   /* ... Autres règles CSS ... */
   
-  @media (max-width: 768px) {
+  @media (max-width: 1150px) {
    
   
     .navbar-item {
       margin: 15px;
-      margin-bottom: 35px;
+      margin-bottom: 100px;
     }
   
     .navbar-center {

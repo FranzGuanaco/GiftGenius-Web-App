@@ -13,9 +13,9 @@ import Searchbar from './SearchBar';
 
 function Navbar(props) {
     return (
-        <nav className="navbar">
+        <nav className="navbar" >
            <div className="navbar-center">
-                <div className="position" style={{paddingLeft: "30%", position:"relative"}}>
+                <div className="position" style={{paddingLeft: "40%", position:"relative"}}>
                 <Searchbar />
             </div>
             </div>
