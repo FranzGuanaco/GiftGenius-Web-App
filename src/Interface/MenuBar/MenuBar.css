@@ -1,7 +1,7 @@
 .accordion {
   display: flex;
   background-color: #EEEEEE;
-  padding-inline-start: 24%;
+  padding-inline-start: 35%;
 
 }
 
@@ -13,7 +13,6 @@
   flex: 0.1;
   display: flex;
   flex-direction: column;
-
   font-size: 18px;
   font-weight: bold;
   justify-content: center; /* Centrer le contenu verticalement */
@@ -21,7 +20,7 @@
 }
 
 .accordion-header {
-  padding: 80px; /* Ajuster l'espace autour du texte de l'en-tête */
+  padding: 10px; /* Ajuster l'espace autour du texte de l'en-tête */
   cursor: pointer;
 }
 

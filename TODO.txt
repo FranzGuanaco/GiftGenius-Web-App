@@ -1,1 +1,3 @@
 1/ props pour la navbar
+2/rajouter une interface different selon changement de filtre ou changement de categorie
+3/ bosser l'architecture de l'app à partir du questionnaire en particulier

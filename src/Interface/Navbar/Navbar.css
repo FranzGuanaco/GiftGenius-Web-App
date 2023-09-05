@@ -1,10 +1,11 @@
 .navbar {
     display: flex;
+    height: 122px;
     justify-content: space-between;; /* Centre horizontalement */
     align-items: center; /* Centre verticalement */
     list-style: none; /* Supprime les puces */
     padding: 0;
-    background-color: #ffffff; /* Ajoutez la couleur de fond souhaitée */}
+    background-color: #1B1B1B; /* Ajoutez la couleur de fond souhaitée */}
   
   .navbar-list {
     display: flex;
@@ -14,7 +15,7 @@
   }
   
   .navbar-item {
-    margin-left: 55px;
+    margin-left: 45px;
   }
   
   .navbar-center {
@@ -56,4 +57,11 @@
         padding-right: 40px; /* Ajout d'un espace à droite des icônes */
        
       }
+  }
+
+  .Logo {
+    display: flex;
+    height: 122px;
+    justify-content: space-between;; /* Centre horizontalement */
+    align-items: center;
   }

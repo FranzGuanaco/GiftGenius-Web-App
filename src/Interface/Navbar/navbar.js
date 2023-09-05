@@ -7,13 +7,17 @@ import Productdetails from '../Productdetails';
 import Categorydetails from '../Categorydetails';
 import account_icon from './account_icon.png'
 import category_icon from './category_icon.png'
-import filter_icon from './filter_icon.webp'
+import favorite_icon from './favorite_icon.png'
+import GiftGeniusLogo from './GiftGeniusLogo.png'
 import './Navbar.css';
 import Searchbar from './SearchBar';
 
 function Navbar(props) {
     return (
         <nav className="navbar" >
+            <div className="Logo" style={{paddingLeft: "10%"}}> 
+            <img src={GiftGeniusLogo} alt="Accueil" style={{ width: '200px', position: "relative", top:"10%" }} />
+            </div>
            <div className="navbar-center">
                 <div className="position" style={{paddingLeft: "40%", position:"relative"}}>
                 <Searchbar />
@@ -33,7 +37,7 @@ function Navbar(props) {
         </li>
         <li className="navbar-item">
          <Link to="/result">
-         <img src={props.filterIcon} alt="Résultat" style={{ width: '30px' }} />
+         <img src={props.FavoriteIcon} alt="Résultat" style={{ width: '35px' }} />
          </Link>
         </li>
         </ul>
@@ -46,7 +50,7 @@ function Navbar(props) {
 
 Navbar.defaultProps = {
     accountIcon: account_icon,
-    filterIcon: filter_icon,
+    FavoriteIcon: favorite_icon,
     categoryIcon: category_icon,
    
   }
