@@ -50,3 +50,10 @@
     padding: 0.9em;
   }
 }
+
+@media (max-width: 1400px) {
+  .position {
+    display: none; /* Masquer la Searchbar lorsque l'écran est inférieur à 750px */
+  }
+}
+

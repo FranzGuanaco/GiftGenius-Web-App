@@ -1,0 +1,17 @@
+/* NewsBox.css */
+
+.NewsBox {
+    background-color: #ECC25A;
+    color: white;
+    padding: 10px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @media (max-width: 560px) {
+    .NewsBox {
+      width: 585px;
+    }
+  }

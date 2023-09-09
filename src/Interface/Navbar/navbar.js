@@ -16,7 +16,7 @@ function Navbar(props) {
     return (
         <nav className="navbar" >
             <div className="Logo" style={{paddingLeft: "10%"}}> 
-            <img src={GiftGeniusLogo} alt="Accueil" style={{ width: '200px', position: "relative", top:"10%" }} />
+            <img src={GiftGeniusLogo} alt="Accueil" style={{ width: '130px', position: "relative", top:"10%" }} />
             </div>
            <div className="navbar-center">
                 <div className="position" style={{paddingLeft: "40%", position:"relative"}}>

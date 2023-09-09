@@ -24,4 +24,15 @@
     align-items: center; /* Centrer verticalement */
   }
   
+  @media (max-width: 880px) {
+    .category-box {
+      width: 330px;
+      height: 40px;
+    }
+    .category-box::before {
+      width: 20px;
+    height: 40px;
+    right: -20px;
+    }
+  }
   

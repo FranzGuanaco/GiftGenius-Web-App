@@ -2,6 +2,7 @@
   display: flex;
   background-color: #EEEEEE;
   padding-inline-start: 35%;
+  
 
 }
 
@@ -20,7 +21,7 @@
 }
 
 .accordion-header {
-  padding: 10px; /* Ajuster l'espace autour du texte de l'en-tête */
+  padding: 7px; /* Ajuster l'espace autour du texte de l'en-tête */
   cursor: pointer;
 }
 
@@ -35,3 +36,22 @@
 }
 
 
+@media (max-width: 560px) {
+  .accordion {
+    width: 560px;
+    padding-inline-start: 8%;
+  }
+  .accordion-item {
+    flex: 0.2;
+  }
+}
+
+@media (max-width: 375px) {
+  .accordion {
+    width: 530px;
+    padding-inline-start: 20%;
+  }
+  .accordion-item {
+    flex: 0.2;
+  }
+}

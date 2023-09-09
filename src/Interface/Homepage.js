@@ -20,10 +20,10 @@ export default function Homepage() {
         <NewsBox />
       </div>
       <div className="MenuStyle" >
-        <MenuBar />
+        <MenuBar/>
       </div>
       <div className="MenuStyle" style={{ paddingTop: "7%", width: "44%" }}>
-        <CategoryBox />
+        <CategoryBox style={{width: "44px" }}/>
       </div>
       <div className="QuizButtonContainer" style={{ position: 'fixed', marginLeft: '90%', top: '50%', transform: 'translateY(-50%)' }}>
         <QuizButton />
