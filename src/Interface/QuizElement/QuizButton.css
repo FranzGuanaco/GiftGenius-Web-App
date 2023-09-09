@@ -1,13 +1,12 @@
 .circle-slice {
-    position: relative;
-    width: 300px; /* Largeur de la forme */
-    height: 300px; /* Hauteur de la forme */
-    background-color: #ECC25A; /* Couleur de fond */
-    border-radius: 100% 0% 0% 100%; /* Arrondi d'un côté seulement */
+  width: 200px;
+  height: 300px; /* Hauteur réduite pour obtenir la moitié */
+  background-color: #ECC25A; /* Couleur de fond du cercle */
+  border-radius: 200px 0px 0px 200px; /* Définit un rayon pour la partie supérieure */
   }
   
   .flat-angle  {
-    width: 80px; /* Largeur de l'image */
-    height: 80px; /* Hauteur de l'image */
+    width: 75px; /* Largeur de l'image */
+    height: 6px; /* Hauteur de l'image */
   }
   
