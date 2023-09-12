@@ -12,7 +12,7 @@ import NewsBox from './NewsBox/NewsBox';
 import ProductBox from './ProductBox/ProductBox';
 import SellerButton from './SellerButton/SellerButton';
 
-export default function Homepage() {
+export default function Homepage(props) {
   return (
     <div className="App" style={{ display: 'flex', flexDirection: 'column' }}>
       <div className="NavStyle">
@@ -24,13 +24,16 @@ export default function Homepage() {
       <div className="MenuStyle" >
         <MenuBar/>
       </div>
-      <div className="MenuStyle" style={{ paddingTop: "7%", width: "44%" }}>
+      <div className="NumberofProd" style={{ paddingTop: "2%", color: "#B7B7B7", letterSpacing: "3px", fontWeight:"60", fontSize:"11px" }}>
+        <h3>{props.NumberOfProduct}</h3>
+      </div>
+      <div className="MenuStyle" style={{ paddingTop: "2%", width: "44%" }}>
         <CategoryBox style={{width: "44px" }}/>
       </div>
-      <div className="MenuStyle" style={{ paddingTop: "3%", width: "44%", marginLeft:"2%" }}>
+      <div className="MenuStyle" style={{ paddingTop: "3%", width: "44%", marginLeft:"5%" }}>
         <ProductBox style={{width: "44px" }}/>
       </div>
-      <div className="MenuStyle" style={{ paddingTop: "1%", marginLeft:"2%" }}>
+      <div className="MenuStyle" style={{ paddingTop: "1%", marginLeft:"5%" }}>
         <SellerButton style={{width: "44px" }}/>
       </div>
       <div className="QuizButtonContainer" style={{ position: "fixed", right: "0", top: "50%", transform: "translateY(-50%)"}}>
@@ -39,6 +42,10 @@ export default function Homepage() {
     </div>
   );
 }
+
+Homepage.defaultProps = {
+  NumberOfProduct: "0 résultat trouvé"
+};
 
 
 
