@@ -1,12 +1,38 @@
+/* Styles par défaut pour .circle-slice */
 .circle-slice {
   width: 200px;
   height: 300px; /* Hauteur réduite pour obtenir la moitié */
   background-color: #ECC25A; /* Couleur de fond du cercle */
   border-radius: 200px 0px 0px 200px; /* Définit un rayon pour la partie supérieure */
+}
+
+.flat-angle {
+  width: 75px; /* Largeur de l'image */
+  height: 6px; /* Hauteur de l'image */
+}
+
+.flat-angle img {
+  width: 134px;
+  margin-top: 100%; /* Ajustez la marge supérieure en conséquence si nécessaire */
+  margin-left: 100%; /* Ajustez la marge gauche en conséquence si nécessaire */
+  transform: translateX(-20%); /* Centrez l'image horizontalement */
+}
+
+/* Média query pour réduire la taille de .circle-slice et de l'image en dessous de 1100px de largeur */
+@media screen and (max-width: 1100px) {
+  .circle-slice {
+    width: 150px; /* Largeur réduite pour .circle-slice */
+    height: 225px; /* Hauteur réduite pour .circle-slice */
+    border-radius: 150px 0px 0px 150px; /* Rayon réduit pour .circle-slice */
   }
-  
-  .flat-angle  {
-    width: 75px; /* Largeur de l'image */
-    height: 6px; /* Hauteur de l'image */
+
+  .flat-angle img {
+    width: 100px; /* Largeur réduite pour l'image */
+    margin-top: 80%; /* Ajustez la marge supérieure en conséquence si nécessaire */
+    margin-left: 100%; /* Ajustez la marge gauche en conséquence si nécessaire */
+    transform: translateX(-40%); /* Centrez l'image horizontalement */
   }
+}
+
+
   

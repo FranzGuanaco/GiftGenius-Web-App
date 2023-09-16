@@ -1,6 +1,6 @@
 .navbar {
     display: flex;
-    height: 80px;
+    height: 70px;
     justify-content: space-between;; /* Centre horizontalement */
     align-items: center; /* Centre verticalement */
     list-style: none; /* Supprime les puces */

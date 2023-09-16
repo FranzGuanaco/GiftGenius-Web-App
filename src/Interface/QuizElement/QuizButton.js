@@ -6,7 +6,7 @@ const QuizButton = () => {
   return (
           <div className="circle-slice">
             <div className="flat-angle">
-              <img src={questionnaire_icon} alt="Center" style={{width:'134px', marginTop:'90%', marginLeft:"70%"}}/>
+              <img src={questionnaire_icon} alt="Center" style={{marginTop:'90%', marginLeft:"70%"}}/>
             </div>
           </div>
       );

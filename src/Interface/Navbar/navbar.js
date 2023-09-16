@@ -32,12 +32,12 @@ function Navbar(props) {
         </li>
         <li className="navbar-item">
          <Link to="/quiz">
-         <img src={props.categoryIcon} alt="Quiz" style={{ width: '30px' }} />
+         <img src={props.FavoriteIcon} alt="Quiz" style={{ width: '35px' }} />
          </Link>
         </li>
         <li className="navbar-item">
          <Link to="/result">
-         <img src={props.FavoriteIcon} alt="Résultat" style={{ width: '35px' }} />
+         <img src={props.categoryIcon} alt="Résultat" style={{ width: '30px' }} />
          </Link>
         </li>
         </ul>
