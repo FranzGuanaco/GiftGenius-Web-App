@@ -16,9 +16,6 @@ function App() {
           <Routes>
             <Route path='/Home' element={<Homepage/>} />
             <Route path='/quiz' exact element={<Quiz/>} />
-            <Route path='/result' exact element={<Proposal/>} />
-            <Route path='/product details' exact element={<Productdetails/>} />
-            <Route path='/category details' exact element={<Categorydetails/>} />
             </Routes>
       </BrowserRouter>
       </div>

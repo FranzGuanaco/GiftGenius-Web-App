@@ -3,10 +3,7 @@ import gsap from 'gsap';
 import './Jauge.css'
 
 const ProgressBar = () => {
-  const [progressState, setProgressState] = useState(0);
-
   useEffect(() => {
-    const progressBarContainer = document.querySelector('.progress-bar__container');
     const progressBar = document.querySelector('.progress-bar');
     const progressBarText = document.querySelector('.progress-bar__text');
 
@@ -15,7 +12,7 @@ const ProgressBar = () => {
     let time = 0;
     let endState = 100;
 
-    progressBarStates.forEach((state) => {
+    progressBarStates.forEach(state => {
       let randomTime = Math.floor(Math.random() * 3000);
       setTimeout(() => {
         if (state === endState) {
@@ -25,7 +22,7 @@ const ProgressBar = () => {
             backgroundColor: '#4895ef',
             onComplete: () => {
               progressBarText.style.display = 'initial';
-              progressBarContainer.style.boxShadow = '0 0 5px #4895ef';
+              progressBar.style.boxShadow = '0 0 5px #4895ef';
             },
           });
         } else {
@@ -34,22 +31,20 @@ const ProgressBar = () => {
             duration: 2,
           });
         }
-        setProgressState(state); // Mettre à jour l'état de progression React
       }, randomTime + time);
       time += randomTime;
     });
-  }, []); // Utilisez un tableau vide pour exécuter cela uniquement une fois au montage
+  }, []);
 
   return (
-    <div className="container">
-      <div className="progress-bar__container">
-        <div className="progress-bar" style={{ width: `${progressState}%` }}>
-          <span className="progress-bar__text">Uploaded Successfully!</span>
-        </div>
+    <div className="progress-bar__container">
+      <div className="progress-bar">
+        <span className="progress-bar__text">Uploaded Successfully!</span>
       </div>
     </div>
   );
 };
 
 export default ProgressBar;
+
 
