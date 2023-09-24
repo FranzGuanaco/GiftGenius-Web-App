@@ -1,40 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import gsap from 'gsap';
-import './Jauge.css'
+import './Jauge.css';
 
-const ProgressBar = () => {
+const ProgressBar = ({ trigger }) => {
   useEffect(() => {
-    const progressBar = document.querySelector('.progress-bar');
-    const progressBarText = document.querySelector('.progress-bar__text');
+    if (trigger) {
+      const progressBar = document.querySelector('.progress-bar');
+      const progressBarText = document.querySelector('.progress-bar__text');
 
-    const progressBarStates = [0, 7, 27, 34, 68, 80, 95, 100];
-
-    let time = 0;
-    let endState = 100;
-
-    progressBarStates.forEach(state => {
-      let randomTime = Math.floor(Math.random() * 3000);
-      setTimeout(() => {
-        if (state === endState) {
-          gsap.to(progressBar, {
-            x: `${state}%`,
-            duration: 2,
-            backgroundColor: '#4895ef',
-            onComplete: () => {
-              progressBarText.style.display = 'initial';
-              progressBar.style.boxShadow = '0 0 5px #4895ef';
-            },
-          });
-        } else {
-          gsap.to(progressBar, {
-            x: `${state}%`,
-            duration: 2,
-          });
-        }
-      }, randomTime + time);
-      time += randomTime;
-    });
-  }, []);
+      gsap.to(progressBar, {
+        x: `100%`,
+        scaleY: 1,
+        duration: 1,
+        backgroundColor: '#4895ef',
+        onComplete: () => {
+          
+          progressBar.style.boxShadow = '0 0 1px #4895ef';
+        },
+      });
+    }
+  }, [trigger]);
 
   return (
     <div className="progress-bar__container">
