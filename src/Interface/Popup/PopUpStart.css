@@ -1,0 +1,10 @@
+.popUp {
+    border: 6px solid #ECC25A;
+    background-color: #1B1B1B;
+    border-radius: 15px; 
+    text-align: center;
+    line-height: 150px; 
+    font-size: 18px;
+    font-weight: bold;
+  }
+  

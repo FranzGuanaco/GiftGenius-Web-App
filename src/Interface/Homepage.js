@@ -1,16 +1,12 @@
 import React from 'react';
-import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
-import Quiz from './Quiz';
-import Proposal from './Proposal';
-import Productdetails from './Productdetails';
-import Categorydetails from './Categorydetails';
 import Navbar from './Navbar/navbar';
 import MenuBar from './MenuBar/MenuBar';
 import CategoryBox from './Category/Category';
 import QuizButton from './QuizElement/QuizButton';
 import NewsBox from './NewsBox/NewsBox';
 import ProductBox from './ProductBox/ProductBox';
-import SellerButton from './SellerButton/SellerButton';
+import PopUpStart from './Popup/PopUpStart';
+
 
 export default function Homepage(props) {
   return (
@@ -24,6 +20,9 @@ export default function Homepage(props) {
       <div className="MenuStyle" >
         <MenuBar/>
       </div>
+      <div className="PopUpStartPosition"  style={{ position: "fixed", right: "30%", top: "20%", zIndex: 1}}>
+      <PopUpStart PopUpStartText='test'/>
+    </div>
       <div className="NumberofProd" style={{ paddingTop: "2%", color: "#B7B7B7", letterSpacing: "3px", fontWeight:"60", fontSize:"11px", textAlign:"center" }}>
         <h3>{props.NumberOfProduct}</h3>
       </div>
