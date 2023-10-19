@@ -30,7 +30,7 @@ export default function Homepage(props) {
         <CategoryBox style={{width: "44px" }}/>
       </div>
       <div className="MenuStyle" style={{ paddingTop: "2%", width: "44%", marginLeft:"5%" }}>
-        <ProductBox style={{width: "44px" }}/>
+        <ProductBox display={true}  style={{width: "44px" }}/>
       </div>
       <div className="QuizButtonContainer" style={{ position: "fixed", right: "0", top: "50%", transform: "translateY(-50%)"}}>
         <QuizButton />

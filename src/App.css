@@ -51,3 +51,11 @@ body, html {
     transform: rotate(360deg);
   }
 }
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20%;
+  justify-content: center; /* Centre les éléments verticalement */
+  height: 20vh; /* Ajustez la hauteur selon vos besoins */
+}
