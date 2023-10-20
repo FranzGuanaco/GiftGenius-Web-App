@@ -1,20 +1,16 @@
 import React from 'react';
 import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
-import Homepage from '../Homepage';
-import Quiz from '../Quiz';
-import Proposal from '../Proposal';
-import Productdetails from '../Productdetails';
-import Categorydetails from '../Categorydetails';
 import account_icon from './account_icon.png'
 import category_icon from './category_icon.png'
 import favorite_icon from './favorite_icon.png'
 import GiftGeniusLogo from './GiftGeniusLogo.png'
 import './Navbar.css';
 import Searchbar from './SearchBar';
+import NewsBox from '../NewsBox/NewsBox';
 
 function Navbar(props) {
     return (
-        <nav className="navbar" >
+        <nav className="navbar" style={{width: props.width}}>
             <div className="Logo" style={{paddingLeft: "10%"}}> 
             <img src={GiftGeniusLogo} alt="Accueil" style={{ width: '130px', position: "relative", top:"10%" }} />
             </div>
@@ -42,7 +38,6 @@ function Navbar(props) {
         </li>
         </ul>
         </div>
-        
     </nav>
 
     );
@@ -52,6 +47,7 @@ Navbar.defaultProps = {
     accountIcon: account_icon,
     FavoriteIcon: favorite_icon,
     categoryIcon: category_icon,
+    width: '1800px'
    
   }
 

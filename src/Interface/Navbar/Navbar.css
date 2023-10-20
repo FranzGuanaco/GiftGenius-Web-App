@@ -5,7 +5,7 @@
     align-items: center; /* Centre verticalement */
     list-style: none; /* Supprime les puces */
     padding: 0;
-    width: 100%;
+    position: fixed;
     background-color: #1B1B1B; /* Ajoutez la couleur de fond souhaitée */}
   
   .navbar-list {
@@ -43,7 +43,7 @@
 
   @media (max-width: 560px) {
     .navbar {
-      width: 605px;
+      width: 615px;
     }
   }
 
