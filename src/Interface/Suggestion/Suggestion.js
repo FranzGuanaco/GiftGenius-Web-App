@@ -8,8 +8,8 @@ const Suggestion = () => {
     <div style={{ borderBottom: '1px solid #ccc' }}>
      {/* Ligne grise */}
     </div>
-    <div className="suggestion">
-    <ProductBox width={"90px"} height={"100px"} />
+    <div className="suggestion" style={{marginTop: "3%", marginLeft:"2%"}}>
+    <ProductBox width={"200px"} height={"220px"} />
     </div>
     </div>
   );

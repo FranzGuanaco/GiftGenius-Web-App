@@ -1,0 +1,32 @@
+
+
+.sidebar {
+    width: 300px;
+    background-color: #fff;
+    padding: 20px;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.avatar {
+    width: 70px;
+    height: 70px;
+    background-color: #ccc;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.menu-item {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #f9f9f9;
+}
+
+.content {
+    flex-grow: 1;
+    padding: 20px;
+}

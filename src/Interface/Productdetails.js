@@ -12,24 +12,24 @@ export default function Productdetails() {
       
          <Navbar width={"100%"} style={{ position: 'sticky', top: '0', zIndex: '100' }}></Navbar>
          <div className='page-NewsBox' style={{paddingTop: '70px'}}>
-         <NewsBox width={"100%"}></NewsBox>
+         <NewsBox width={"100%"} style={{ position: 'sticky'}}></NewsBox>
          </div>
-         <div className='page-container '>
-         <div className="MenuStyle" style={{ paddingTop: "10%", width: "44%", marginLeft:"5%" }}>
-         <div className="ProductBoxPosition" style={{ display: 'flex', marginLeft: "3%", alignItems: 'flex-start', position:'sticky', border: "2px solid red", zIndex:'inherit'}}>
+         <div className='page-container'>
+         <div className="MenuStyle" style={{ paddingTop: "35%", width: "44%", marginLeft:"5%" }}>
+         <div className="ProductBoxPosition" style={{ display: 'flex', marginLeft: "3%", alignItems: 'flex-start', zIndex:'inherit'}}>
          <div className="TinyProductBoxPosition" style={{display: 'flex', alignItems: 'flex-start', flexDirection: 'column'}}>
-            <ProductBox width={"90px"} height={"100px"} />
-            <div className="margin" style={{marginTop: "15%"}}>
-            <ProductBox width={"90px"} height={"100px"} />
+            <ProductBox width={"115px"} height={"132px"} />
+            <div className="margin" style={{marginTop: "24%"}}>
+            <ProductBox width={"115px"} height={"132px"} />
             </div>
-            <div className="margin" style={{marginTop: "15%"}}>
-            <ProductBox width={"90px"} height={"100px"} />
+            <div className="margin" style={{marginTop: "24%"}}>
+            <ProductBox width={"115px"} height={"132px"} />
             </div>
             
             </div>
        
             <div className="largeProductBoxPosition" style={{ display: 'flex', marginLeft: "5%"}}>
-            <ProductBox style={{ width: "44px", height: "110px" }} />
+            <ProductBox width={"400px"} height={"450px"} />
             </div>
             <div className="ProductBoxPosit" style={{marginLeft: "13%", alignItems: 'flex-start'}}>
         <BoxProductInfo detailWidth={"300px"}/>
@@ -37,11 +37,9 @@ export default function Productdetails() {
         </div>
         </div>
       </div>
-      <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-      <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+      <div className="SpaceSuggestion" style={{ marginTop: "30%"}}></div>
       <Suggestion/>
     </div>
     
   );
 }
-

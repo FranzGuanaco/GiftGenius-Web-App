@@ -16,25 +16,32 @@ const Quiz = ({ question }) => {
   };
 
   return (
-    <div className="App" style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-      <div className="ButtonBackStyle" style={{ position: "fixed", marginTop: '50%', marginLeft: '7%' }}>
-        <ButtonBack />
-      </div>
-      <div className="NavStyle">
-        <Navbar />
-      </div>
-      <div className="NewsStyle">
-        <NewsBox />
-      </div>
-      <div className="QuestionStyle" style={{ textAlign: 'center', marginTop: '3%' }}>
-        <h3>{question}</h3>
-      </div>
-      <div style={{ left: '50%', marginTop: '2%', marginLeft: '22%', border: '2px solid red', padding: '10px', width: "60%", height: '80%' }}>
+    <div className="App" style={{ display: 'flex', flexDirection: 'column' }}>
+    <Navbar width="100%" style={{ position: 'sticky', top: 0, zIndex: 100 }} />
+  
+    <div className="page-NewsBox" style={{ paddingTop: '70px' }}>
+      <NewsBox width="100%" style={{ position: 'sticky' }} />
+    </div>
+  
+    <div className="QuestionStyle" style={{ textAlign: 'center', marginTop: '5%' }}>
+      <h3>{question}</h3>
+    </div>
+  
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
+      <div style={{ border: '2px solid red', padding: '10px', width: '80%', height: '80%', marginLeft: '25%' }}>
         <QuestionBox onClick={handleQuestionBoxClick} />
+        
+      </div>
+     
+      <div style={{ top: '100%' }}>
         <ProgressBar trigger={triggered} />
       </div>
-      <div></div>
     </div>
+    <div style={{ position: 'fixed', left: "10%", top: '90%' }}>
+    <ButtonBack />
+  </div>
+  </div>
+  
   );
   }  
 

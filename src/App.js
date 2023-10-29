@@ -6,6 +6,9 @@ import Proposal from './Interface/Proposal';
 import Productdetails from './Interface/Productdetails';
 import Categorydetails from './Interface/Categorydetails';
 import './App.css';
+import Login from './Interface/Login';
+import Confirmation from './Interface/Confirmation';
+import Account from './Interface/Account';
 
 function App() {
 
@@ -17,6 +20,9 @@ function App() {
             <Route path='/Home' element={<Homepage/>} />
             <Route path='/quiz' exact element={<Quiz/>} />
             <Route path='/product details' exact element={<Productdetails/>} />
+            <Route path='/login' exact element={<Login/>} />
+            <Route path='/confirmation' exact element={<Confirmation/>} />
+            <Route path='/account' exact element={<Account/>} />
             </Routes>
       </BrowserRouter>
       </div>
