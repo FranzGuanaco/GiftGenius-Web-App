@@ -29,8 +29,7 @@ const Quiz = ({ question }) => {
   
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
       <div style={{ border: '2px solid red', padding: '10px', width: '80%', height: '80%', marginLeft: '25%' }}>
-        <QuestionBox onClick={handleQuestionBoxClick} />
-        
+        <QuestionBox onClick={handleQuestionBoxClick}/>
       </div>
      
       <div style={{ top: '100%' }}>

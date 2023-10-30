@@ -15,7 +15,7 @@ const ProductBox = ({ imageUrl, productName, shortDescription, display, width, h
        )}
       {display && (
         <div className="SellerStyle" style={{ paddingTop: "1%" }}>
-          <SellerButton style={{ width: "44px" }} />
+          <SellerButton width={"60px"} height={"30px"}/>
         </div>
       )}
     </div>

@@ -10,7 +10,7 @@ function BoxProductInfo({detailWidth}) {
         <h3 style={{ marginTop: '0' }}>Nom</h3>
         <h4>Description</h4>
         <h5>Site vendeurs:</h5>
-        <SellerButton></SellerButton>
+        <SellerButton width={"60px"} height={"30px"} />
         <div className='ProductInf' style={{marginTop: '10%'}}>
         <ProductInf></ProductInf>
         </div>

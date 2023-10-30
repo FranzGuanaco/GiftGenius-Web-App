@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import SellerButton from './SellerButton/SellerButton';
 
 function EmailVerification() {
   const [code, setCode] = useState(['', '', '', '', '', '']);
@@ -27,18 +28,18 @@ function EmailVerification() {
   };
 
   return (
-    
-  
-    <div style={{ textAlign: 'center', 
-                maxWidth: '400px', 
-                margin: 'auto', 
-                background: "red", 
-                marginTop:"200px", 
-                height: "500px",
-                width: "90%", 
-                paddingTop: "100px",
-                paddingLeft: "30px",
-                paddingRight: "30px"}}>
+    <div style={{
+      textAlign: 'center', 
+      maxWidth: '400px', 
+      margin: 'auto', 
+      background: "red", 
+      marginTop:"200px", 
+      height: "500px",
+      width: "90%", 
+      paddingTop: "100px",
+      paddingLeft: "30px",
+      paddingRight: "30px"
+    }}>
       <div style={{ marginBottom: '20px' }}>
         <h2>Verify your email address</h2>
         <p>We send you a six-digit code to pierrechev@gmail.com</p>
@@ -64,11 +65,11 @@ function EmailVerification() {
           />
         ))}
       </div>
-      <button onClick={handleSubmit} style={{ padding: '10px 20px', fontSize: '16px' }}>
-        Submit
-      </button>
+      
+      <div style={{ marginLeft:"35%", marginTop:"15%"}}>
+        <SellerButton width={"120px"} height={"50px"}/>
+      </div>
     </div>
-
   );
 }
 
