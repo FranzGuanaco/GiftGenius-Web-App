@@ -34,5 +34,20 @@
   }
 }
 
+@media screen and (max-width: 600px) {
+  .circle-slice {
+    width: 100px; /* Largeur réduite pour .circle-slice */
+    height: 175px; /* Hauteur réduite pour .circle-slice */
+    border-radius: 150px 0px 0px 150px; /* Rayon réduit pour .circle-slice */
+  }
+
+  .flat-angle img {
+    width: 70px; /* Largeur réduite pour l'image */
+    margin-top: 70%; /* Ajustez la marge supérieure en conséquence si nécessaire */
+    margin-left: 100%; /* Ajustez la marge gauche en conséquence si nécessaire */
+    transform: translateX(-80%); /* Centrez l'image horizontalement */
+  }
+}
+
 
   

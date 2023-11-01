@@ -11,10 +11,23 @@
   text-align: center;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  width: 400px;
+  height: 40px;
 }
 
 .category:hover {
   background-color: gray;
 }
+
+/* Media query for screens that are 470px wide or less */
+@media (max-width: 600px) {
+  .category {
+    width: 250px; /* Example of a smaller width */
+    height: 35px; /* Example of a smaller height */
+    padding: 8px 15px;
+    font-size: 14px;
+  }
+}
+
 
   

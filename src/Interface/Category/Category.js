@@ -1,17 +1,16 @@
 import React from 'react';
 import './Category.css'; // Importez le fichier CSS pour le style
 
-const CategoryBox = ({ width, height }) => {
+const CategoryBox = ({ width, height, category }) => {
   return (
       <button className="category" style={{width: width, height: height}}>
-        Cadeaux technologiques
+        {category}
       </button>
   );
 }
 
 CategoryBox.defaultProps = {
-  width: "2000px",
-  height: "20px"
+  category:"category"
 };
 
 export default CategoryBox;

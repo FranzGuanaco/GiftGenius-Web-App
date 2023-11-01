@@ -23,6 +23,7 @@ function App() {
             <Route path='/login' exact element={<Login/>} />
             <Route path='/confirmation' exact element={<Confirmation/>} />
             <Route path='/account' exact element={<Account/>} />
+            <Route path='/match' exact element={<Account/>} /> 
             </Routes>
       </BrowserRouter>
       </div>

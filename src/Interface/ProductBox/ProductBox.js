@@ -5,7 +5,7 @@ import SellerButton from '../SellerButton/SellerButton'; // Importez le composan
 const ProductBox = ({ imageUrl, productName, shortDescription, display, width, height }) => {
   return (
     <div>
-      <div className="square" style={{width: width, height: height}}>
+      <div className="square">
         <img src={imageUrl} alt="Votre image" className="square-image" />
       </div>
       {display && (
@@ -26,8 +26,6 @@ ProductBox.defaultProps = {
   productName: "Nom:",
   shortDescription: "Courte description par défaut",
   display: false,
-  width: "300px",
-  height: "330px"
 };
 
 export default ProductBox;

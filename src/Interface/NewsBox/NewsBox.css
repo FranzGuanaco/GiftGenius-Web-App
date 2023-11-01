@@ -10,11 +10,18 @@
     align-items: center;
     text-align: center;
     position: fixed;
+    font-size: 15px;
   
   }
 
   @media (max-width: 560px) {
     .NewsBox {
       width: 595px;
+    }
+  }
+
+  @media (max-width: 800px) {
+    .NewsBox {
+      font-size: 11px;
     }
   }

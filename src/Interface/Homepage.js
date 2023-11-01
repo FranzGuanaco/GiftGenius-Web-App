@@ -15,15 +15,15 @@ export default function Homepage(props) {
     <div className='page-NewsBox' style={{ paddingTop: '70px' }}>
       <NewsBox width={"100%"} style={{ position: 'sticky' }}></NewsBox>
     </div>
-    <div className="NumberofProd" style={{ paddingTop: "2%", color: "#B7B7B7", letterSpacing: "3px", fontWeight:"60", fontSize:"11px", textAlign:"center" }}>
+    <div className="NumberofProd" style={{ marginTop: "5vh", color: "#B7B7B7", letterSpacing: "3px", fontWeight:"60", fontSize:"11px", textAlign:"center" }}>
         <h3>{props.NumberOfProduct}</h3>
       </div>
-      <div className="MenuStyle" style={{ paddingTop: "2%"}}>
-        <CategoryBox width={"350px"} height={"40px"}/>
+      <div className="MenuStyle" style={{ paddingTop: "4vh"}}>
+        <CategoryBox/>
       </div>
 
-      <div className="MenuStyle" style={{ paddingTop: "2%", width: "44%", marginLeft:"5%" }}>
-        <ProductBox display={true}  width={"300px" }/>
+      <div className="MenuStyle" style={{ marginTop: "3%", width: "44%", marginLeft:"5%" }}>
+        <ProductBox display={true}/>
         <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
         <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
         <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>

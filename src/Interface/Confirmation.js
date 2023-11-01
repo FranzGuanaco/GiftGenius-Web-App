@@ -28,17 +28,19 @@ function EmailVerification() {
   };
 
   return (
+    <div className='background' style={{backgroundColor:"#f0f0f0", height:"100vh"}}>
     <div style={{
       textAlign: 'center', 
       maxWidth: '400px', 
       margin: 'auto', 
-      background: "red", 
-      marginTop:"200px", 
+      background: "red",  
       height: "500px",
-      width: "90%", 
+      width: "40vh", 
       paddingTop: "100px",
       paddingLeft: "30px",
-      paddingRight: "30px"
+      paddingRight: "30px",
+      backgroundColor: "#ffffff",
+      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"
     }}>
       <div style={{ marginBottom: '20px' }}>
         <h2>Verify your email address</h2>
@@ -69,7 +71,8 @@ function EmailVerification() {
       <div style={{ marginLeft:"35%", marginTop:"15%"}}>
         <SellerButton width={"120px"} height={"50px"}/>
       </div>
-    </div>
+      </div>
+      </div>
   );
 }
 
