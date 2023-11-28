@@ -16,7 +16,7 @@ function ProductInf() {
         switch (item) {
             case "ac-1": return "140px";
             case "ac-2": return "180px";
-            // Ajoutez d'autres cas si nécessaire
+            
             default: return "0px";
         }
     };
