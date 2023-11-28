@@ -1,5 +1,6 @@
 .navbar {
     display: flex;
+    width: 100%;
     height: 70px;
     justify-content: space-between;; /* Centre horizontalement */
     align-items: center; /* Centre verticalement */
@@ -39,11 +40,67 @@
     padding: 10%;
   }
   
-  /* ... Autres règles CSS ... */
+  .favoriteImg{
+    width: 40px;
+  }
 
-  @media (max-width: 560px) {
+  .accountIcon{
+    width: 35px;
+  }
+
+  .categoryIcon{
+    width: 35px;
+  }
+
+  @media (max-width: 960px) {
+    .favoriteImg {
+      width: 30px;
+    }
+  }
+
+  @media (max-width: 960px) {
+    .accountIcon{
+      width: 25px;
+  }
+}
+
+  @media (max-width: 960px) {
+    .categoryIcon{
+      width: 25px;
+  }
+}
+
+
+  @media (max-width: 460px) {
     .navbar {
-      width: 615px;
+      width: 465px;
+    }
+  }
+
+
+  @media (max-width: 450px) {
+    .navbar {
+      width: 465px;
+    }
+
+    .navbar-item {
+      margin-left: 35px;
+    }
+  }
+
+
+  @media (max-width: 380px) {
+
+    .navbar {
+      width: 520px;
+    }
+
+    .navbar-list {
+      padding-right: 30px
+    }
+  
+    .navbar-item {
+      margin-left: 60px;
     }
   }
 

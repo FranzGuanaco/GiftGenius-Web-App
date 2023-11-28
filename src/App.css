@@ -61,5 +61,52 @@ body, html {
 
 }
 
+.MenuStyle {
+  margin-top: 5vh;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  border: 1px solid #adabab;
+  background-color: #ffffff;
+}
+
+.sidenav.open {
+  width: 350px;
+  
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.closebtn {
+  position: absolute;
+  top: 90px;
+  right: 25px;
+  font-size: 36px;
+  margin-right: 250px;
+}
+
+.closebtn:hover {
+  color: #f1f1f1;
+}
 
 

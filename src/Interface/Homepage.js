@@ -1,24 +1,22 @@
-import React from 'react';
+import {React, useState} from 'react';
 import Navbar from './Navbar/navbar';
-import MenuBar from './MenuBar/MenuBar';
 import CategoryBox from './Category/Category';
 import QuizButton from './QuizElement/QuizButton';
 import NewsBox from './NewsBox/NewsBox';
 import ProductBox from './ProductBox/ProductBox';
-import PopUpStart from './Popup/PopUpStart';
 
 
 export default function Homepage(props) {
+
+  
   return (
-    <div className="App" style={{ display: 'flex', flexDirection: 'column' }}>
-      <Navbar width={"100%"} style={{ position: 'sticky', top: '0', zIndex: '100' }}></Navbar>
-    <div className='page-NewsBox' style={{ paddingTop: '70px' }}>
-      <NewsBox width={"100%"} style={{ position: 'sticky' }}></NewsBox>
-    </div>
+
+    <div className="App" style={{ flexDirection: 'column' }}>
+      <Navbar ></Navbar>
     <div className="NumberofProd" style={{ marginTop: "5vh", color: "#B7B7B7", letterSpacing: "3px", fontWeight:"60", fontSize:"11px", textAlign:"center" }}>
         <h3>{props.NumberOfProduct}</h3>
       </div>
-      <div className="MenuStyle" style={{ paddingTop: "4vh"}}>
+      <div className="MenuStyle">
         <CategoryBox/>
       </div>
 
