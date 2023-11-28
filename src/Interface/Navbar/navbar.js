@@ -7,6 +7,7 @@ import GiftGeniusLogo from './GiftGeniusLogo.png'
 import './Navbar.css';
 import Searchbar from './SearchBar';
 import NewsBox from '../NewsBox/NewsBox';
+import MenuBar from '../MenuBar/MenuBar';
 
 
 function Navbar(props) {
@@ -22,7 +23,7 @@ function Navbar(props) {
 
   return (
     <>
-    <nav className="navbar" style={{ position: 'sticky', top: '0', zIndex: '100' }}>
+    <nav className="navbar" style={{top: '0', zIndex: '100' }}>
       <div className="Logo" style={{ paddingLeft: '10%' }}>
         <img src={GiftGeniusLogo} alt="Accueil" style={{ width: '130px', position: 'relative', top: '10%' }} />
       </div>
@@ -51,8 +52,12 @@ function Navbar(props) {
       </div>
     </nav>
     <div className='page-NewsBox'>
-    <NewsBox width={"100%"} style={{ position: 'sticky' }}></NewsBox>
-    
+    <NewsBox width='100%'/>
+    <div className='page-Box' style={{top:"20px"}}>
+    {props.MenuBar && (
+    <MenuBar width='100%'/>
+    )}
+    </div>
     </div>
 
     <span
@@ -85,7 +90,8 @@ Navbar.defaultProps = {
     accountIcon: account_icon,
     FavoriteIcon: favorite_icon,
     categoryIcon: category_icon,
-    width: '1800px'
+    width: '1800px',
+    MenuBar: true,
    
   }
 

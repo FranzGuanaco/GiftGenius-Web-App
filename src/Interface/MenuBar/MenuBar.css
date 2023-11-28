@@ -1,7 +1,9 @@
 .accordion {
   display: flex;
   background-color: #EEEEEE;
-  padding-inline-start: 35%;
+  padding-inline-start: 25%;
+  position: fixed;
+  top: 99px;
 }
 
 .accordionStyle{

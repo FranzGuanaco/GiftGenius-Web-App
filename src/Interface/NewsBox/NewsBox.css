@@ -3,8 +3,8 @@
 .NewsBox {
     background-color: #ECC25A;
     color: white;
-    padding: 10px;
-    height: 10px;
+    top: 70px;
+    height: 30px;
     display: flex;
     justify-content: center;
     align-items: center;

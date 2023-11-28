@@ -4,7 +4,7 @@ import './MenuBar.css';
 
 function MenuBar(props) {
     return (
-        <div class="accordion">
+        <div class="accordion" style={{width: props.width}}>
         <div class="accordion-item">
             <div class="accordion-header">XXX</div>
             <div class="accordion-content">
@@ -49,5 +49,10 @@ function MenuBar(props) {
     );
 }
 
+MenuBar.defaultProps = {
+    width: '1800px'
+   
+  }
+  
 
 export default MenuBar;

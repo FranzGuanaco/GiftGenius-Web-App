@@ -13,7 +13,6 @@
     display: flex;
     justify-content: flex-end; /* Aligner les icônes à droite */
     padding-right: 10px; /* Ajout d'un espace à droite des icônes */
-   
   }
   
   .navbar-item {
@@ -70,37 +69,13 @@
   }
 }
 
-
-  @media (max-width: 460px) {
-    .navbar {
-      width: 465px;
-    }
-  }
-
-
-  @media (max-width: 450px) {
-    .navbar {
-      width: 465px;
-    }
-
-    .navbar-item {
-      margin-left: 35px;
-    }
-  }
-
-
   @media (max-width: 380px) {
 
-    .navbar {
-      width: 520px;
-    }
-
     .navbar-list {
-      padding-right: 30px
+      padding-right: 10px
     }
-  
     .navbar-item {
-      margin-left: 60px;
+      margin-left: 35px;
     }
   }
 
