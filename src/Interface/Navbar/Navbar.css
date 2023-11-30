@@ -34,7 +34,7 @@
     float: right;
   }
   
-  li a {
+  .closebtn {
     display: block;
     padding: 10%;
   }
