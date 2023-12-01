@@ -18,6 +18,7 @@ export default function Productdetails() {
          </div>
          <div className='page-container'>
          <div className="MenuStyle" style={{ paddingTop: "50vh", width: "44%", marginLeft:"5%"}}>
+         <div className="ProductBoxContainer" style={{padding: '10px'}}>
          <div className="ProductBoxPosition" style={{ display: 'flex', marginLeft: "3%", alignItems: 'flex-start', zIndex:'inherit'}}>
          <div className="TinyProductBoxPosition" style={{display: 'flex', alignItems: 'flex-start', flexDirection: 'column'}}>
             <ProductBoxDetails width={"115px"} height={"132px"} />
@@ -38,8 +39,9 @@ export default function Productdetails() {
         </div>
         </div>
         </div>
+        </div>
       </div>
-      <div className="SpaceSuggestion" style={{ marginTop: "60vh"}}></div>
+      <div className="SpaceSuggestion" style={{ marginTop: "55vh"}}></div>
       <Suggestion/>
     </div>
     

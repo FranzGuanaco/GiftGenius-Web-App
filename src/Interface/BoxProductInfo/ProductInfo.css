@@ -80,4 +80,46 @@
 
 hr{
     color: red;
+    margin: 0;
+    padding: 0;
+    width: 100%
 }
+
+.span {
+    display: flex;
+    justify-content: space-between;
+     width: 260px
+}
+
+.ac-small{
+transition: height 0.3s ease-in-out;
+width: 100%;
+}
+
+.ac-medium{
+    transition: height 0.3s ease-in-out;
+    width: 100%;
+}
+
+@media (max-width: 1250px) {
+  
+hr{
+
+    width: 70%
+}
+
+.span {
+     width: 200px
+}
+
+.ac-small{
+    transition: height 0.3s ease-in-out;
+    width: 70%;
+    }
+
+.ac-medium{
+    transition: height 0.3s ease-in-out;
+    width: 70%;
+    }
+
+  }

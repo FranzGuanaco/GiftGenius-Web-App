@@ -40,15 +40,15 @@
   }
   
   .favoriteImg{
-    width: 40px;
+    width: 30px;
   }
 
   .accountIcon{
-    width: 35px;
+    width: 25px;
   }
 
   .categoryIcon{
-    width: 35px;
+    width: 25px;
   }
 
   @media (max-width: 960px) {

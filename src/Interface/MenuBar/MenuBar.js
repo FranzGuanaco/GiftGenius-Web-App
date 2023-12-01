@@ -8,14 +8,14 @@ function MenuBar(props) {
         <div className="accordion-item">
         <nav>
           <div className="wrapper">
-            <input type="radio" name="slider" id="menu-btn" />
-            <input type="radio" name="slider" id="close-btn" />
+            <input type="radio" name="slider" id="menu-btn" className='input'/>
+            <input type="radio" name="slider" id="close-btn" className='input'/>
             <ul className="nav-links">
               <label htmlFor="close-btn" className="btn close-btn"><i className="fas fa-times"></i></label>
               
               <li>
               <a href="#" className="desktop-item">Prix</a>
-                <input type="checkbox" id="showDrop" />
+                <input type="checkbox" id="showDrop" className='input'/>
                 <label htmlFor="showDrop" className="mobile-item">Dropdown Menu</label>
                 <ul className="drop-menu">
                   <li><a href="#">Drop menu 1</a></li>
@@ -26,7 +26,7 @@ function MenuBar(props) {
               </li>
               <li>
                 <a href="#" className="desktop-item">Marque</a>
-                <input type="checkbox" id="showDrop" />
+                <input type="checkbox" id="showDrop" className='input' />
                 <label htmlFor="showDrop" className="mobile-item">Dropdown Menu</label>
                 <ul className="drop-menu">
                   <li><a href="#">Drop menu 1</a></li>
@@ -37,7 +37,7 @@ function MenuBar(props) {
               </li>
               <li>
               <a href="#" className="desktop-item">Vendeur</a>
-                <input type="checkbox" id="showDrop" />
+                <input type="checkbox" id="showDrop" className='input'/>
                 <label htmlFor="showDrop" className="mobile-item">Dropdown Menu</label>
                 <ul className="drop-menu">
                   <li><a href="#">Drop menu 1</a></li>
@@ -48,7 +48,7 @@ function MenuBar(props) {
               </li>
               <li>
               <a href="#" className="desktop-item">Nouveauté</a>
-                <input type="checkbox" id="showDrop" />
+                <input type="checkbox" id="showDrop" className='input'/>
                 <label htmlFor="showDrop" className="mobile-item">Dropdown Menu</label>
                 <ul className="drop-menu">
                   <li><a href="#">Drop menu 1</a></li>

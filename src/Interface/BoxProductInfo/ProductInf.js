@@ -27,7 +27,7 @@ function ProductInf() {
       <section className="ac-container">
         <div>
           <label htmlFor="ac-1" onClick={() => toggleItem("ac-1")} style={{ /* Votre style ici */ }}>
-          <p style={{ display: 'flex', justifyContent: 'space-between', width: '250px' }}>
+          <p className="span">
         details 
         <span>{isItemOpen("ac-1") ? "-" : "+"}</span>
     </p>
@@ -39,7 +39,7 @@ function ProductInf() {
         </div>
         <div>
           <label htmlFor="ac-2" onClick={() => toggleItem("ac-2")} style={{ /* Votre style ici */ }}>
-          <p style={{ display: 'flex', justifyContent: 'space-between', width: '250px' }}>
+          <p className="span">
         about me 
         <span>{isItemOpen("ac-2") ? "-" : "+"}</span>
     </p>
