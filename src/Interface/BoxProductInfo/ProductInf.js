@@ -33,7 +33,7 @@ function ProductInf() {
     </p>
           </label>
           <hr/>
-          <article className="ac-small" style={{ height: openItem === "ac-1" ? getItemHeight("ac-1") : "0", transition: 'height 0.3s ease-in-out' }}>
+          <article className="ac-small" style={{ height: openItem === "ac-1" ? getItemHeight("ac-1") : "0" }}>
             <p>Votre texte ici...</p>
           </article>
         </div>
@@ -46,7 +46,7 @@ function ProductInf() {
             
           </label>
           <hr/>
-          <article className="ac-medium" style={{ height: openItem === "ac-2" ? getItemHeight("ac-2") : "0", transition: 'height 0.3s ease-in-out' }}>
+          <article className="ac-medium" style={{ height: openItem === "ac-2" ? getItemHeight("ac-2") : "0" }}>
             <p>Votre texte ici...</p>
           </article>
         </div>

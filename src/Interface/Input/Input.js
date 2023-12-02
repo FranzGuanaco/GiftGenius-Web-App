@@ -1,22 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './Input.css';
 
 function Input(props) {
-    const { type, placeholder, handleChange, width } = props;
+    const { type, placeholder, handleChange } = props;
     
     return (
         <input
             type={type}
             placeholder={placeholder}
             onChange={handleChange}
-            style={{
-                width: width,
-                padding: '10px',
-                margin: '10px 0',
-                border: 'none',
-                borderRadius:"33px"
-            }}
+            className="input-responsive"
         />
+
     );
 }
 

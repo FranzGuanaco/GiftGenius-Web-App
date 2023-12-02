@@ -1,0 +1,30 @@
+.input-responsive {
+    width: 50%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid gray;
+    border-radius: 33px;
+}
+
+.input-responsive::placeholder {
+    font-size: 16px; /* Taille normale */
+    /* Autres styles du placeholder */
+}
+
+@media screen and (max-width: 1000px) {
+    .input-responsive {
+        width: 200px; /* Ajustez la largeur comme nécessaire */
+    }
+    .input-responsive::placeholder {
+        font-size: 12px; /* Taille plus petite pour les écrans étroits */
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .input-responsive {
+        width: 130px; /* Ajustez la largeur comme nécessaire */
+    }
+    .input-responsive::placeholder {
+        font-size: 10px; /* Taille plus petite pour les écrans étroits */
+    }
+}

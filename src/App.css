@@ -109,4 +109,71 @@ body, html {
   color: #f1f1f1;
 }
 
+.login-pattern {
+  width: 100%;
+  /* Add your background pattern here */
+  background-color: #2c2b2b;
+  background-image: radial-gradient(rgb(254 254 254 / 17%) 2px, #721c1cb3 0);
+  background-size: 30px 30px;
+  background-position: -5px -5px;
 
+  padding: 50px;
+  text-align: center;
+  width: 50%
+  
+}
+
+.h2-login-pattern {
+
+  font-size: 25px;
+}
+
+@media (max-width: 600px) {
+
+  .h2-login-pattern {
+
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 500px) {
+
+  .h2-login-pattern {
+
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 400px) {
+
+  .h2-login-pattern {
+
+    font-size: 10px;
+  }
+}
+
+.p-login{
+  font-size: 17px;
+}
+
+@media (max-width: 500px) {
+
+  .p-login {
+
+    font-size: 8px;
+  }
+}
+
+.login-button {
+  background-color: white; /* Fond blanc */
+border: 1px solid #D9D9D9; /* Bord gris */
+border-radius: 55px;
+padding: 10px 20px;
+cursor: pointer;
+display: flex;
+align-items: center;
+box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Effet drop shadow */
+margin: auto;
+width: 100px;
+height: 40px;
+}
