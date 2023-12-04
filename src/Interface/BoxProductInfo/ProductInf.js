@@ -14,8 +14,8 @@ function ProductInf() {
 
     const getItemHeight = (item) => {
         switch (item) {
-            case "ac-1": return "140px";
-            case "ac-2": return "180px";
+            case "ac-1": return "100px";
+            case "ac-2": return "140px";
             
             default: return "0px";
         }

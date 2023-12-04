@@ -13,6 +13,7 @@ const ProgressBar = ({ trigger }) => {
         scaleY: 1,
         duration: 1,
         backgroundColor: '#4895ef',
+    
         onComplete: () => {
           
           progressBar.style.boxShadow = '0 0 1px #4895ef';

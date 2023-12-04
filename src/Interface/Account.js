@@ -7,7 +7,7 @@ import EditAccountBox from './MenuAccount/EditAccountBox';
 
 const Account = () => {
     return (
-        <div className="App" style={{ display: 'flex', flexDirection: 'column', alignitems: "center", height: "100vh", backgroundColor: "#f0f0f0" }}>
+        <div className="App" style={{ display: 'flex', flexDirection: 'column', alignitems: "center", height: "100vh"}}>
         <Navbar width={"100%"} style={{ position: 'sticky', top: '0', zIndex: '100' }}></Navbar>
         <div style={{ display: 'flex', alignItems: 'center'}}>
         <div className='AccountMenu' style={{marginTop: "10%", marginLeft:"15%"}}>

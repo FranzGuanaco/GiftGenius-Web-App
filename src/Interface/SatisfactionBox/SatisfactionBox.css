@@ -1,0 +1,73 @@
+.SatisfactionBox{
+    display: flex;
+    bottom: 90%; /* Position it above the element that follows */
+    left: 0;
+    width: 100%;
+    position: absolute;
+    flex-direction: column;
+    justify-content: center; /* This will put space between your message and buttons */
+    align-items: center;
+    width: 300px; /* Adjust the width as per your requirement */
+    height: 90px; /* Adjust the height as per your requirement */
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 0px 38px rgba(0, 0, 0, 0.2);
+    padding: 16px;
+    text-align: center;
+    /* Add more styles as per your requirement */
+}
+
+@media (max-width: 1200px) {
+
+    .SatisfactionBox {
+        width: 400px;
+    }
+  }
+
+  .ProductBoxPosit {
+    position: relative;
+  }
+
+  .message {
+    width: 100%; /* Message container takes full width */
+    text-align: center; /* Center the text within the message container */
+    margin-bottom: auto; /* Pushes everything else to the bottom */
+  }
+
+  .buttons {
+    display: flex;
+    width: 100%; /* Buttons container takes full width */
+    justify-content: space-evenly; /* This spaces out the buttons evenly */
+  }
+
+  .satisfaction-button {
+    background-color: #ecc25a; /* Fond blanc */
+    border: 1px solid #D9D9D9; /* Bord gris */
+    border-radius: 55px;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: 60px;
+    height: 20px;
+    font-weight: 500;
+    justify-content: center;
+    color: aliceblue;
+    }
+
+    .unsatisfaction-button {
+        background-color: #db0a0a; /* Fond blanc */
+        border: 1px solid #D9D9D9; /* Bord gris */
+        border-radius: 55px;
+        padding: 10px 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        margin: auto;
+        width: 60px;
+        height: 20px;
+        font-weight: 500;
+        justify-content: center;
+        color: aliceblue;
+        }

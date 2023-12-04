@@ -17,12 +17,10 @@ const Quiz = ({ question }) => {
 
   return (
     <div className="App" style={{ display: 'flex', flexDirection: 'column' }}>
-      <Navbar width={"100%"} style={{ position: 'sticky', top: '0', zIndex: '100' }}></Navbar>
-    <div className='page-NewsBox' style={{ paddingTop: '70px' }}>
-      <NewsBox width={"100%"} style={{ position: 'sticky' }}></NewsBox>
-    </div>
+      <Navbar width={"100%"} style={{ top: '0', zIndex: '2' }}></Navbar>
 
-    <div className="QuestionStyle" style={{ textAlign: 'center', marginTop: '5%' }}>
+
+    <div className="QuestionStyle" style={{ textAlign: 'center', marginTop: '8%' }}>
         <h3>{question}</h3>
       </div>
 
@@ -31,9 +29,12 @@ const Quiz = ({ question }) => {
           <QuestionBox onClick={handleQuestionBoxClick}/>
         
 
-        <div style={{ top: '100%', paddingLeft: "30%"}}>
+        <div style={{ top: '100%', paddingLeft: "30%", zIndex: '1' }}>
           <ProgressBar trigger={triggered} />
-        </div>
+          </div>
+          
+      
+        
         </div>
         </div>
   

@@ -9,6 +9,7 @@ import './App.css';
 import Login from './Interface/Login';
 import Confirmation from './Interface/Confirmation';
 import Account from './Interface/Account';
+import Match from './Interface/Match';
 
 function App() {
 
@@ -17,13 +18,13 @@ function App() {
         <div className="App">
           <BrowserRouter>
           <Routes>
-            <Route path='/' element={<Homepage/>} />
+            <Route path='/' element={<Homepage/>} /> 
             <Route path='/quiz' exact element={<Quiz/>} />
             <Route path='/product details' exact element={<Productdetails/>} />
             <Route path='/login' exact element={<Login/>} />
             <Route path='/confirmation' exact element={<Confirmation/>} />
             <Route path='/account' exact element={<Account/>} />
-            <Route path='/match' exact element={<Account/>} /> 
+            <Route path='/match' exact element={<Match/>} /> 
             </Routes>
       </BrowserRouter>
       </div>

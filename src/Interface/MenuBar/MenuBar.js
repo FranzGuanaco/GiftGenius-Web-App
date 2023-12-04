@@ -4,7 +4,7 @@ import './MenuBar.css';
 
 function MenuBar(props) {
     return (
-      <div className="accordion" style={{ width: props.width }}>
+      <div className="accordion" style={{ width: props.width, zIndex: 2 }}>
         <div className="accordion-item">
         <nav>
           <div className="wrapper">

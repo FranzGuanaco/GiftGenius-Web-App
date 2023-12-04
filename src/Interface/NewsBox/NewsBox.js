@@ -5,7 +5,7 @@ const message = "Explorez notre réseau de plus de 200 partenaires avec Gift Gen
 
 const NewsBox = (props) => {
   return (
-    <div className="NewsBox" style={{width: props.width}}> {/* Utilisez la classe CSS */}
+    <div className="NewsBox" style={{width: props.width, zIndex: 2}}> {/* Utilisez la classe CSS */}
       {message}
     </div>
   );

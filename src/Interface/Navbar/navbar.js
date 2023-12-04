@@ -8,6 +8,7 @@ import './Navbar.css';
 import Searchbar from './SearchBar';
 import NewsBox from '../NewsBox/NewsBox';
 import MenuBar from '../MenuBar/MenuBar';
+import { useNavigate } from 'react-router-dom';
 
 
 function Navbar(props) {
@@ -21,11 +22,19 @@ function Navbar(props) {
     setIsNavOpen(false);
   };
 
+
+  const navigate = useNavigate();
+
+  const goToHomepage = () => {
+    navigate('/')
+    console.log('test')
+};
+
   return (
     <>
     <nav className="navbar" style={{top: '0', zIndex: '100' }}>
       <div className="Logo" style={{ paddingLeft: '10%' }}>
-        <img src={GiftGeniusLogo} alt="Accueil" style={{ width: '130px', position: 'relative', top: '10%' }} />
+        <img src={GiftGeniusLogo} alt="Accueil" style={{ width: '130px', position: 'relative', top: '10%' }} onClick={goToHomepage}/>
       </div>
       
       <div className="navbar-center">
@@ -36,7 +45,7 @@ function Navbar(props) {
       <div className="left" style={{ paddingRight: '10%' }}>
         <ul className="navbar-list">
           <li className="navbar-item">
-            <Link to="/">
+            <Link to="/account">
               <img src={props.accountIcon} alt="Accueil" className="accountIcon" />
             </Link>
           </li>

@@ -32,7 +32,7 @@ function Login() {
                    
                 />
                <div style={{height:"30px"}}></div>
-               <button className="login-button"></button>
+               <button className="login-button">Connexion</button>
                 <div style={{height:"50px"}}></div>
                 <p>Or sign in with...</p>
                 <div style={{height:"20px"}}></div>
@@ -45,7 +45,7 @@ function Login() {
                 <div style={{paddingTop: "20%", color:'aliceblue'}}>
                 <h2 className='h2-login-pattern'>Nouveau chez Gift Genius ?</h2>
                 <p className='p-login'>Rejoignez nous en quelques clics</p>
-                <button className="login-button"/>
+                <button className="login-button">Inscription</button>
             </div>
         </div>
         </div>
