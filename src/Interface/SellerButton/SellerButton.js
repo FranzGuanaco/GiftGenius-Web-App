@@ -14,7 +14,11 @@ const SellerButton = ({ imageUrl, onClick, children, width, height, autoMargin }
 SellerButton.propTypes = {
   width: "600px",
   height: "405px",
-  autoMargin: false 
+  autoMargin: false, 
+};
+
+SellerButton.defaultProps = {
+  children: "Submit"
 };
 
 export default SellerButton;
