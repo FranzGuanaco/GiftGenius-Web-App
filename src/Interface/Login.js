@@ -1,12 +1,22 @@
 import React, { useState } from 'react';
 import Input from './Input/Input';
-import SellerButton from './SellerButton/SellerButton';
+import { collection, addDoc } from "firebase/firestore";
+import { firestore } from '../Firebase';
+import { useNavigate } from 'react-router-dom';
+
 
 function Login() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const navigate = useNavigate();
+
+    const goToCreateAccount = () => {
+    navigate('/create account')
+    console.log('test')
+};
+    
     return (
         <div style={{
             display: 'flex', width: '100%', height:"100%", 
@@ -45,7 +55,7 @@ function Login() {
                 <div style={{paddingTop: "20%", color:'aliceblue'}}>
                 <h2 className='h2-login-pattern'>Nouveau chez Gift Genius ?</h2>
                 <p className='p-login'>Rejoignez nous en quelques clics</p>
-                <button className="login-button">Inscription</button>
+                <button className="login-button" onClick={goToCreateAccount}>Inscription</button>
             </div>
         </div>
         </div>

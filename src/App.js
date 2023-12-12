@@ -10,6 +10,7 @@ import Login from './Interface/Login';
 import Confirmation from './Interface/Confirmation';
 import Account from './Interface/Account';
 import Match from './Interface/Match';
+import CreateAccount from './Interface/CreateAccount';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
             <Route path='/quiz' exact element={<Quiz/>} />
             <Route path='/product details' exact element={<Productdetails/>} />
             <Route path='/login' exact element={<Login/>} />
+            <Route path='/create account' exact element={<CreateAccount/>} />
             <Route path='/confirmation' exact element={<Confirmation/>} />
             <Route path='/account' exact element={<Account/>} />
             <Route path='/match' exact element={<Match/>} /> 

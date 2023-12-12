@@ -8,10 +8,12 @@ import './Navbar.css';
 import Searchbar from './SearchBar';
 import NewsBox from '../NewsBox/NewsBox';
 import MenuBar from '../MenuBar/MenuBar';
+
 import { useNavigate } from 'react-router-dom';
 
 
 function Navbar(props) {
+
   const [isNavOpen, setIsNavOpen] = useState(false);
 
   const openNav = () => {
