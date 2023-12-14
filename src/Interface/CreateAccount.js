@@ -1,105 +1,111 @@
 import React, { useState } from 'react';
-import SellerButton from './SellerButton/SellerButton';
 import Input from './Input/Input';
-import { auth, createUser } from '../Firebase';
-import { createUserWithEmailAndPassword } from "firebase/auth"
+import SellerButton from './SellerButton/SellerButton';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../Firebase'; // Assurez-vous que cette importation est correcte
+import emailjs from '@emailjs/browser';
 import { useNavigate } from 'react-router-dom';
 
+export const generateRandomNumber = () => {
+    return Math.floor(100000 + Math.random() * 900000);
+  };
+
 function CreateAccount() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [nickname, setNickname] = useState(''); // Ajouté pour gérer le surnom
+  const [code, setCode] = useState(['', '', '', '', '', '']);
+  const navigate = useNavigate();
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
 
-    const navigate = useNavigate();
-    const goToConfirmation = () => {
-    navigate('/confirmation')
-    console.log('test')
-};
+  const goToConfirmation = () => {
+    navigate('/confirmation');
+    console.log('test');
+  }
+
+
+  const sendEmail = () => {
+
+    const randomNum = generateRandomNumber()
+
+    const emailParams = {
+        from_name: "Gift Genius", // Nom d'utilisateur ou autre champ
+        user_email: email, // Adresse email
+        unique_code: randomNum // Message ou contenu de l'email
+      };
+    emailjs.send('gift_genius2024', 'GiftGeniusConfirmation', emailParams , 'WNkAG24NwAI_iP2iL' )
+      .then((result) => {
+        console.log(result.text);
+       // goToConfirmation(); // Naviguer vers la page de confirmation après l'envoi de l'email
+      }, (error) => {
+        console.log(error.text);
+      });
+  };
 
   const handleCreateAccount = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed up 
         const user = userCredential.user;
         console.log('User created:', user);
-        // Vous pouvez ici rediriger l'utilisateur ou faire d'autres opérations post-inscription
-        goToConfirmation()
+  
+        // Assurez-vous que sendEmail retourne une promesse
+        return sendEmail(); // Retourne la promesse pour le chaînage
+      })
+      .then(() => {
+        // Cette partie s'exécutera après la réussite de sendEmail
+        goToConfirmation();
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error('Error creating user:', errorCode, errorMessage);
-        // Ici, vous pouvez gérer les erreurs, par exemple en affichant un message à l'utilisateur
+        // Cette partie attrapera les erreurs soit de createUserWithEmailAndPassword, soit de sendEmail
+        console.error('Error:', error);
       });
   };
 
-  // State to store input values for verification code
-  const [code, setCode] = useState(['', '', '', '', '', '']);
-
-  // Function to handle input change
   const handleInputChange = (e, index) => {
     let value = e.target.value;
-
-    // Prevent non-numeric characters
     if (/[^0-9]/.test(value)) {
       return;
     }
-
-    // Update code array with new value
     code[index] = value;
-
-    // Automatically move to next input field after a valid input
     if (index < code.length - 1 && value !== '') {
       document.getElementById(`input${index + 1}`).focus();
     }
-
-    // Update state with new code array
     setCode([...code]);
   };
 
-  // Function to handle form submission
-  const handleSubmit = () => {
-    // Join code array to get the full verification code
-    const verificationCode = code.join('');
-    console.log("Submitted code:", verificationCode);
-    // TODO: Add the code here to handle the verification of the code
-    // This is where you would typically call a backend service to verify the code
-  };
-
   return (
-    <div className='background' style={{backgroundColor:"#f0f0f0", height:"100vh"}}>
+    <div className='background' style={{ backgroundColor: "#f0f0f0", height: "100vh" }}>
       <div style={{
-        textAlign: 'center', 
-        maxWidth: '400px', 
-        margin: 'auto', 
-        background: "red",  
+        textAlign: 'center',
+        maxWidth: '400px',
+        margin: 'auto',
         height: "500px",
-        width: "40vh", 
+        width: "40vh",
         paddingTop: "100px",
         paddingLeft: "30px",
         paddingRight: "30px",
         backgroundColor: "#ffffff",
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"
       }}>
-
         <div style={{ marginBottom: '20px' }}>
-          {/* Inputs to collect user nickname, email, and password */}
           <Input
-              type="text"
-              placeholder="Nickname"/>
+            type="text"
+            placeholder="Nickname"
+            handleChange={(event) => setNickname(event.target.value)}
+          />
           <Input
-              type="email"
-              placeholder="Email"
-              handleChange={(event) => setEmail(event.target.value)}/>
+            type="email"
+            placeholder="Email"
+            handleChange={(event) => setEmail(event.target.value)}
+          />
           <Input
-              type="password"
-              placeholder="Password"
-              handleChange={(event) => setPassword(event.target.value)}/>
+            type="password"
+            placeholder="Password"
+            handleChange={(event) => setPassword(event.target.value)}
+          />
         </div>
-        
-        {/* Button for user to submit their details */}
-        <div style={{ marginLeft:"35%", marginTop:"5%"}}>
-          <SellerButton width={"120px"} height={"50px"} onClick={handleCreateAccount}/>
+        <div style={{ marginLeft: "35%", marginTop: "5%" }}>
+          <SellerButton width={"120px"} height={"50px"} onClick={handleCreateAccount} />
         </div>
       </div>
     </div>
