@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
+
+import React, { createContext, useState, useContext } from 'react';
 import Input from './Input/Input';
 import SellerButton from './SellerButton/SellerButton';
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from '../Firebase'; // Assurez-vous que cette importation est correcte
 import emailjs from '@emailjs/browser';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
 
 export const generateRandomNumber =  Math.floor(100000 + Math.random() * 900000);
   
 
 function CreateAccount() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+    const {email, setEmail, password, setPassword } = useAuth();
   const [nickname, setNickname] = useState(''); // Ajouté pour gérer le surnom
   const [code, setCode] = useState(['', '', '', '', '', '']);
   const navigate = useNavigate();
@@ -32,7 +31,7 @@ function CreateAccount() {
         user_email: email, // Adresse email
         unique_code: randomNum // Message ou contenu de l'email
       };
-    emailjs.send('gift_genius2024', 'GiftGeniusConfirmation', emailParams , 'WNkAG24NwAI_iP2iL' )
+    return emailjs.send('gift_genius2024', 'GiftGeniusConfirmation', emailParams , 'WNkAG24NwAI_iP2iL' )
       .then((result) => {
         console.log(result.text);
        // goToConfirmation(); // Naviguer vers la page de confirmation après l'envoi de l'email
@@ -42,14 +41,7 @@ function CreateAccount() {
   };
 
   const handleCreateAccount = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log('User created:', user);
-  
-        // Assurez-vous que sendEmail retourne une promesse
-        return sendEmail(); // Retourne la promesse pour le chaînage
-      })
+    sendEmail()
       .then(() => {
         // Cette partie s'exécutera après la réussite de sendEmail
         goToConfirmation();

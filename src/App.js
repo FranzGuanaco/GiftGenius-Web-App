@@ -11,6 +11,7 @@ import Confirmation from './Interface/Confirmation';
 import Account from './Interface/Account';
 import Match from './Interface/Match';
 import CreateAccount from './Interface/CreateAccount';
+import { AuthProvider } from './Interface/AuthContext';
 
 function App() {
 
@@ -18,7 +19,9 @@ function App() {
     
         <div className="App">
           <BrowserRouter>
+          <AuthProvider>
           <Routes>
+         
             <Route path='/' element={<Homepage/>} /> 
             <Route path='/quiz' exact element={<Quiz/>} />
             <Route path='/product details' exact element={<Productdetails/>} />
@@ -27,7 +30,9 @@ function App() {
             <Route path='/confirmation' exact element={<Confirmation/>} />
             <Route path='/account' exact element={<Account/>} />
             <Route path='/match' exact element={<Match/>} /> 
+            
             </Routes>
+            </AuthProvider>
       </BrowserRouter>
       </div>
   );

@@ -2,8 +2,13 @@ import React from 'react';
 import { useState } from 'react';
 import SellerButton from './SellerButton/SellerButton';
 import { generateRandomNumber } from './CreateAccount';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../Firebase'; // Assurez-vous que cette importation est correcte
+import { useAuth } from './AuthContext';
 
 function EmailVerification() {
+  const { email, password } = useAuth();
+  console.log(`${email} et ${password}`);
   const [code, setCode] = useState(['', '', '', '', '', '']);
 
   const handleInputChange = (e, index) => {
@@ -19,7 +24,16 @@ function EmailVerification() {
     const randomNumber = generateRandomNumber.toString();// Générer un nombre pour la comparaison
 
   if (verificationCode === randomNumber) {
-    console.log('Code correct');
+    createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log('User created:', user);
+    
+        })
+        .catch((error) => {
+          // Cette partie attrapera les erreurs soit de createUserWithEmailAndPassword, soit de sendEmail
+          console.error('Error:', error);
+        });
   } else {
     console.log('Type de code:', typeof code);
     console.log('Type de generateRandomNumber:', typeof generateRandomNumber);
@@ -27,6 +41,8 @@ function EmailVerification() {
     console.log('Nombre aléatoire attendu:', randomNumber);
   }
     // You can add the code to verify the email here
+
+
   };
 
   return (
