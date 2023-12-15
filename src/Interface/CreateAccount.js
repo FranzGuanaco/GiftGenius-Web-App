@@ -6,9 +6,8 @@ import { auth } from '../Firebase'; // Assurez-vous que cette importation est co
 import emailjs from '@emailjs/browser';
 import { useNavigate } from 'react-router-dom';
 
-export const generateRandomNumber = () => {
-    return Math.floor(100000 + Math.random() * 900000);
-  };
+export const generateRandomNumber =  Math.floor(100000 + Math.random() * 900000);
+  
 
 function CreateAccount() {
   const [email, setEmail] = useState('');
@@ -26,7 +25,7 @@ function CreateAccount() {
 
   const sendEmail = () => {
 
-    const randomNum = generateRandomNumber()
+    const randomNum = generateRandomNumber
 
     const emailParams = {
         from_name: "Gift Genius", // Nom d'utilisateur ou autre champ

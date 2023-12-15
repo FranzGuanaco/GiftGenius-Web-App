@@ -1,29 +1,31 @@
 import React from 'react';
 import { useState } from 'react';
 import SellerButton from './SellerButton/SellerButton';
+import { generateRandomNumber } from './CreateAccount';
 
 function EmailVerification() {
   const [code, setCode] = useState(['', '', '', '', '', '']);
 
   const handleInputChange = (e, index) => {
-    let value = e.target.value;
-
-    if (/[^0-9]/.test(value)) {
-      return;
-    }
-
-    code[index] = value;
-
-    if (index < code.length - 1 && value !== '') {
-      document.getElementById(`input${index + 1}`).focus();
-    }
-
-    setCode([...code]);
+    const newCode = [...code];
+    newCode[index] = e.target.value;
+    setCode(newCode);
+    console.log(code)
   };
 
   const handleSubmit = () => {
-    const verificationCode = code.join('');
-    console.log("Submitted code:", verificationCode);
+    const Code = code.join('');
+    const verificationCode = Code.toString()
+    const randomNumber = generateRandomNumber.toString();// Générer un nombre pour la comparaison
+
+  if (verificationCode === randomNumber) {
+    console.log('Code correct');
+  } else {
+    console.log('Type de code:', typeof code);
+    console.log('Type de generateRandomNumber:', typeof generateRandomNumber);
+    console.log('Code de vérification:', verificationCode);
+    console.log('Nombre aléatoire attendu:', randomNumber);
+  }
     // You can add the code to verify the email here
   };
 
@@ -54,8 +56,9 @@ function EmailVerification() {
             id={`input${index}`}
             type="text"
             value={data}
-            key={index}
             onChange={(e) => handleInputChange(e, index)}
+            key={index}
+         
             maxLength="1"
             style={{
               width: '40px',
@@ -69,7 +72,7 @@ function EmailVerification() {
       </div>
       
       <div style={{ marginLeft:"35%", marginTop:"15%"}}>
-        <SellerButton width={"120px"} height={"50px"}/>
+        <SellerButton width={"120px"} height={"50px"} onClick={handleSubmit}/>
       </div>
       </div>
       </div>
