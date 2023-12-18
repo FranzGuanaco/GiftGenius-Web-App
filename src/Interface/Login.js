@@ -1,15 +1,38 @@
 import React, { useState } from 'react';
 import Input from './Input/Input';
 import { useNavigate } from 'react-router-dom';
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth } from '../Firebase';
-import gmail_icon from './gmail_icon.png'
+import google_icon from './google_icon.png'
 
 
 function Login() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const GmailConnection = () => {
+        const provider = new GoogleAuthProvider();
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                // Ceci vous donne un jeton d'accès Google. Vous pouvez l'utiliser pour accéder à l'API Google.
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+                // Les informations de l'utilisateur connecté
+                const user = result.user;
+                // ...
+                navigate('/'); // Redirigez l'utilisateur où vous voulez après la connexion
+            }).catch((error) => {
+                // Gérez les erreurs ici.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // Le courriel de l'utilisateur qui a été utilisé pour la tentative de connexion
+                const email = error.email;
+                // Le type AuthCredential qui a été utilisé
+                const credential = GoogleAuthProvider.credentialFromError(error);
+                // ...
+            });
+    };
 
     const navigate = useNavigate();
 
@@ -60,10 +83,10 @@ function Login() {
                 <div style={{height:"50px"}}></div>
                 <p>Or sign in with...</p>
                 <div style={{height:"20px"}}></div>
-                <button className="login-button" onClick={GmailConnection}><img src={gmail_icon} alt="Sign in with Google"
+                <button className="login-button" onClick={GmailConnection}><img src={google_icon} alt="Sign in with Google"
                 style={{ width: '30px', 
                 padding: '10px 20px',
-                height: '20px', 
+                height: '30px', 
                 alignContent:'center' }}  /></button>
                 
             </div>
@@ -82,7 +105,7 @@ function Login() {
 }
 
 Login.defaultProps = {
-    gmail_icon: gmail_icon,
+    google_icon: google_icon,
    
   }
 
