@@ -1,13 +1,36 @@
-import {React, useState} from 'react';
+import {React, useState, useEffect} from 'react';
 import Navbar from './Navbar/navbar';
 import CategoryBox from './Category/Category';
 import QuizButton from './QuizElement/QuizButton';
 import NewsBox from './NewsBox/NewsBox';
 import ProductBox from './ProductBox/ProductBox';
 import { useNavigate } from 'react-router-dom';
+import { auth } from '../Firebase';
+
+
 
 
 export default function Homepage(props) {
+
+  useEffect(() => {
+    // Utilisez auth.onAuthStateChanged pour vérifier l'état de l'utilisateur
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        // L'utilisateur est connecté
+        var email = user.email;
+        var uid = user.uid;
+  
+        console.log(`${uid} et ${email}`);
+      } else {
+        // L'utilisateur n'est pas connecté
+        console.error('Utilisateur non connecté.');
+      }
+    });
+  
+    // N'oubliez pas de désabonner l'écouteur lorsque le composant est démonté
+    return () => unsubscribe();
+  }, []); // [] assure que cela ne fonctionne qu'une seule fois après le montage
+  
 
   const navigate = useNavigate();
 
@@ -15,7 +38,6 @@ export default function Homepage(props) {
     navigate('/product details')
     console.log('test')
 };
-
   
   return (
 

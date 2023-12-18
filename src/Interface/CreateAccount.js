@@ -23,27 +23,28 @@ function CreateAccount() {
 
 
   const sendEmail = async () => {
-    if (randomNum === null) {
-      const newRandomNum = generateRandomNumber();
-      setRandomNum(newRandomNum);
-  
-      const emailParams = {
-        from_name: "Gift Genius",
-        user_email: email,
-        unique_code: newRandomNum
-      };
-  
-      try {
-        const result = await emailjs.send('gift_genius2024', 'GiftGeniusConfirmation', emailParams, 'WNkAG24NwAI_iP2iL');
-        console.log(result.text);
-        // goToConfirmation(); // Naviguer vers la page de confirmation après l'envoi de l'email
-      } catch (error) {
-        console.error(error.text);
-        throw error; // Propagez l'erreur pour la gérer dans la fonction appelante
-      }
+  if (randomNum === null) {
+    const newRandomNum = generateRandomNumber();
+    setRandomNum(newRandomNum);
+
+    const emailParams = {
+      from_name: "Gift Genius",
+      user_email: email,
+      unique_code: newRandomNum
+    };
+
+    try {
+      const result = await emailjs.send('gift_genius2024', 'GiftGeniusConfirmation', emailParams, 'WNkAG24NwAI_iP2iL');
+      console.log(result.text);
+      console.log(`envoie de ${email} et ${password} et ${nickname} et random ${randomNum} à confirmation`)
+      // goToConfirmation(); // Naviguer vers la page de confirmation après l'envoi de l'email
+    } catch (error) {
+      console.error(error.text);
+      throw error; // Propagez l'erreur pour la gérer dans la fonction appelante
     }
-  };
-  
+  }
+};
+
   
   const handleCreateAccount = () => {
     sendEmail()

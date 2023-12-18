@@ -8,8 +8,8 @@ import './Navbar.css';
 import Searchbar from './SearchBar';
 import NewsBox from '../NewsBox/NewsBox';
 import MenuBar from '../MenuBar/MenuBar';
-
 import { useNavigate } from 'react-router-dom';
+import { auth } from '../../Firebase';
 
 
 function Navbar(props) {
@@ -29,8 +29,29 @@ function Navbar(props) {
 
   const goToHomepage = () => {
     navigate('/')
-    console.log('test')
+    console.log('home')
 };
+
+  const goToLogin = () => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+    if (user) {
+      // L'utilisateur est connecté
+      var email = user.email;
+      var uid = user.uid;
+
+      console.log(`${uid} et ${email}`);
+      navigate('/account')
+    } else {
+      // L'utilisateur n'est pas connecté
+      console.log('Utilisateur non connecté.');
+      navigate('/login')
+      console.log('logintest')
+      }
+    });
+   return () => unsubscribe();
+  };
+
+
 
   return (
     <>
@@ -47,9 +68,9 @@ function Navbar(props) {
       <div className="left" style={{ paddingRight: '10%' }}>
         <ul className="navbar-list">
           <li className="navbar-item">
-            <Link to="/account">
-              <img src={props.accountIcon} alt="Accueil" className="accountIcon" />
-            </Link>
+      
+              <img src={props.accountIcon} alt="Account" className="accountIcon" onClick={goToLogin}/>
+       
           </li>
           <li className="navbar-item">
             <Link to="/quiz">

@@ -7,8 +7,18 @@ import { collection, addDoc, doc, setDoc } from "firebase/firestore";
 import { db } from '../Firebase';
 import { auth } from '../Firebase'; // Assurez-vous que cette importation est correcte
 import { useAuth } from './AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 function EmailVerification() {
+
+  const navigate = useNavigate();
+
+  const goToHomepage = () => {
+    navigate('/')
+    console.log('home')
+};
+
+
   const { email, password, nickname, randomNum } = useAuth();
   console.log(`${email} et ${password} et ${nickname} et random ${randomNum}`);
   const [code, setCode] = useState(['', '', '', '', '', '']);
@@ -43,13 +53,15 @@ function EmailVerification() {
     const verificationCode = Code.toString()
     const randomNumber = randomNum.toString();// Générer un nombre pour la comparaison
 
-  if (verificationCode === randomNumber) {
-    createUserWithEmailAndPassword(auth, email, password)
+    if (verificationCode === randomNumber) {
+      createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
           console.log('User created:', user);
-          test(user.uid)
-    
+          return test(user.uid); // Utilisez return ici pour retourner la promesse de test
+        })
+        .then(() => {
+          goToHomepage();
         })
         .catch((error) => {
           // Cette partie attrapera les erreurs soit de createUserWithEmailAndPassword, soit de sendEmail
