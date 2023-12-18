@@ -6,12 +6,12 @@ import emailjs from '@emailjs/browser';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 
-export const generateRandomNumber =  Math.floor(100000 + Math.random() * 900000);
+export const generateRandomNumber = () => Math.floor(100000 + Math.random() * 900000);
   
 
 function CreateAccount() {
-    const {email, setEmail, password, setPassword } = useAuth();
-  const [nickname, setNickname] = useState(''); // Ajouté pour gérer le surnom
+
+  const {email, setEmail, password, setPassword, nickname, setNickname , randomNum, setRandomNum} = useAuth();
   const [code, setCode] = useState(['', '', '', '', '', '']);
   const navigate = useNavigate();
 
@@ -22,24 +22,29 @@ function CreateAccount() {
   }
 
 
-  const sendEmail = () => {
-
-    const randomNum = generateRandomNumber
-
-    const emailParams = {
-        from_name: "Gift Genius", // Nom d'utilisateur ou autre champ
-        user_email: email, // Adresse email
-        unique_code: randomNum // Message ou contenu de l'email
+  const sendEmail = async () => {
+    if (randomNum === null) {
+      const newRandomNum = generateRandomNumber();
+      setRandomNum(newRandomNum);
+  
+      const emailParams = {
+        from_name: "Gift Genius",
+        user_email: email,
+        unique_code: newRandomNum
       };
-    return emailjs.send('gift_genius2024', 'GiftGeniusConfirmation', emailParams , 'WNkAG24NwAI_iP2iL' )
-      .then((result) => {
+  
+      try {
+        const result = await emailjs.send('gift_genius2024', 'GiftGeniusConfirmation', emailParams, 'WNkAG24NwAI_iP2iL');
         console.log(result.text);
-       // goToConfirmation(); // Naviguer vers la page de confirmation après l'envoi de l'email
-      }, (error) => {
-        console.log(error.text);
-      });
+        // goToConfirmation(); // Naviguer vers la page de confirmation après l'envoi de l'email
+      } catch (error) {
+        console.error(error.text);
+        throw error; // Propagez l'erreur pour la gérer dans la fonction appelante
+      }
+    }
   };
-
+  
+  
   const handleCreateAccount = () => {
     sendEmail()
       .then(() => {
@@ -50,18 +55,6 @@ function CreateAccount() {
         // Cette partie attrapera les erreurs soit de createUserWithEmailAndPassword, soit de sendEmail
         console.error('Error:', error);
       });
-  };
-
-  const handleInputChange = (e, index) => {
-    let value = e.target.value;
-    if (/[^0-9]/.test(value)) {
-      return;
-    }
-    code[index] = value;
-    if (index < code.length - 1 && value !== '') {
-      document.getElementById(`input${index + 1}`).focus();
-    }
-    setCode([...code]);
   };
 
   return (

@@ -18,7 +18,7 @@ SellerButton.propTypes = {
 };
 
 SellerButton.defaultProps = {
-  children: "Submit"
+  children: ""
 };
 
 export default SellerButton;

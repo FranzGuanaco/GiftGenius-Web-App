@@ -3,12 +3,14 @@ import { useState } from 'react';
 import SellerButton from './SellerButton/SellerButton';
 import { generateRandomNumber } from './CreateAccount';
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { collection, addDoc, doc, setDoc } from "firebase/firestore";
+import { db } from '../Firebase';
 import { auth } from '../Firebase'; // Assurez-vous que cette importation est correcte
 import { useAuth } from './AuthContext';
 
 function EmailVerification() {
-  const { email, password } = useAuth();
-  console.log(`${email} et ${password}`);
+  const { email, password, nickname, randomNum } = useAuth();
+  console.log(`${email} et ${password} et ${nickname} et random ${randomNum}`);
   const [code, setCode] = useState(['', '', '', '', '', '']);
 
   const handleInputChange = (e, index) => {
@@ -18,16 +20,35 @@ function EmailVerification() {
     console.log(code)
   };
 
+  const test = (userUID) => {
+    // Accédez à la collection "cities" et ajoutez un document
+    const userCollection = collection(db, "Users");
+    const laDoc = doc(userCollection, userUID);
+
+    setDoc(laDoc, {
+      name: nickname,
+      email: email,
+      favorite: {}
+    })
+      .then(() => {
+        console.log("Document écrit avec succès !");
+      })
+      .catch((error) => {
+        console.error("Erreur lors de l'écriture du document : ", error);
+      });
+  }
+
   const handleSubmit = () => {
     const Code = code.join('');
     const verificationCode = Code.toString()
-    const randomNumber = generateRandomNumber.toString();// Générer un nombre pour la comparaison
+    const randomNumber = randomNum.toString();// Générer un nombre pour la comparaison
 
   if (verificationCode === randomNumber) {
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
           console.log('User created:', user);
+          test(user.uid)
     
         })
         .catch((error) => {
@@ -36,13 +57,11 @@ function EmailVerification() {
         });
   } else {
     console.log('Type de code:', typeof code);
-    console.log('Type de generateRandomNumber:', typeof generateRandomNumber);
+    console.log('Type de generateRandomNumber:', typeof randomNumber);
     console.log('Code de vérification:', verificationCode);
     console.log('Nombre aléatoire attendu:', randomNumber);
   }
     // You can add the code to verify the email here
-
-
   };
 
   return (
@@ -62,7 +81,7 @@ function EmailVerification() {
     }}>
       <div style={{ marginBottom: '20px' }}>
         <h2>Verify your email address</h2>
-        <p>We send you a six-digit code to pierrechev@gmail.com</p>
+        <p>We send you a six-digit code to {email}</p>
         <p>Enter the code below to confirm your email address</p>
       </div>
 
