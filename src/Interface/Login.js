@@ -60,7 +60,7 @@ function Login() {
                 <div style={{height:"50px"}}></div>
                 <p>Or sign in with...</p>
                 <div style={{height:"20px"}}></div>
-                <button className="login-button"><img src={gmail_icon} alt="Sign in with Google"
+                <button className="login-button" onClick={GmailConnection}><img src={gmail_icon} alt="Sign in with Google"
                 style={{ width: '30px', 
                 padding: '10px 20px',
                 height: '20px', 
