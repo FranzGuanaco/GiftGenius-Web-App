@@ -10,6 +10,7 @@ function Login() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigation = useNavigate();
 
     const GmailConnection = () => {
         const provider = new GoogleAuthProvider();
@@ -21,7 +22,7 @@ function Login() {
                 // Les informations de l'utilisateur connecté
                 const user = result.user;
                 // ...
-                navigate('/'); // Redirigez l'utilisateur où vous voulez après la connexion
+                navigation('Home'); // Redirigez l'utilisateur où vous voulez après la connexion
             }).catch((error) => {
                 // Gérez les erreurs ici.
                 const errorCode = error.code;
@@ -34,7 +35,6 @@ function Login() {
             });
     };
 
-    const navigate = useNavigate();
 
     const Connection = () => {
         signInWithEmailAndPassword(auth, email, password)
@@ -50,9 +50,8 @@ function Login() {
     }
 
     const goToCreateAccount = () => {
-    navigate('/create account')
-    console.log('test')
-};
+        navigation('/create account'); // Utilisez la navigation React Native
+    };
     
     return (
         <div style={{

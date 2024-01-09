@@ -9,9 +9,10 @@ export const AuthProvider = ({ children }) => {
   const [password, setPassword] = useState('');
   const [nickname, setNickname] = useState('');
   const [randomNum, setRandomNum] = useState(null);
+  const [codeGenerationTimestampMilliSecond, setcodeGenerationTimestampMilliSecond] = useState('');
 
   return (
-    <AuthContext.Provider value={{ email, setEmail, password, setPassword, nickname, setNickname, randomNum, setRandomNum }}>
+    <AuthContext.Provider value={{ email, setEmail, password, setPassword, nickname, setNickname, randomNum, setRandomNum, codeGenerationTimestampMilliSecond, setcodeGenerationTimestampMilliSecond }}>
       {children}
     </AuthContext.Provider>
   );

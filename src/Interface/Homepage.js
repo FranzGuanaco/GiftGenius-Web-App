@@ -8,8 +8,6 @@ import { useNavigate } from 'react-router-dom';
 import { auth } from '../Firebase';
 
 
-
-
 export default function Homepage(props) {
 
   useEffect(() => {

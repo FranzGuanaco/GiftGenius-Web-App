@@ -19,8 +19,8 @@ function EmailVerification() {
 };
 
 
-  const { email, password, nickname, randomNum } = useAuth();
-  console.log(`${email} et ${password} et ${nickname} et random ${randomNum}`);
+  const { email, password, nickname, randomNum, codeGenerationTimestampMilliSecond } = useAuth();
+  console.log(`${email} et ${password} et ${nickname} et random ${randomNum} et time ${codeGenerationTimestampMilliSecond}`);
   const [code, setCode] = useState(['', '', '', '', '', '']);
 
   const handleInputChange = (e, index) => {
@@ -30,7 +30,7 @@ function EmailVerification() {
     console.log(code)
   };
 
-  const test = (userUID) => {
+  const UserDB = (userUID) => {
     // Accédez à la collection "cities" et ajoutez un document
     const userCollection = collection(db, "Users");
     const laDoc = doc(userCollection, userUID);
@@ -49,16 +49,20 @@ function EmailVerification() {
   }
 
   const handleSubmit = () => {
+
+    const currentTimestampMilliSecond = Date.now();
+    const currentTimestamp = currentTimestampMilliSecond / 1000
+    const codeGenerationTimestamp = codeGenerationTimestampMilliSecond / 1000
     const Code = code.join('');
     const verificationCode = Code.toString()
     const randomNumber = randomNum.toString();// Générer un nombre pour la comparaison
 
-    if (verificationCode === randomNumber) {
+    if (verificationCode === randomNumber && currentTimestamp - codeGenerationTimestamp < 300) {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
           console.log('User created:', user);
-          return test(user.uid); // Utilisez return ici pour retourner la promesse de test
+          return UserDB(user.uid); // Utilisez return ici pour retourner la promesse de test
         })
         .then(() => {
           goToHomepage();
@@ -66,12 +70,15 @@ function EmailVerification() {
         .catch((error) => {
           // Cette partie attrapera les erreurs soit de createUserWithEmailAndPassword, soit de sendEmail
           console.error('Error:', error);
+          
         });
   } else {
     console.log('Type de code:', typeof code);
     console.log('Type de generateRandomNumber:', typeof randomNumber);
     console.log('Code de vérification:', verificationCode);
     console.log('Nombre aléatoire attendu:', randomNumber);
+    console.error(currentTimestamp - codeGenerationTimestamp);
+    alert('le délai de reception de votre mot de passe s\'est écoulé')
   }
     // You can add the code to verify the email here
   };

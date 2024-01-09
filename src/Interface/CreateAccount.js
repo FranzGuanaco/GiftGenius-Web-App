@@ -11,7 +11,7 @@ export const generateRandomNumber = () => Math.floor(100000 + Math.random() * 90
 
 function CreateAccount() {
 
-  const {email, setEmail, password, setPassword, nickname, setNickname , randomNum, setRandomNum} = useAuth();
+  const {email, setEmail, password, setPassword, nickname, setNickname , randomNum, setRandomNum, codeGenerationTimestampMilliSecond, setcodeGenerationTimestampMilliSecond} = useAuth();
   const [code, setCode] = useState(['', '', '', '', '', '']);
   const navigate = useNavigate();
 
@@ -21,11 +21,13 @@ function CreateAccount() {
     console.log('test');
   }
 
-
   const sendEmail = async () => {
   if (randomNum === null) {
     const newRandomNum = generateRandomNumber();
     setRandomNum(newRandomNum);
+    const currentTimestamp = Date.now();
+    setcodeGenerationTimestampMilliSecond(currentTimestamp); // Mettre à jour l'état avec la variable
+    console.log(`Timestamp: ${currentTimestamp}`); 
 
     const emailParams = {
       from_name: "Gift Genius",
