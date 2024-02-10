@@ -6,13 +6,16 @@ const ProductBox = ({ imageUrl, productName, shortDescription, display, width, h
   return (
     <div>
       <div className="square">
-        <img src={imageUrl} alt="Votre image" className="square-image" onClick={onclick}/>
+       {/* afficher image */}
+        <img src={imageUrl} alt="Votre image" className="square-image" onClick={onclick}/> 
       </div>
+       {/* afficher le nom et la description */}
       {display && (
       <div className="DescriptionStyle">
         <p>{productName} {shortDescription}</p>
       </div>
        )}
+       {/* afficher le nom du vendeur */}
       {display && (
         <div className="SellerStyle" style={{ paddingTop: "1%" }}>
           <SellerButton width={"60px"} height={"30px"}/>

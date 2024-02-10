@@ -22,9 +22,9 @@ function App() {
           <AuthProvider>
           <Routes>
          
-            <Route path='/' element={<Homepage/>} /> 
-            <Route path='/quiz' exact element={<Quiz/>} />
-            <Route path='/product details' exact element={<Productdetails/>} />
+            <Route path='/' element={<Homepage/>} /> afficher tous les produit par categorie, afficher les vendeurs, prix et afficher avec filtres les prix, marque, vendeur, recherche de produit
+            <Route path='/quiz' exact element={<Quiz/>} /> quiz details
+            <Route path='/product details' exact element={<Productdetails/>} /> afficher image, description, vendeur, prix, nom 
             <Route path='/login' exact element={<Login/>} />
             <Route path='/create account' exact element={<CreateAccount/>} />
             <Route path='/confirmation' exact element={<Confirmation/>} />

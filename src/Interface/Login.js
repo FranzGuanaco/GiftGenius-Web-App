@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Input from './Input/Input';
 import { useNavigate } from 'react-router-dom';
-import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, sendPasswordResetEmail } from "firebase/auth";
 import { auth } from '../Firebase';
 import google_icon from './google_icon.png'
 
@@ -11,6 +11,7 @@ function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigation = useNavigate();
+  
 
     const GmailConnection = () => {
         const provider = new GoogleAuthProvider();
@@ -52,6 +53,16 @@ function Login() {
     const goToCreateAccount = () => {
         navigation('/create account'); // Utilisez la navigation React Native
     };
+
+    const handleResetPassword = async () => {
+        try {
+          await sendPasswordResetEmail(auth, email);
+          alert("Un e-mail de réinitialisation du mot de passe a été envoyé.");
+        } catch (error) {
+          console.error("Erreur lors de l'envoi de l'e-mail de réinitialisation du mot de passe:", error);
+          alert("Erreur lors de l'envoi de l'e-mail. Vérifiez l'adresse e-mail et réessayez.");
+        }
+      };
     
     return (
         <div style={{
@@ -87,7 +98,8 @@ function Login() {
                 padding: '10px 20px',
                 height: '30px', 
                 alignContent:'center' }}  /></button>
-                
+                <div style={{ marginBottom: '30px' }}></div>
+                 <span onClick={handleResetPassword}>CLICK</span>
             </div>
             </div>
             

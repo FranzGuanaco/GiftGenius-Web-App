@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
 import account_icon from './account_icon.png'
 import category_icon from './category_icon.png'
 import favorite_icon from './favorite_icon.png'
-import GiftGeniusLogo from './GiftGeniusLogo.png'
+import GiftGeniusLogo from './GiftGenius-G12.png'
 import './Navbar.css';
 import Searchbar from './SearchBar';
 import NewsBox from '../NewsBox/NewsBox';
@@ -57,7 +57,7 @@ function Navbar(props) {
     <>
     <nav className="navbar" style={{top: '0', zIndex: '100' }}>
       <div className="Logo" style={{ paddingLeft: '10%' }}>
-        <img src={GiftGeniusLogo} alt="Accueil" style={{ width: '130px', position: 'relative', top: '10%' }} onClick={goToHomepage}/>
+        <img src={GiftGeniusLogo} alt="Accueil" style={{ width: '90px', position: 'relative', top: '1%' }} onClick={goToHomepage}/>
       </div>
       
       <div className="navbar-center">
