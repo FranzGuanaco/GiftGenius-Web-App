@@ -38,7 +38,7 @@ export default function Homepage(props) {
 
   const navigate = useNavigate();
 
-  const goToCategoyDetails = () => {
+  const goToCategoryDetails = () => {
     navigate('/product details');
     console.log('test');
   };
@@ -50,12 +50,23 @@ export default function Homepage(props) {
         <h3>{props.NumberOfProduct}</h3>
       </div>
       <div className="MenuStyle">
-        <CategoryBox />
-      </div>
-      <div className="MenuStyle" style={{ marginTop: "3%", width: "44%", marginLeft:"5%" }}>
-        {products.map((product, index) => (
-          <ProductBox key={index} display={true} onclick={goToCategoyDetails} productName={product.name} />
-        ))}
+      {
+      // La prop 'name' sera utilisée pour afficher le nom de chaque catégorie
+    }
+    {products.map((product, index) => (
+    <div key={index} className="MenuStyle">
+      {/* Affiche la catégorie du produit */}
+      <CategoryBox category={product.category} />  
+      {/* Affiche le produit */}
+      <ProductBox
+        key={index}
+        display={true}
+        onclick={() => goToCategoryDetails()}
+        productName={product.array_agg}
+      />
+    </div>
+  ))}
+
       </div>
       <div className="QuizButtonContainer" style={{ position: "fixed", right: "0", top: "50%", transform: "translateY(-50%)"}}>
         <QuizButton />
