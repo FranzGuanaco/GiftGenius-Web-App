@@ -9,6 +9,7 @@ import { auth } from '../Firebase';
 
 export default function Homepage(props) {
   const [products, setProducts] = useState([]);
+  const [productName, setProductName] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,14 +33,14 @@ export default function Homepage(props) {
         console.error('Utilisateur non connecté.');
       }
     });
-  
     return () => unsubscribe();
   }, []);
 
+
   const navigate = useNavigate();
 
-  const goToCategoryDetails = () => {
-    navigate('/product details');
+  const goToCategoryDetails = (array_agg) => {
+    navigate('/product details', { state: { message: array_agg } });
     console.log('test');
   };
 
@@ -53,19 +54,22 @@ export default function Homepage(props) {
       {
       // La prop 'name' sera utilisée pour afficher le nom de chaque catégorie
     }
-    {products.map((product, index) => (
-    <div key={index} className="MenuStyle">
-      {/* Affiche la catégorie du produit */}
-      <CategoryBox category={product.category} />  
-      {/* Affiche le produit */}
+  {products.map((category, index) => (
+  <div key={index} className="MenuStyle">
+    {/* Affiche la catégorie du produit */}
+    <CategoryBox category={category.category} />
+    {/* Itère sur chaque produit de la catégorie */}
+    {category.array_agg.map((productName, productIndex) => (
       <ProductBox
-        key={index}
+        key={productIndex} // Utilisez productIndex ici pour une clé unique
         display={true}
-        onclick={() => goToCategoryDetails()}
-        productName={product.array_agg}
+        productName={productName}
+        onclick={() => goToCategoryDetails(productName)}
       />
-    </div>
-  ))}
+    ))}
+  </div>
+))}
+
 
       </div>
       <div className="QuizButtonContainer" style={{ position: "fixed", right: "0", top: "50%", transform: "translateY(-50%)"}}>

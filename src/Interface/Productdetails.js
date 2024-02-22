@@ -1,14 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar/navbar';
 import NewsBox from './NewsBox/NewsBox';
 import ProductBox from './ProductBox/ProductBox';
 import BoxProductInfo from './BoxProductInfo/BoxProductInfo';
 import Suggestion from './Suggestion/Suggestion';
 import ProductBoxDetails from './ProductBox/ProductBoxDetails';
+import { useLocation } from 'react-router-dom';
 import '../App.css';
 
 
 export default function Productdetails() {
+
+  const location = useLocation(); 
+  const { message } = location.state || {};
+  console.log(message)
+
+  useEffect(() => {
+    
+    const fetchData = async () => {
+      const nom_prod = message
+      try {
+        const response = await fetch('http://localhost:3001/api/description');
+        const data = await response.json();
+     
+      } catch (error) {
+        console.error("Erreur lors de la récupération des données:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+
   return (
     <div className='Productdetails'>
       
