@@ -11,18 +11,21 @@ import Confirmation from './Interface/Confirmation';
 import Account from './Interface/Account';
 import Match from './Interface/Match';
 import CreateAccount from './Interface/CreateAccount';
+import { BrandProvider } from './Interface/BrandContext';
 import { AuthProvider } from './Interface/AuthContext';
+import MenuBar from './Interface/MenuBar/MenuBar';
 
 function App() {
 
       return(
     
         <div className="App">
-          <BrowserRouter>
           <AuthProvider>
-          <Routes>
-         
-            <Route path='/' element={<Homepage/>} /> afficher tous les produit par categorie, afficher les vendeurs, prix et afficher avec filtres les prix, marque, vendeur, recherche de produit
+            <BrandProvider>
+              <BrowserRouter>
+                <Routes>
+          
+            <Route path='/' element={<><MenuBar/><Homepage/></>} />
             <Route path='/quiz' exact element={<Quiz/>} /> quiz details
             <Route path='/product details' exact element={<Productdetails/>} /> afficher image, description, vendeur, prix, nom 
             <Route path='/login' exact element={<Login/>} />
@@ -32,8 +35,9 @@ function App() {
             <Route path='/match' exact element={<Match/>} /> 
             
             </Routes>
-            </AuthProvider>
-      </BrowserRouter>
+          </BrowserRouter>
+        </BrandProvider>
+      </AuthProvider>
       </div>
   );
   

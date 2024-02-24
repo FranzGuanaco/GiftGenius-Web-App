@@ -4,26 +4,43 @@ import CategoryBox from './Category/Category';
 import QuizButton from './QuizElement/QuizButton';
 import NewsBox from './NewsBox/NewsBox';
 import ProductBox from './ProductBox/ProductBox';
+import { useBrand } from './BrandContext';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../Firebase';
 
 export default function Homepage(props) {
   const [products, setProducts] = useState([]);
-  const [productName, setProductName] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://localhost:3001/api/products');
-        const data = await response.json();
-        setProducts(data); // Stockez les données de produit dans l'état
-      } catch (error) {
-        console.error("Erreur lors de la récupération des données:", error);
+  const { selectedBrand } = useBrand();
+
+  // lancer le filtre avec le context de la menubar
+  // lancer le filtre avec le context de la menubar
+useEffect(() => {
+  const fetchData = async () => {
+    let url = 'http://localhost:3001/api/products'; // Utilisation de `let` pour permettre la modification
+    if (selectedBrand) {
+      const brand_name = encodeURIComponent(selectedBrand); // Définissez `brand_name` avant de l'utiliser
+      url = `http://localhost:3001/api/Filtremarque?brand_name=${brand_name}`; // Construisez l'URL correctement
+    }
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Réponse réseau non OK');
       }
-    };
+      const data = await response.json();
+      setProducts(data); // Met à jour l'état avec les produits filtrés ou tous les produits
+      console.log(data);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des données:", error);
+    }
+  };
+
+  fetchData();
+}, [selectedBrand]); // Exécutez l'effet chaque fois que `selectedBrand` change
+
   
-    fetchData();
-  }, []);
+
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -36,9 +53,8 @@ export default function Homepage(props) {
     return () => unsubscribe();
   }, []);
 
-
+  
   const navigate = useNavigate();
-
   const goToCategoryDetails = (array_agg) => {
     navigate('/product details', { state: { message: array_agg } });
     console.log('test');
@@ -69,7 +85,6 @@ export default function Homepage(props) {
     ))}
   </div>
 ))}
-
 
       </div>
       <div className="QuizButtonContainer" style={{ position: "fixed", right: "0", top: "50%", transform: "translateY(-50%)"}}>

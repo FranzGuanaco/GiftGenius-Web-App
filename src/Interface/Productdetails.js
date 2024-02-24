@@ -16,20 +16,23 @@ export default function Productdetails() {
   console.log(message)
 
   useEffect(() => {
-    
     const fetchData = async () => {
-      const nom_prod = message
-      try {
-        const response = await fetch('http://localhost:3001/api/description');
-        const data = await response.json();
-     
-      } catch (error) {
-        console.error("Erreur lors de la récupération des données:", error);
+      if(message) { // Vérifiez si `message` est défini
+        const nom_prod = encodeURIComponent(message); // Encodez `message` pour l'utiliser dans l'URL
+        try {
+          // Construisez l'URL avec `nom_prod` comme paramètre de requête
+          const url = `http://localhost:3001/api/description?nom_prod=${nom_prod}`;
+          const response = await fetch(url); // Utilisez la méthode GET par défaut
+          const data = await response.json();
+          console.log(data);
+        } catch (error) {
+          console.error("Erreur lors de la récupération des données:", error);
+        }
       }
     };
-    fetchData();
-  }, []);
-
+    if(message) fetchData(); // S'assurer que `message` est défini avant de faire la requête
+  }, [message]); // Ajouter `message` comme dépendance pour réexécuter l'effet si `message` change
+    
 
   return (
     <div className='Productdetails'>
