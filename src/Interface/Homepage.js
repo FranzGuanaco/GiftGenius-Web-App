@@ -7,6 +7,7 @@ import ProductBox from './ProductBox/ProductBox';
 import { useBrand } from './BrandContext';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../Firebase';
+import PriceRangeSlider from './PriceRange/PriceRangeSlider';
 
 export default function Homepage(props) {
   const [products, setProducts] = useState([]);
@@ -90,6 +91,7 @@ useEffect(() => {
       <div className="QuizButtonContainer" style={{ position: "fixed", right: "0", top: "50%", transform: "translateY(-50%)"}}>
         <QuizButton />
       </div>
+
     </div>
   );
 }
@@ -97,7 +99,5 @@ useEffect(() => {
 Homepage.defaultProps = {
   NumberOfProduct: "0 résultat trouvé"
 };
-
-
 
 

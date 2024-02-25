@@ -25,7 +25,7 @@ function App() {
               <BrowserRouter>
                 <Routes>
           
-            <Route path='/' element={<><MenuBar/><Homepage/></>} />
+            <Route path='/' element={<><Homepage/></>} />
             <Route path='/quiz' exact element={<Quiz/>} /> quiz details
             <Route path='/product details' exact element={<Productdetails/>} /> afficher image, description, vendeur, prix, nom 
             <Route path='/login' exact element={<Login/>} />

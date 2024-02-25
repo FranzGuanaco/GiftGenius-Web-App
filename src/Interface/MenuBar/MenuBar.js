@@ -1,13 +1,13 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useBrand } from '../BrandContext';
 import './MenuBar.css';
+import PriceRangeSlider from '../PriceRange/PriceRangeSlider';
 
 function MenuBar(props) {
 
   const [Brand, setBrand] = useState([]);
 
   const { selectBrand } = useBrand(); // Utilisez selectBrand pour mettre à jour la marque sélectionnée
-
 
   const BrandFilter = async (brand) => {
     try {
@@ -50,10 +50,8 @@ function MenuBar(props) {
                 <input type="checkbox" id="showDrop" className='input'/>
                 <label htmlFor="showDrop" className="mobile-item">Dropdown Menu</label>
                 <ul className="drop-menu">
-                  <li><a href="#">Drop menu 1</a></li>
-                  <li><a href="#">Drop menu 2</a></li>
-                  <li><a href="#">Drop menu 3</a></li>
-                  <li><a href="#">Drop menu 4</a></li>
+                  <PriceRangeSlider/>
+                  
                 </ul>
               </li>
               {
@@ -87,7 +85,6 @@ function MenuBar(props) {
                 <input type="checkbox" id="showDrop" className='input'/>
                 <label htmlFor="showDrop" className="mobile-item">Dropdown Menu</label>
                 <ul className="drop-menu">
-            
                   <li><a href="#">Drop menu 1</a></li>
               
                 </ul>

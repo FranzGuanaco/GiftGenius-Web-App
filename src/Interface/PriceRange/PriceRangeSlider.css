@@ -1,0 +1,168 @@
+/* Import Google Font - Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+::selection {
+  color: #fff;
+  background: #17a2b8;
+}
+.wrapperRangePrice {
+    max-width: 400px; /* Utilisez max-width pour une largeur maximale tout en permettant une réduction */
+    width: 100%; /* Assurez-vous que le wrapper s'adapte à la largeur de son conteneur */
+    background: #fff;
+    border-radius: 10px;
+    margin: auto; /* Centrer le wrapper si l'écran est plus large que la largeur max */
+  }
+
+  .fontSlider{
+    font-size: 14px;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .wrapperRangePrice {
+      padding: 15px 20px; /* Réduisez le padding sur les petits écrans */
+    }
+    .price-input, .price-input .field, .price-input .separator {
+      flex-direction: column; /* Empilez les éléments verticalement */
+      align-items: center;
+      
+    }
+    .price-input .separator {
+      width: auto; /* Ajustez la largeur du séparateur pour les petits écrans */
+      margin: 10px 0; /* Ajoutez un peu d'espace vertical */
+    }
+    .field input, .range-input input {
+      width: 90%; /* Réduisez la largeur des inputs pour éviter le débordement */
+    }
+  }
+
+.price-input {
+  width: 100%;
+  display: flex;
+  margin: 30px 0 35px;
+}
+
+  .input-minFont, .input-max {
+    font-size: 1rem; /* Taille de base pour les champs de saisie */
+  }
+  
+  /* Exemple de media query pour ajuster la taille sur les petits écrans */
+  @media (max-width: 768px) {
+    .fontSlider {
+      font-size: 0.8rem; /* Taille réduite pour les petits écrans */
+    }
+  
+    .input-minFont, .input-max {
+      font-size: 0.8rem; /* Taille réduite pour les champs de saisie */
+    }
+  }
+  
+.price-input .field {
+  display: flex;
+  width: 100%;
+  height: 45px;
+  align-items: center;
+}
+.field input {
+  width: 5vh;
+  height: 4vh;
+  outline: none;
+  margin-left: 6px;
+  border-radius: 5px;
+  text-align: center;
+  border: 1px solid #999;
+  -moz-appearance: textfield;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+.price-input .separator {
+  display: flex;
+  font-size: 19px;
+  align-items: center;
+  justify-content: center;
+}
+.slider {
+  height: 5px;
+  position: relative;
+  background: black;
+  border-radius: 5px;
+}
+.slider .progress {
+  height: 100%;
+  left: 25%;
+  right: 25%;
+  position: absolute;
+  border-radius: 5px;
+  background: #ECC25A;
+}
+.range-input {
+  position: relative;
+}
+.range-input input {
+  position: absolute;
+  width: 100%;
+  height: 5px;
+  top: -5px;
+  background: none;
+  pointer-events: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  height: 17px;
+  width: 17px;
+  border-radius: 50%;
+  background: #17a2b8;
+  pointer-events: auto;
+  -webkit-appearance: none;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+}
+input[type="range"]::-moz-range-thumb {
+  height: 17px;
+  width: 17px;
+  border: none;
+  border-radius: 50%;
+  background: #17a2b8;
+  pointer-events: auto;
+  -moz-appearance: none;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+}
+
+.b-btn {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+.b-btn.paypal i {
+  color: blue;
+}
+.b-btn:hover {
+  text-decoration: none;
+  font-weight: bold;
+}
+.b-btn i {
+  font-size: 20px;
+  color: yellow;
+  margin-top: 2rem;
+}
+
+.field {
+    display: flex;
+    flex-direction: column; /* Change la direction de flex pour empiler verticalement */
+    align-items: center; /* Centre les éléments horizontalement */
+    margin-bottom: 15px; /* Ajoute une marge en bas pour espacer les éléments du champ suivant */
+  }
+  
+  .field input {
+
+    width: calc(100% - 12px); /* Ajuste la largeur si nécessaire, en tenant compte des marges */
+  }
+  
