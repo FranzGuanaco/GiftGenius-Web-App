@@ -2,17 +2,16 @@ import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar/navbar';
 import CategoryBox from './Category/Category';
 import QuizButton from './QuizElement/QuizButton';
-import NewsBox from './NewsBox/NewsBox';
 import ProductBox from './ProductBox/ProductBox';
-import { useBrand } from './BrandContext';
+import { useBrand, useSeller } from './BrandContext';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../Firebase';
-import PriceRangeSlider from './PriceRange/PriceRangeSlider';
 
 export default function Homepage(props) {
   const [products, setProducts] = useState([]);
 
   const { selectedBrand } = useBrand();
+  const {selectedSeller} = useSeller();
 
   // lancer le filtre avec le context de la menubar
   // lancer le filtre avec le context de la menubar
@@ -23,6 +22,10 @@ useEffect(() => {
       const brand_name = encodeURIComponent(selectedBrand); // Définissez `brand_name` avant de l'utiliser
       url = `http://localhost:3001/api/Filtremarque?brand_name=${brand_name}`; // Construisez l'URL correctement
     }
+    else if (selectedSeller) {
+      const seller_name = encodeURIComponent(selectedSeller); // Définissez `brand_name` avant de l'utiliser
+      url = `http://localhost:3001/api/Filtrevendeur?seller_name=${seller_name}`; // Construisez l'URL correctement
+    }
 
     try {
       const response = await fetch(url);
@@ -31,18 +34,16 @@ useEffect(() => {
       }
       const data = await response.json();
       setProducts(data); // Met à jour l'état avec les produits filtrés ou tous les produits
-      console.log(data);
+      console.log("voici le resultat du filtre:",data);
     } catch (error) {
       console.error("Erreur lors de la récupération des données:", error);
     }
   };
 
   fetchData();
-}, [selectedBrand]); // Exécutez l'effet chaque fois que `selectedBrand` change
+}, [selectedBrand, selectedSeller]); // Exécutez l'effet chaque fois que `selectedBrand` change
 
   
-
-
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
@@ -86,7 +87,6 @@ useEffect(() => {
     ))}
   </div>
 ))}
-
       </div>
       <div className="QuizButtonContainer" style={{ position: "fixed", right: "0", top: "50%", transform: "translateY(-50%)"}}>
         <QuizButton />
