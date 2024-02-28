@@ -9,6 +9,7 @@ import { auth } from '../Firebase';
 
 export default function Homepage(props) {
   const [products, setProducts] = useState([]);
+  const [NumberOfProd, setNumberOfProd] = useState('aucun résultat trouvé')
 
   const { selectedBrand } = useBrand();
   const {selectedSeller} = useSeller();
@@ -17,14 +18,21 @@ export default function Homepage(props) {
   // lancer le filtre avec le context de la menubar
 useEffect(() => {
   const fetchData = async () => {
-    let url = 'http://localhost:3001/api/products'; // Utilisation de `let` pour permettre la modification
+    let queryParams = [];
     if (selectedBrand) {
-      const brand_name = encodeURIComponent(selectedBrand); // Définissez `brand_name` avant de l'utiliser
-      url = `http://localhost:3001/api/Filtremarque?brand_name=${brand_name}`; // Construisez l'URL correctement
+      queryParams.push(`brand_name=${encodeURIComponent(selectedBrand)}`);
+      setNumberOfProd(`resultat pour la marque ${selectedBrand}`)
     }
-    else if (selectedSeller) {
-      const seller_name = encodeURIComponent(selectedSeller); // Définissez `brand_name` avant de l'utiliser
-      url = `http://localhost:3001/api/Filtrevendeur?seller_name=${seller_name}`; // Construisez l'URL correctement
+    if (selectedSeller) {
+      queryParams.push(`seller_name=${encodeURIComponent(selectedSeller)}`);
+      setNumberOfProd(`resultat pour le vendeur ${selectedSeller}`)
+    }
+
+    let url = 'http://localhost:3001/api/products'; // URL par défaut
+    if (queryParams.length > 0) {
+      const baseApiUrl = selectedSeller && selectedBrand ? '/api/Filtre/vendeur/marque' : selectedSeller ? '/api/Filtrevendeur' : '/api/Filtremarque';
+      url = `http://localhost:3001${baseApiUrl}?${queryParams.join('&')}`;
+      setNumberOfProd(`resultat pour la marque ${selectedBrand} et le vendeur ${selectedSeller}`)
     }
 
     try {
@@ -66,7 +74,7 @@ useEffect(() => {
     <div className="App" style={{ flexDirection: 'column' }}>
       <Navbar />
       <div className="NumberofProd" style={{marginTop: '18vh', color: "#B7B7B7", letterSpacing: "3px", fontWeight:"60", fontSize:"11px", textAlign:"center" }}>
-        <h3>{props.NumberOfProduct}</h3>
+        <h3>{NumberOfProd}</h3>
       </div>
       <div className="MenuStyle">
       {
@@ -95,9 +103,4 @@ useEffect(() => {
     </div>
   );
 }
-
-Homepage.defaultProps = {
-  NumberOfProduct: "0 résultat trouvé"
-};
-
 

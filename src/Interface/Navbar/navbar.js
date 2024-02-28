@@ -17,8 +17,10 @@ function Navbar(props) {
   const [isNavOpen, setIsNavOpen] = useState(false);
 
   const openNav = () => {
-    setIsNavOpen(true);
-  };
+  
+      setIsNavOpen(currentState => !currentState);
+    };
+    
 
   const closeNav = () => {
     setIsNavOpen(false);
@@ -101,7 +103,7 @@ function Navbar(props) {
         marginTop: '50px',
         width: '10%',
       }}
-      onClick={openNav}
+   
     >
     </span>
     <div id="mySidenav" className={`sidenav ${isNavOpen ? 'open' : ''}`}>
