@@ -84,8 +84,10 @@ body, html {
   
 }
 
+
+
 .sidenav a {
-  padding: 8px 8px 8px 32px;
+  padding: 8px 25px 8px 32px;
   text-decoration: none;
   font-size: 25px;
   color: #818181;
@@ -178,4 +180,80 @@ margin: auto;
 width: 120px;
 height: 40px;
 font-weight: 500;
+}
+
+
+.menu {
+  width: 100%;
+
+}
+
+.Navbar-menu-item {
+  padding: 30px 0px 0px 0px;
+  display: block;
+  border-bottom: 1px solid #999999;
+}
+
+.Navbar-menu-item:last-child {
+  border-bottom: 1px solid #999999;
+}
+
+.checkbox-container {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.checkbox-container input[type="checkbox"] {
+  accent-color: #007BFF;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.arrow-container {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.arrow {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid #333;
+  border-bottom: 2px solid #333;
+  transform: rotate(45deg);
+  transition: transform 0.3s ease;
+}
+
+.text {
+  flex-grow: 1;
+}
+
+.toggle {
+  display: none;
+}
+
+.toggle:not(:checked) ~ .submenu {
+  display: none;
+}
+
+.toggle:checked + .label .arrow {
+  transform: rotate(225deg);
+}
+
+.submenu {
+  background: #f2f2f2;
+  padding-left: 20px;
+}
+
+.submenu-item {
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  border-top: 1px solid #eee;
 }

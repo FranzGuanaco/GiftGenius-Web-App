@@ -107,13 +107,42 @@ function Navbar(props) {
     >
     </span>
     <div id="mySidenav" className={`sidenav ${isNavOpen ? 'open' : ''}`}>
-      <a href="#" className="closebtn" onClick={closeNav}>
-        &times;
+  <div style={{ padding: '103px 0px 0px 101px', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <a href="#" className="closebtn" onClick={closeNav} style={{ textDecoration: 'none', color: 'inherit' }}>
+        &times; {/* Close button */}
       </a>
-      <div className="align">
-   
+      <h4 style={{ margin: '0', color:'gray'}}>Catégories de cadeaux</h4>
+    </div>
+    {/* Additional content here */}
+  </div>
+  <div className="menu">
+    <div className="Navbar-menu-item">
+      
+      <input type="checkbox" id="appliances-toggle" className="toggle" />
+      <label htmlFor="appliances-toggle" className="label">
+        <div className="arrow-container">
+          <span className="arrow"></span>
+        </div>
+        <div className="checkbox-container">
+        <input type="checkbox" id="appliances" />
+      </div>
+        <div className="text">Appliances</div>
+      </label>
+      <div className="submenu">
+        <div className="submenu-item">
+          <div className="checkbox-container">
+            <input type="checkbox" id="dishwashers" />
+          </div>
+          <div className="text">Dishwashers</div>
+        </div>
+        {/* Add more submenu items here */}
       </div>
     </div>
+    {/* Add more menu items here */}
+  </div>
+</div>
+
     </>
   );
 }
