@@ -107,41 +107,40 @@ function Navbar(props) {
     >
     </span>
     <div id="mySidenav" className={`sidenav ${isNavOpen ? 'open' : ''}`}>
-  <div style={{ padding: '103px 0px 0px 101px', display: 'flex', flexDirection: 'column' }}>
+  <div style={{ padding: '103px 0px 0px 70px', display: 'flex', flexDirection: 'column' }}>
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
       <a href="#" className="closebtn" onClick={closeNav} style={{ textDecoration: 'none', color: 'inherit' }}>
         &times; {/* Close button */}
       </a>
-      <h4 style={{ margin: '0', color:'gray'}}>Catégories de cadeaux</h4>
+      <h4 style={{ margin: '0', color:'##1b1b1b'}}>Catégories de cadeaux</h4>
     </div>
     {/* Additional content here */}
   </div>
   <div className="menu">
-    <div className="Navbar-menu-item">
-      
-      <input type="checkbox" id="appliances-toggle" className="toggle" />
-      <label htmlFor="appliances-toggle" className="label">
-        <div className="arrow-container">
-          <span className="arrow"></span>
-        </div>
-        <div className="checkbox-container">
-        <input type="checkbox" id="appliances" />
+  <div className="Navbar-menu-item">
+    <label htmlFor="appliances-toggle" className="label">
+      <div className="arrow-container">
+        <span className="arrow"></span>
       </div>
-        <div className="text">Appliances</div>
-      </label>
-      <div className="submenu">
-        <div className="submenu-item">
-          <div className="checkbox-container">
-            <input type="checkbox" id="dishwashers" />
-          </div>
-          <div className="text">Dishwashers</div>
-        </div>
-        {/* Add more submenu items here */}
+      <div className="checkbox-wrapper-1">
+        {/* Ici, vous pouvez ajouter un contenu visuel ou laisser vide selon votre besoin */}
       </div>
+      <span className="text">Appliances</span>
+    </label>
+    <input type="checkbox" id="appliances-toggle" className="toggle substituted" aria-hidden="true" />
+    <div className="submenu">
+      <div className="submenu-item">
+        <input type="checkbox" id="dishwashers" className="substituted" aria-hidden="true" />
+        <label htmlFor="dishwashers" className="textSubmenu">Dishwashers</label>
+      </div>
+      {/* Ajoutez plus d'éléments de sous-menu ici */}
     </div>
-    {/* Add more menu items here */}
   </div>
+
+  {/* Ajoutez plus d'éléments de menu ici */}
 </div>
+  </div>
+ 
 
     </>
   );
