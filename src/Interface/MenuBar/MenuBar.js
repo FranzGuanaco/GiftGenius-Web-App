@@ -9,7 +9,7 @@ function MenuBar(props) {
   const [Seller, setSeller] = useState([]);
 
   const { selectBrand } = useBrand(); // Utilisez selectBrand pour mettre à jour la marque sélectionnée
-  const {selectSeller} = useSeller();
+  const {selectedSeller} = useSeller();
 
   const BrandFilter = async (brand) => {
     try {
@@ -24,7 +24,7 @@ function MenuBar(props) {
    const SellerFilter = async (seller) => {
     try {
        console.log(`voila le resultat du vendeur ${seller}`);
-       selectSeller(seller);
+       selectedSeller(seller);
      }
      catch{
        console.error(`Le filtre seller n'a pas fonctionné`);

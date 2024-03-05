@@ -118,28 +118,31 @@ function Navbar(props) {
   </div>
   <div className="menu">
   <div className="Navbar-menu-item">
+    <input type="checkbox" id="appliances-toggle" className="toggle substituted" aria-hidden="true" />
     <label htmlFor="appliances-toggle" className="label">
       <div className="arrow-container">
         <span className="arrow"></span>
       </div>
-      <div className="checkbox-wrapper-1">
-        {/* Ici, vous pouvez ajouter un contenu visuel ou laisser vide selon votre besoin */}
-      </div>
-      <span className="text">Appliances</span>
+      <div class="checkbox-wrapper-1">
+  <input id="example-1" class="substituted" type="checkbox" aria-hidden="true" />
+  <label for="example-1">Checkbox</label>
+</div>
+
     </label>
-    <input type="checkbox" id="appliances-toggle" className="toggle substituted" aria-hidden="true" />
     <div className="submenu">
       <div className="submenu-item">
-        <input type="checkbox" id="dishwashers" className="substituted" aria-hidden="true" />
-        <label htmlFor="dishwashers" className="textSubmenu">Dishwashers</label>
-      </div>
-      {/* Ajoutez plus d'éléments de sous-menu ici */}
+      <div class="checkbox-wrapper-1">
+  <input id="example-1" class="substituted" type="checkbox" aria-hidden="true" />
+  <label for="example-1">Checkbox</label>
     </div>
   </div>
+  </div>
+  </div>
+</div>
+</div>
+
 
   {/* Ajoutez plus d'éléments de menu ici */}
-</div>
-  </div>
  
 
     </>

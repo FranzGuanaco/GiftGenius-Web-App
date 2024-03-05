@@ -2,7 +2,7 @@ import React from 'react';
 import './ProductBox.css'; // Importez le fichier CSS
 import SellerButton from '../SellerButton/SellerButton'; // Importez le composant SellerButton depuis son fichier
 
-const ProductBox = ({ imageUrl, productName, shortDescription, display, width, height, onclick }) => {
+const ProductBox = ({ imageUrl, productName, shortDescription, display, Link, ClickLink, onclick }) => {
   return (
     <div>
       <div className="square">
@@ -18,7 +18,7 @@ const ProductBox = ({ imageUrl, productName, shortDescription, display, width, h
        {/* afficher le nom du vendeur */}
       {display && (
         <div className="SellerStyle" style={{ paddingTop: "1%" }}>
-          <SellerButton width={"60px"} height={"30px"}/>
+          <SellerButton width={"60px"} height={"30px"} id={Link} ClickLink={ClickLink} />
         </div>
       )}
     </div>

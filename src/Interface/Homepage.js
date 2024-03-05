@@ -65,10 +65,16 @@ useEffect(() => {
 
   
   const navigate = useNavigate();
-  const goToCategoryDetails = (array_agg) => {
-    navigate('/product details', { state: { message: array_agg } });
+  const goToCategoryDetails = (productSeller) => {
+    navigate('/product details', { state: { message: productSeller } });
     console.log('test');
   };
+
+  const goToProductLink = (link) => {
+    // Si le lien est interne à l'application, utilisez navigate
+      window.location.href = link; // Pour naviguer directement
+  };
+  
 
   return (
     <div className="App" style={{ flexDirection: 'column' }}>
@@ -79,22 +85,30 @@ useEffect(() => {
       <div className="MenuStyle">
       {
       // La prop 'name' sera utilisée pour afficher le nom de chaque catégorie
-    }
-  {products.map((category, index) => (
-  <div key={index} className="MenuStyle">
-    {/* Affiche la catégorie du produit */}
-    <CategoryBox category={category.category} />
-    {/* Itère sur chaque produit de la catégorie */}
-    {category.array_agg.map((productName, productIndex) => (
-      <ProductBox
-        key={productIndex} // Utilisez productIndex ici pour une clé unique
-        display={true}
-        productName={productName}
-        onclick={() => goToCategoryDetails(productName)}
-      />
-    ))}
-  </div>
-))}
+}
+{
+  products.map((category, index) => (
+    <div key={index} className="MenuStyle">
+      <CategoryBox category={category.category} />
+      {category.name.map((productName, productIndex) => {
+        const productSeller = category.seller[productIndex];
+        const productLink = category.link[productIndex];
+        return (
+          <ProductBox
+            key={`${index}-${productIndex}`} // Clé unique améliorée
+            display={true}
+            productName={productName}
+            onclick={() => goToCategoryDetails(productSeller)} // Supposition de la fonction goToCategoryDetails
+            Link={productLink} // Correction pour passer le lien correctement
+            ClickLink={() => goToProductLink(productLink)} // Supposition de la fonction goToProductLink
+          />
+        );
+      })}
+    </div>
+  ))
+}
+
+      
       </div>
       <div className="QuizButtonContainer" style={{ position: "fixed", right: "0", top: "50%", transform: "translateY(-50%)"}}>
         <QuizButton />
