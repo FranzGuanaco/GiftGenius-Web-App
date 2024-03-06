@@ -21,18 +21,18 @@ useEffect(() => {
     let queryParams = [];
     if (selectedBrand) {
       queryParams.push(`brand_name=${encodeURIComponent(selectedBrand)}`);
-      setNumberOfProd(`resultat pour la marque ${selectedBrand}`)
+   
     }
     if (selectedSeller) {
       queryParams.push(`seller_name=${encodeURIComponent(selectedSeller)}`);
-      setNumberOfProd(`resultat pour le vendeur ${selectedSeller}`)
+      
     }
 
     let url = 'http://localhost:3001/api/products'; // URL par défaut
     if (queryParams.length > 0) {
       const baseApiUrl = selectedSeller && selectedBrand ? '/api/Filtre/vendeur/marque' : selectedSeller ? '/api/Filtrevendeur' : '/api/Filtremarque';
       url = `http://localhost:3001${baseApiUrl}?${queryParams.join('&')}`;
-      setNumberOfProd(`resultat pour la marque ${selectedBrand} et le vendeur ${selectedSeller}`)
+      
     }
 
     try {
@@ -42,6 +42,7 @@ useEffect(() => {
       }
       const data = await response.json();
       setProducts(data); // Met à jour l'état avec les produits filtrés ou tous les produits
+      setNumberOfProd(data)
       console.log("voici le resultat du filtre:",data);
     } catch (error) {
       console.error("Erreur lors de la récupération des données:", error);
@@ -62,7 +63,6 @@ useEffect(() => {
     });
     return () => unsubscribe();
   }, []);
-
   
   const navigate = useNavigate();
   const goToCategoryDetails = (productSeller) => {
@@ -80,7 +80,15 @@ useEffect(() => {
     <div className="App" style={{ flexDirection: 'column' }}>
       <Navbar />
       <div className="NumberofProd" style={{marginTop: '18vh', color: "#B7B7B7", letterSpacing: "3px", fontWeight:"60", fontSize:"11px", textAlign:"center" }}>
-        <h3>{NumberOfProd}</h3>
+       
+      {
+  // Vérification qu'il s'agit bien d'un tableau et qu'il n'est pas vide
+  Array.isArray(NumberOfProd) && NumberOfProd.length > 0 && (
+    <h3>Le nombre total d'article est {NumberOfProd[0].total_product_count}</h3>
+  )
+}
+
+
       </div>
       <div className="MenuStyle">
       {
@@ -110,7 +118,7 @@ useEffect(() => {
 
       
       </div>
-      <div className="QuizButtonContainer" style={{ position: "fixed", right: "0", top: "50%", transform: "translateY(-50%)"}}>
+      <div className="QuizButtonContainer" id="Quiz">
         <QuizButton />
       </div>
 

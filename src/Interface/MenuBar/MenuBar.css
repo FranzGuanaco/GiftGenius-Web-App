@@ -78,16 +78,25 @@ nav .wrapper{
 }
 .nav-links li:hover .drop-menu,
 .nav-links li:hover .mega-box{
-  transition: all 0.3s ease;
-  top: 40px;
+  transition: all 0.1s ease;
+  top: 35px;
   opacity: 1;
   visibility: visible;
 }
+.drop-menu li a:hover{
+  width: 100%;
+  display: block;
+  background-color: #e1e1e1;
+  font-weight: 400;
+  border-radius: 0px;
+}
+
 .drop-menu li a{
   width: 100%;
   display: block;
   font-weight: 400;
   border-radius: 0px;
+  border-bottom: 1px solid #dedede;
 }
 .mega-box{
   position: absolute;

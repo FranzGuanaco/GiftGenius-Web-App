@@ -10,6 +10,7 @@ function MenuBar(props) {
 
   const { selectBrand } = useBrand(); // Utilisez selectBrand pour mettre à jour la marque sélectionnée
   const {selectedSeller} = useSeller();
+  const { selectSeller } = useSeller();
 
   const BrandFilter = async (brand) => {
     try {
@@ -23,13 +24,14 @@ function MenuBar(props) {
 
    const SellerFilter = async (seller) => {
     try {
-       console.log(`voila le resultat du vendeur ${seller}`);
-       selectedSeller(seller);
-     }
-     catch{
-       console.error(`Le filtre seller n'a pas fonctionné`);
-     }
-   }
+      console.log(`voila le resultat du vendeur ${seller} sur menubar`);
+      selectSeller(seller); // Corrigé pour utiliser la fonction de mise à jour
+    }
+    catch (error) {
+      console.error(`Le filtre seller n'a pas fonctionné sur menubar`, error);
+    }
+  };
+  
 
   useEffect(() => {
     const fetchData = async () => {
