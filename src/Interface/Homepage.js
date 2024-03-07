@@ -10,7 +10,6 @@ import { auth } from '../Firebase';
 export default function Homepage(props) {
   const [products, setProducts] = useState([]);
   const [NumberOfProd, setNumberOfProd] = useState('aucun résultat trouvé')
-
   const { selectedBrand } = useBrand();
   const {selectedSeller} = useSeller();
 
@@ -21,18 +20,15 @@ useEffect(() => {
     let queryParams = [];
     if (selectedBrand) {
       queryParams.push(`brand_name=${encodeURIComponent(selectedBrand)}`);
-   
     }
     if (selectedSeller) {
       queryParams.push(`seller_name=${encodeURIComponent(selectedSeller)}`);
-      
     }
 
     let url = 'http://localhost:3001/api/products'; // URL par défaut
     if (queryParams.length > 0) {
       const baseApiUrl = selectedSeller && selectedBrand ? '/api/Filtre/vendeur/marque' : selectedSeller ? '/api/Filtrevendeur' : '/api/Filtremarque';
-      url = `http://localhost:3001${baseApiUrl}?${queryParams.join('&')}`;
-      
+      url = `http://localhost:3001${baseApiUrl}?${queryParams.join('&')}`;     
     }
 
     try {
@@ -87,21 +83,23 @@ useEffect(() => {
     <h3>Le nombre total d'article est {NumberOfProd[0].total_product_count}</h3>
   )
 }
-
-
       </div>
       <div className="MenuStyle">
       {
       // La prop 'name' sera utilisée pour afficher le nom de chaque catégorie
 }
+
 {
   products.map((category, index) => (
     <div key={index} className="MenuStyle">
       <CategoryBox category={category.category} />
+      <div className="productGrid">
+     
       {category.name.map((productName, productIndex) => {
         const productSeller = category.seller[productIndex];
         const productLink = category.link[productIndex];
         return (
+          <div class="grid-item">
           <ProductBox
             key={`${index}-${productIndex}`} // Clé unique améliorée
             display={true}
@@ -110,14 +108,15 @@ useEffect(() => {
             Link={productLink} // Correction pour passer le lien correctement
             ClickLink={() => goToProductLink(productLink)} // Supposition de la fonction goToProductLink
           />
+           </div>
         );
       })}
     </div>
-  ))
-}
+   
+    </div>
+  ))} 
+  </div>
 
-      
-      </div>
       <div className="QuizButtonContainer" id="Quiz">
         <QuizButton />
       </div>
