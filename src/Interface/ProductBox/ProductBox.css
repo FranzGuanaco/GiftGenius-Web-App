@@ -24,30 +24,20 @@
   
   .DescriptionStyle {
     font-size: 13px;
-    width: 100%; /* même largeur que le carré */
+    width: 90%; /* même largeur que le carré */
     display: flex;
-    align-items: center;
+    flex-direction: column; /* Modifie l'axe principal pour être vertical */
     border: 1px solid red; /* bordure solide rouge */
-    bottom: 0;
   }
-
-
-
-  @media (max-width: 600px) {
- 
-   .DescriptionStyle {
-      font-size: 10px;
-      width: 200px; /* ajustez la largeur pour les écrans plus petits */
-    }
+  .DescriptionStyle p:first-child {
+    margin-bottom: 1px; /* Ajustez cette valeur pour l'espacement désiré */
   }
-
-  @media (max-width: 400px) {
-    .square {
-      width: 160px; /* Adjust the width as needed */
-      height: 160px; /* Adjust the height as needed */
-      /* Add any additional styles you want to change for smaller screens */
-    }
-    .DescriptionStyle {
-      width: 160px; /* ajustez la largeur pour les écrans encore plus petits */
-    }
+  
+  /* Ou, pour ajouter de l'espace au-dessus du second paragraphe */
+  .DescriptionStyle p:last-child {
+    margin-top: 1px; /* Ajustez cette valeur pour l'espacement désiré */
   }
+    
+
+
+

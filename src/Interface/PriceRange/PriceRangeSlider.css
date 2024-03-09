@@ -1,10 +1,11 @@
 /* Import Google Font - Poppins */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 .PriceRangeSlider-container {
-    margin: 0;
+    margin: 10%;
     padding: 0;
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
+   
   }
   
 
@@ -27,7 +28,7 @@
   /* Responsive adjustments */
   @media (max-width: 768px) {
     .wrapperRangePrice {
-      padding: 15px 20px; /* Réduisez le padding sur les petits écrans */
+      
     }
     .price-input, .price-input .field, .price-input .separator {
       flex-direction: column; /* Empilez les éléments verticalement */

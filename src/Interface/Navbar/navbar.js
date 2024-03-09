@@ -59,7 +59,7 @@ function Navbar(props) {
     <>
     <nav className="navbar" style={{top: '0', zIndex: '100' }}>
       <div className="Logo" style={{ paddingLeft: '10%' }}>
-        <img src={GiftGeniusLogo} alt="Accueil" style={{ width: '90px', position: 'relative', top: '1%' }} onClick={goToHomepage}/>
+        <img src={GiftGeniusLogo} alt="Accueil" className="logo-img" onClick={goToHomepage}/>
       </div>
       
       <div className="navbar-center">

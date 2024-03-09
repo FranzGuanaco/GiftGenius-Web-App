@@ -12,7 +12,10 @@ const ProductBox = ({ imageUrl, productName, shortDescription, display, Link, Cl
        {/* afficher le nom et la description */}
       {display && (
       <div className="DescriptionStyle">
-        <p>{productName} {shortDescription}</p>
+        <p>{productName}</p> 
+        
+        <p>{shortDescription}</p>
+
       </div>
        )}
        {/* afficher le nom du vendeur */}

@@ -7,6 +7,8 @@ const QuizButton = () => {
 
   const navigate = useNavigate();
 
+  
+
   const goToQuiz = () => {
     navigate('/quiz')
     console.log('test')

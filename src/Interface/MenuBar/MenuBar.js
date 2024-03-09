@@ -77,7 +77,7 @@ function MenuBar(props) {
               <a href="#" className="desktop-item">Prix</a>
                 <input type="checkbox" id="showDrop" className='input'/>
                 <label htmlFor="showDrop" className="mobile-item">Dropdown Menu</label>
-                <ul className="drop-menu">
+                <ul className="drop-menu-price">
                   <PriceRangeSlider/>
                   
                 </ul>
