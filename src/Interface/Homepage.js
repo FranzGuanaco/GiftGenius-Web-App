@@ -44,11 +44,11 @@ useEffect(() => {
       console.error("Erreur lors de la récupération des données:", error);
     }
   };
-
   fetchData();
 }, [selectedBrand, selectedSeller]); // Exécutez l'effet chaque fois que `selectedBrand` change
 
-  
+
+  // message en console pour savoir si le user est connecté
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
@@ -60,6 +60,7 @@ useEffect(() => {
     return () => unsubscribe();
   }, []);
   
+
   const navigate = useNavigate();
   const goToCategoryDetails = (productSeller) => {
     navigate('/product details', { state: { message: productSeller } });
@@ -71,12 +72,18 @@ useEffect(() => {
       window.location.href = link; // Pour naviguer directement
   };
   
+  // const pour reduire la taille des nom de produit et description trop longue
+  const formatProductName = (productInfo ) => {
+  if (productInfo.length > 30) {
+    return `${productInfo.substring(0, 30)} . . .`;
+  }
+  return productInfo;
+};
 
   return (
     <div className="App" style={{ flexDirection: 'column' }}>
       <Navbar />
-      <div className="NumberofProd" style={{marginTop: '18vh', color: "#B7B7B7", letterSpacing: "3px", fontWeight:"60", fontSize:"11px", textAlign:"center" }}>
-       
+      <div className="NumberofProd NumberofProdStyle">
       {
   // Vérification qu'il s'agit bien d'un tableau et qu'il n'est pas vide
   Array.isArray(NumberOfProd) && NumberOfProd.length > 0 && (
@@ -96,14 +103,18 @@ useEffect(() => {
       <div className="productGrid">
      
       {category.name.map((productName, productIndex) => {
+        const formattedProductName = formatProductName(productName);
         const productSeller = category.seller[productIndex];
         const productLink = category.link[productIndex];
+        const productDescription = category.desc[productIndex];
+        const formattedproductDescription = formatProductName(productDescription);
         return (
           <div class="grid-item">
           <ProductBox
             key={`${index}-${productIndex}`} // Clé unique améliorée
             display={true}
-            productName={productName}
+            productName={formattedProductName}
+            shortDescription={formattedproductDescription}
             onclick={() => goToCategoryDetails(productSeller)} // Supposition de la fonction goToCategoryDetails
             Link={productLink} // Correction pour passer le lien correctement
             ClickLink={() => goToProductLink(productLink)} // Supposition de la fonction goToProductLink

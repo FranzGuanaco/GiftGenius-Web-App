@@ -49,9 +49,26 @@ nav .wrapper{
 .wrapper .nav-links{
   display: inline-flex;
 }
-.nav-links li{
-  list-style: none;
+
+.nav-links li {
+  position: relative; /* Ajoute un contexte de positionnement pour le menu déroulant */
+  list-style-type: none;
+  /* Assurez-vous que le reste de votre style est préservé */
 }
+
+.nav-links .drop-menu,
+.nav-links .drop-menu-price {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%; /* S'assure que la largeur correspond à celle du `li` parent */
+  box-shadow: 0 6px 10px rgba(0,0,0,0.25);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.1s ease;
+  /* Votre style existant reste inchangé */
+}
+
 .nav-links li a{
   color: #1f1e1e;
   text-decoration: none;
@@ -70,7 +87,6 @@ nav .wrapper{
 .nav-links .drop-menu{
   position: absolute;
   background: #ffffff;
-  width: 18%;
   line-height: 35px;
   top: 85px;
   opacity: 0;
@@ -92,18 +108,19 @@ nav .wrapper{
   border-radius: 0px;
 }
 
-.drop-menu li a{
-  width: 100%;
+.drop-menu li a, .drop-menu-price li a {
+  text-align: left;
+  padding-right: 10px; /* Ajustez selon le besoin pour l'espacement */
   display: block;
-  font-weight: 400;
-  border-radius: 0px;
+  width: 100%;
+  box-sizing: border-box; /* Assure que le padding et border sont inclus dans la largeur */
   border-bottom: 1px solid #dedede;
 }
 
 .nav-links .drop-menu-price{
   position: absolute;
   background: #ffffff;
-  width: 18%;
+
   line-height: 35px;
   top: 85px;
   opacity: 0;

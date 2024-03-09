@@ -27,8 +27,9 @@
     width: 90%; /* même largeur que le carré */
     display: flex;
     flex-direction: column; /* Modifie l'axe principal pour être vertical */
-    border: 1px solid red; /* bordure solide rouge */
+
   }
+
   .DescriptionStyle p:first-child {
     margin-bottom: 1px; /* Ajustez cette valeur pour l'espacement désiré */
   }
@@ -38,6 +39,42 @@
     margin-top: 1px; /* Ajustez cette valeur pour l'espacement désiré */
   }
     
+  @media screen and (max-width: 1300px) {
+    .DescriptionStyle {
+      font-size: 10px;
+      width: 90%; /* même largeur que le carré */
+      display: flex;
+      flex-direction: column; /* Modifie l'axe principal pour être vertical */
+  
+    }
+  }
 
+  @media screen and (max-width: 1050px) {
+    .DescriptionStyle {
+      font-size: 9px;
+      width: 90%; /* même largeur que le carré */
+      display: flex;
+      flex-direction: column; /* Modifie l'axe principal pour être vertical */
 
+    }
+  }
 
+  @media screen and (max-width: 850px) {
+    .DescriptionStyle {
+      font-size: 10px;
+      width: 90%; /* même largeur que le carré */
+      display: flex;
+      flex-direction: column; /* Modifie l'axe principal pour être vertical */
+
+    }
+  }
+
+  @media screen and (max-width: 550px) {
+    .DescriptionStyle {
+      font-size: 7px;
+      width: 90%; /* même largeur que le carré */
+      display: flex;
+      flex-direction: column; /* Modifie l'axe principal pour être vertical */
+ 
+    }
+  }
