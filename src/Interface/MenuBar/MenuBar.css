@@ -21,6 +21,7 @@
   padding: 0;
   font-family: 'Poppins', sans-serif;
 }
+
 nav{
   position: fixed;
   z-index: 99;
@@ -69,7 +70,7 @@ nav .wrapper{
   /* Votre style existant reste inchangé */
 }
 
-.nav-links li a{
+.nav-links li a {
   color: #1f1e1e;
   text-decoration: none;
   font-size: 14px;
@@ -78,12 +79,15 @@ nav .wrapper{
   border-radius: 5px;
   transition: all 0.3s ease;
 }
+
 .nav-links li a:hover{
   background: #dfdfdf;
 }
+
 .nav-links .mobile-item{
   display: none;
 }
+
 .nav-links .drop-menu{
   position: absolute;
   background: #ffffff;
@@ -110,23 +114,36 @@ nav .wrapper{
 
 .drop-menu li a, .drop-menu-price li a {
   text-align: left;
-  padding-right: 10px; /* Ajustez selon le besoin pour l'espacement */
   display: block;
   width: 100%;
-  box-sizing: border-box; /* Assure que le padding et border sont inclus dans la largeur */
   border-bottom: 1px solid #dedede;
 }
 
 .nav-links .drop-menu-price{
   position: absolute;
   background: #ffffff;
-
   line-height: 35px;
   top: 85px;
   opacity: 0;
   visibility: hidden;
   box-shadow: 0 6px 10px rgba(0,0,0,0.25);
 }
+
+.nav-links .drop-menu, .nav-links .drop-menu-price {
+  width: calc(100% - 2px); /* Ajustez en fonction des bordures/paddings */
+  box-sizing: border-box; /* Inclut padding et bordure dans la largeur */
+}
+
+.drop-menu li a, .drop-menu-price li a {
+  box-sizing: border-box; /* Assure que le padding et la bordure sont inclus dans la largeur de 100% */
+  width: 100%; 
+
+
+
+/* S'assure que les liens prennent toute la largeur */
+  /* Gardez le reste de vos styles ici */
+}
+
 
 .nav-links li:hover .drop-menu-price,
 .nav-links li:hover .mega-box{
@@ -295,3 +312,4 @@ nav .wrapper{
   .nav-links li a{
     font-size: 10px;
 }}
+

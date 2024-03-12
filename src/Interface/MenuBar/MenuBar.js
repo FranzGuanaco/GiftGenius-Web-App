@@ -65,6 +65,7 @@ function MenuBar(props) {
       <div className="accordion" style={{ width: props.width, zIndex: 2 }}>
         <div className="accordion-item">
         <nav>
+        
           <div className="wrapper">
             <input type="radio" name="slider" id="menu-btn" className='input'/>
             <input type="radio" name="slider" id="close-btn" className='input'/>
