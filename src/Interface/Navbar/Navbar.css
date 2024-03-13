@@ -30,9 +30,6 @@
     overflow: hidden;
   }
   
-  li {
-    float: right;
-  }
   
   .closebtn {
     display: block;

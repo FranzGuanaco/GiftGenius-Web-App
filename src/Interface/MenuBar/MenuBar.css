@@ -84,7 +84,7 @@ nav .wrapper{
   background: #dfdfdf;
 }
 
-.nav-links .mobile-item{
+.mobile-item{
   display: none;
 }
 
@@ -136,12 +136,10 @@ nav .wrapper{
 
 .drop-menu li a, .drop-menu-price li a {
   box-sizing: border-box; /* Assure que le padding et la bordure sont inclus dans la largeur de 100% */
-  width: 100%; 
-
-
-
-/* S'assure que les liens prennent toute la largeur */
-  /* Gardez le reste de vos styles ici */
+  width: 100%;
+  padding: 10px 15px; /* Ajuste l'espace intérieur; ajustez selon les besoins */
+  text-align: left; /* Alignement du texte à gauche */
+  /* Les autres styles restent inchangés */
 }
 
 

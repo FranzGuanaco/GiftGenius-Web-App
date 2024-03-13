@@ -124,23 +124,36 @@ function Navbar(props) {
         <span className="arrow"></span>
       </div>
       <div class="checkbox-wrapper-1">
-  <input id="example-1" class="substituted" type="checkbox" aria-hidden="true" />
-  <label for="example-1">Checkbox</label>
-</div>
-
+      <input id="example-1" class="substituted" type="checkbox" aria-hidden="true" />
+      <label for="example-1">Categorie</label>
+      </div>
     </label>
     <div className="submenu">
       <div className="submenu-item">
-      <div class="checkbox-wrapper-1">
-  <input id="example-1" class="substituted" type="checkbox" aria-hidden="true" />
-  <label for="example-1">Checkbox</label>
+        <div className="checkbox-wrapper-1">
+          <input id="example-1" className="substituted" type="checkbox" aria-hidden="true" />
+          <label htmlFor="example-1"> Sous Categorie</label>
+        </div>
+      </div>
+      <div className="submenu-item">
+        <div className="checkbox-wrapper-1">
+          <input id="example-2" className="substituted" type="checkbox" aria-hidden="true" />
+          <label htmlFor="example-2">Sous Sous cat</label>
+        </div>
+        <div className="sub-submenu">
+          <div className="sub-submenu-item">
+            {/* Assurez-vous que l'ID est unique pour éviter les conflits */}
+            <div className="checkbox-wrapper-1">
+              <input id="example-3" className="substituted" type="checkbox" aria-hidden="true" />
+              <label htmlFor="example-3">Soussous cat</label>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  </div>
-  </div>
 </div>
 </div>
-
 
   {/* Ajoutez plus d'éléments de menu ici */}
  

@@ -212,7 +212,7 @@ justify-content: center;
   display: inline-flex; /* Utilisez flex pour aligner les éléments intérieurs */
   align-items: center; /* Centre les éléments verticalement */
   padding: 5px; /* Ajoute un peu d'espace autour des éléments intérieurs */
-  margin-right: 10px; /* Espace à droite du conteneur */
+  
 }
 
 .checkbox-wrapper-1 [type=checkbox].substituted {
@@ -268,7 +268,7 @@ justify-content: center;
 }
 
 .checkbox-wrapper-1 [type=checkbox].substituted.dark + label:before {
-  color: rgba(219, 39, 39, 0.275);
+  color: rgba(7, 7, 7, 0.275);
   background-color: #222;
   background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xml:space="preserve" fill="rgba(34, 34, 34, 0.999)" viewBox="0 0 9 9"><rect x="0" y="4.3" transform="matrix(-0.707 -0.7072 0.7072 -0.707 0.5891 10.4702)" width="4.3" height="1.6" /><rect x="2.2" y="2.9" transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 12.1877 2.9833)" width="6.1" height="1.7" /></svg>');
 }
@@ -295,10 +295,9 @@ justify-content: center;
 }
 
 .checkbox-wrapper-2 {
-  display: inline-flex; /* Utilisez flex pour aligner les éléments intérieurs */
   align-items: center; /* Centre les éléments verticalement */
   padding: 5px 30px; /* Ajoute un peu d'espace autour des éléments intérieurs */
-  margin-right: 20px; /* Espace à droite du conteneur ajusté à 20px */
+ 
 }
 
 .checkbox-wrapper-2 [type=checkbox].substituted {
@@ -330,6 +329,7 @@ justify-content: center;
 }
 
 
+
 .label {
   display: flex;
   align-items: center;
@@ -349,7 +349,7 @@ justify-content: center;
   height: 10px;
   border-right: 2px solid #333;
   border-bottom: 2px solid #333;
-  transform: rotate(45deg);
+  transform: rotate(225deg);
   transition: transform 0.3s ease;
 }
 
@@ -370,7 +370,7 @@ justify-content: center;
 }
 
 .toggle:checked + .label .arrow {
-  transform: rotate(225deg);
+  transform: rotate(45deg);
 }
 
 .submenu {
@@ -386,6 +386,18 @@ justify-content: center;
   border-top: 1px solid #eee;
 }
 
+.sub-submenu {
+  background: #a11616;
+  padding-left: 20px;
+  display: none;
+}
+
+.sub-submenu-item {
+  display: flex;
+  align-items: center;
+  padding: 45px 180px;
+  border-top: 1px solid #d40a0a;
+}
 
 .textSubmenu{
   padding: 5px 10px;
