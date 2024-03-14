@@ -1,4 +1,4 @@
-import {React, useState} from 'react';
+import {React, useState, useEffect} from 'react';
 import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
 import account_icon from './account_icon.png'
 import category_icon from './category_icon.png'
@@ -15,6 +15,7 @@ import { auth } from '../../Firebase';
 function Navbar(props) {
 
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [Category, setCategory] = useState([]);
 
   const openNav = () => {
   
@@ -52,6 +53,20 @@ function Navbar(props) {
     });
    return () => unsubscribe();
   };
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/api/category/subcategory/subsubcategory');
+        const data = await response.json();
+        setCategory(data); // Stockez les données des marques dans l'état
+      } catch (error) {
+        console.error("Erreur lors de la récupération des données:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
 
 
@@ -118,46 +133,44 @@ function Navbar(props) {
   </div>
   <div className="menu">
   <div className="Navbar-menu-item">
+    {/* Catégorie principale */}
     <input type="checkbox" id="appliances-toggle" className="toggle substituted" aria-hidden="true" />
     <label htmlFor="appliances-toggle" className="label">
-      <div className="arrow-container">
-        <span className="arrow"></span>
-      </div>
-      <div class="checkbox-wrapper-1">
-      <input id="example-1" class="substituted" type="checkbox" aria-hidden="true" />
-      <label for="example-1">Categorie</label>
-      </div>
+      <div className="arrow-container"><span className="arrow"></span></div>
+      <div className="checkbox-wrapper-1">
+            <input id="example-3" className="substituted" type="checkbox" aria-hidden="true" />
+            <label htmlFor="example-3">Sous Sous cat</label>
+            </div>
     </label>
     <div className="submenu">
+      {/* Sous-catégorie */}
+      <input type="checkbox" id="subcat-toggle" className="toggle substituted" aria-hidden="true" />
+      <label htmlFor="subcat-toggle" className="label">
       <div className="submenu-item">
+      <div className="arrow-container"><span className="arrow"></span></div>
         <div className="checkbox-wrapper-1">
           <input id="example-1" className="substituted" type="checkbox" aria-hidden="true" />
           <label htmlFor="example-1"> Sous Categorie</label>
         </div>
       </div>
-      <div className="submenu-item">
+      </label>
+      <div className="submenu">
+        {/* Sous-sous-catégorie */}
+        <input type="checkbox" id="subcat-toggle" className="toggle substituted" aria-hidden="true" />
+      <label htmlFor="subcat-toggle" className="label">
+      <div className="sub-submenu-item">
         <div className="checkbox-wrapper-1">
           <input id="example-2" className="substituted" type="checkbox" aria-hidden="true" />
-          <label htmlFor="example-2">Sous Sous cat</label>
-        </div>
-        <div className="sub-submenu">
-          <div className="sub-submenu-item">
-            {/* Assurez-vous que l'ID est unique pour éviter les conflits */}
-            <div className="checkbox-wrapper-1">
-              <input id="example-3" className="substituted" type="checkbox" aria-hidden="true" />
-              <label htmlFor="example-3">Soussous cat</label>
-            </div>
-          </div>
+          <label htmlFor="example-2"> Sous Categorie</label>
         </div>
       </div>
+      </label>
+    </div> 
     </div>
   </div>
 </div>
 </div>
-
   {/* Ajoutez plus d'éléments de menu ici */}
- 
-
     </>
   );
 }

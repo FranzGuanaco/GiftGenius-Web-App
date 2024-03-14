@@ -382,7 +382,6 @@ justify-content: center;
 .submenu-item {
   display: flex;
   align-items: center;
-  padding: 5px 80px;
   border-top: 1px solid #eee;
 }
 
@@ -395,8 +394,8 @@ justify-content: center;
 .sub-submenu-item {
   display: flex;
   align-items: center;
-  padding: 45px 180px;
-  border-top: 1px solid #d40a0a;
+  padding: 0px 50px;
+
 }
 
 .textSubmenu{
