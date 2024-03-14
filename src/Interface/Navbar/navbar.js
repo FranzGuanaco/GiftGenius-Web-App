@@ -127,53 +127,66 @@ function Navbar(props) {
       <a href="#" className="closebtn" onClick={closeNav} style={{ textDecoration: 'none', color: 'inherit' }}>
         &times; {/* Close button */}
       </a>
+      <div style={{ marginBottom: '20px' }}>
       <h4 style={{ margin: '0', color:'##1b1b1b'}}>Catégories de cadeaux</h4>
+      </div>
     </div>
     {/* Additional content here */}
   </div>
   <div className="menu">
-  <div className="Navbar-menu-item">
-    {/* Catégorie principale */}
-    <input type="checkbox" id="appliances-toggle" className="toggle substituted" aria-hidden="true" />
-    <label htmlFor="appliances-toggle" className="label">
-      <div className="arrow-container"><span className="arrow"></span></div>
-      <div className="checkbox-wrapper-1">
-            <input id="example-3" className="substituted" type="checkbox" aria-hidden="true" />
-            <label htmlFor="example-3">Sous Sous cat</label>
-            </div>
-    </label>
-    <div className="submenu">
-      {/* Sous-catégorie */}
-      <input type="checkbox" id="subcat-toggle" className="toggle substituted" aria-hidden="true" />
-      <label htmlFor="subcat-toggle" className="label">
-      <div className="submenu-item">
-      <div className="arrow-container"><span className="arrow"></span></div>
-        <div className="checkbox-wrapper-1">
-          <input id="example-1" className="substituted" type="checkbox" aria-hidden="true" />
-          <label htmlFor="example-1"> Sous Categorie</label>
+  {Category.map((category, catIndex) => (
+    <div key={`category-${catIndex}`} className="Navbar-menu-item">
+      <div className="Navbar-menu-item">
+        <input type="checkbox" id={`category-toggle-${catIndex}`} className="toggle substituted" aria-hidden="true" />
+        <label htmlFor={`category-toggle-${catIndex}`} className="label">
+          <div className="arrow-container"><span className="arrow"></span></div>
+          <div className="checkbox-wrapper-1">
+            <input id={`cat-checkbox-${catIndex}`} className="substituted" type="checkbox" aria-hidden="true" />
+            <label htmlFor={`cat-checkbox-${catIndex}`}>{category.category}</label>
+          </div>
+        </label>
+        <div className="submenu">
+          {category.subcategory.map((subcategory, subIndex) => (
+            <div key={`subcategory-${catIndex}-${subIndex}`} className="Navbar-submenu-item">
+              <input type="checkbox" id={`subcat-toggle-${catIndex}-${subIndex}`} className="toggle substituted" aria-hidden="true" />
+              <label htmlFor={`subcat-toggle-${catIndex}-${subIndex}`} className="label">
+                <div className="submenu-item">
+                  <div className="arrow-container"><span className="arrow"></span></div>
+                  <div className="checkbox-wrapper-1">
+                    <input id={`subcat-checkbox-${catIndex}-${subIndex}`} className="substituted" type="checkbox" aria-hidden="true" />
+                    <label htmlFor={`subcat-checkbox-${catIndex}-${subIndex}`}>{subcategory}</label>
+                  </div>
+                </div>
+              </label>
+              <div className="submenu">
+                {category.subsubcategory.map((subsubcategory, subsubIndex) => (
+                  <div key={`subsubcategory-${catIndex}-${subIndex}-${subsubIndex}`} className="Navbar-subsubmenu-item">
+                    <input type="checkbox" id={`subsubcat-toggle-${catIndex}-${subIndex}-${subsubIndex}`} className="toggle substituted" aria-hidden="true" />
+                    <label htmlFor={`subsubcat-toggle-${catIndex}-${subIndex}-${subsubIndex}`} className="label">
+                      <div className="sub-submenu-item">
+                        <div className="checkbox-wrapper-1">
+                          <input id={`subsubcat-checkbox-${catIndex}-${subIndex}-${subsubIndex}`} className="substituted" type="checkbox" aria-hidden="true" />
+                          <label htmlFor={`subsubcat-checkbox-${catIndex}-${subIndex}-${subsubIndex}`}>{subsubcategory}</label>
+                        </div>
+                      </div>
+                      </label>
+                    </div> 
+                     ))}
+                  </div> 
+                </div>
+                ))}
+             </div>
+          </div>
         </div>
-      </div>
-      </label>
-      <div className="submenu">
-        {/* Sous-sous-catégorie */}
-        <input type="checkbox" id="subcat-toggle" className="toggle substituted" aria-hidden="true" />
-      <label htmlFor="subcat-toggle" className="label">
-      <div className="sub-submenu-item">
-        <div className="checkbox-wrapper-1">
-          <input id="example-2" className="substituted" type="checkbox" aria-hidden="true" />
-          <label htmlFor="example-2"> Sous Categorie</label>
-        </div>
-      </div>
-      </label>
-    </div> 
+        ))}
     </div>
-  </div>
 </div>
-</div>
-  {/* Ajoutez plus d'éléments de menu ici */}
+
+
     </>
   );
 }
+
 
 
 
