@@ -3,7 +3,7 @@ import Navbar from './Navbar/navbar';
 import CategoryBox from './Category/Category';
 import QuizButton from './QuizElement/QuizButton';
 import ProductBox from './ProductBox/ProductBox';
-import { useBrand, useSeller } from './BrandContext';
+import { useBrand, useSeller, useCategory } from './BrandContext';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../Firebase';
 
@@ -12,6 +12,7 @@ export default function Homepage(props) {
   const [NumberOfProd, setNumberOfProd] = useState('aucun résultat trouvé')
   const { selectedBrand } = useBrand();
   const {selectedSeller} = useSeller();
+  const {selectedCategory} = useCategory();
 
   // lancer le filtre avec le context de la menubar
   // lancer le filtre avec le context de la menubar
@@ -47,6 +48,21 @@ useEffect(() => {
   fetchData();
 }, [selectedBrand, selectedSeller]); // Exécutez l'effet chaque fois que `selectedBrand` change
 
+
+useEffect(() => {
+  const fetchCatData = async () => {
+    if(selectedCategory){
+      
+    try {
+    
+    
+      console.log(`voila selctcat ${selectedCategory}`)
+    } catch (error) {
+      console.error("Erreur lors de la récupération des données:", error);
+    }
+  }};
+  fetchCatData();
+}, [selectedCategory]);
 
   // message en console pour savoir si le user est connecté
   useEffect(() => {

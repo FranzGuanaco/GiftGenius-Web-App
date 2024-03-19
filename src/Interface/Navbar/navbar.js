@@ -1,5 +1,6 @@
 import {React, useState, useEffect} from 'react';
 import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
+import { useCategory } from '../BrandContext';
 import account_icon from './account_icon.png'
 import category_icon from './category_icon.png'
 import favorite_icon from './favorite_icon.png'
@@ -16,13 +17,13 @@ function Navbar(props) {
 
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [Category, setCategory] = useState([]);
+  const [CategoryFilter, setCategoryFilter] = useState([]);
+  const { selectCategory } = useCategory();
 
   const openNav = () => {
-  
       setIsNavOpen(currentState => !currentState);
     };
     
-
   const closeNav = () => {
     setIsNavOpen(false);
   };
@@ -69,6 +70,16 @@ function Navbar(props) {
   }, []);
 
 
+  const handleCheckboxChange = async (catIndex, category) => {
+    try {
+       console.log(`la categorie a été coché sont index est :${catIndex} et sa categorie:${category}`);
+       selectCategory(category);
+     }
+     catch{
+       console.error(`Le filtre brand n'a pas fonctionné`);
+     }
+   }
+  
 
   return (
     <>
@@ -137,8 +148,16 @@ function Navbar(props) {
   {Category.map((category, catIndex) => (
     <div key={`category-${catIndex}`} className="Navbar-menu-item">
       <div className="Navbar-menu-item">
-        <input type="checkbox" id={`category-toggle-${catIndex}`} className="toggle substituted" aria-hidden="true" />
-        <label htmlFor={`category-toggle-${catIndex}`} className="label">
+        <input type="checkbox" id={`category-toggle-${catIndex}`} className="toggle substituted" 
+        aria-hidden="true" 
+        onChange={() => handleCheckboxChange(catIndex, category.category)}/>
+
+        {/* Actionnement du filtre */}
+        <label 
+        htmlFor={`category-toggle-${catIndex}`} 
+        className="label" 
+        >
+
           <div className="arrow-container"><span className="arrow"></span></div>
           <div className="checkbox-wrapper-1">
             <input id={`cat-checkbox-${catIndex}`} className="substituted" type="checkbox" aria-hidden="true" />
