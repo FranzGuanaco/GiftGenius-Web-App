@@ -25,7 +25,9 @@ useEffect(() => {
     if (selectedSeller) {
       queryParams.push(`seller_name=${encodeURIComponent(selectedSeller)}`);
     }
-
+    if (selectedCategory){
+      console.log('Category currently selected:', selectedCategory)
+    }
     let url = 'http://localhost:3001/api/products'; // URL par défaut
     if (queryParams.length > 0) {
       const baseApiUrl = selectedSeller && selectedBrand ? '/api/Filtre/vendeur/marque' : selectedSeller ? '/api/Filtrevendeur' : '/api/Filtremarque';
@@ -46,23 +48,9 @@ useEffect(() => {
     }
   };
   fetchData();
-}, [selectedBrand, selectedSeller]); // Exécutez l'effet chaque fois que `selectedBrand` change
+}, [selectedBrand, selectedSeller, selectedCategory]); // Exécutez l'effet chaque fois que `selectedBrand` change
 
 
-useEffect(() => {
-  const fetchCatData = async () => {
-    if(selectedCategory){
-      
-    try {
-    
-    
-      console.log(`voila selctcat ${selectedCategory}`)
-    } catch (error) {
-      console.error("Erreur lors de la récupération des données:", error);
-    }
-  }};
-  fetchCatData();
-}, [selectedCategory]);
 
   // message en console pour savoir si le user est connecté
   useEffect(() => {
@@ -95,6 +83,7 @@ useEffect(() => {
   }
   return productInfo;
 };
+
 
   return (
     <div className="App" style={{ flexDirection: 'column' }}>
@@ -139,15 +128,12 @@ useEffect(() => {
         );
       })}
     </div>
-   
     </div>
   ))} 
   </div>
-
       <div className="QuizButtonContainer" id="Quiz">
         <QuizButton />
       </div>
-
     </div>
   );
 }

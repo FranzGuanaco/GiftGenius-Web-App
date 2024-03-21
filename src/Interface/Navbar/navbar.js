@@ -19,6 +19,7 @@ function Navbar(props) {
   const [Category, setCategory] = useState([]);
   const [CategoryFilter, setCategoryFilter] = useState([]);
   const { selectCategory } = useCategory();
+  const { deselectCategory } = useCategory();
 
   const openNav = () => {
       setIsNavOpen(currentState => !currentState);
@@ -27,7 +28,6 @@ function Navbar(props) {
   const closeNav = () => {
     setIsNavOpen(false);
   };
-
 
   const navigate = useNavigate();
 
@@ -70,15 +70,25 @@ function Navbar(props) {
   }, []);
 
 
-  const handleCheckboxChange = async (catIndex, category) => {
+  const handleCheckboxChange = async (catIndex, category, event) => {
+    const isChecked = event.target.checked;
+    console.log(`La catégorie ${category} a été ${isChecked ? 'cochée' : 'décochée'}. Son index est : ${catIndex}`);
     try {
-       console.log(`la categorie a été coché sont index est :${catIndex} et sa categorie:${category}`);
-       selectCategory(category);
-     }
-     catch{
-       console.error(`Le filtre brand n'a pas fonctionné`);
-     }
-   }
+      if (isChecked) {
+        // Ici, la logique spécifique lorsque la case est cochée
+        console.log('Ajout de la catégorie:', category);
+        selectCategory(category);
+
+      } else {
+        // Ici, la logique spécifique lorsque la case est décochée
+        console.log('Suppression de la catégorie:', category);
+        deselectCategory(category);
+    
+      }
+    } catch {
+      console.error(`Le filtre brand n'a pas fonctionné`);
+    }
+  };
   
 
   return (
@@ -145,17 +155,18 @@ function Navbar(props) {
     {/* Additional content here */}
   </div>
   <div className="menu">
+    
   {Category.map((category, catIndex) => (
     <div key={`category-${catIndex}`} className="Navbar-menu-item">
       <div className="Navbar-menu-item">
-        <input type="checkbox" id={`category-toggle-${catIndex}`} className="toggle substituted" 
-        aria-hidden="true" 
-        onChange={() => handleCheckboxChange(catIndex, category.category)}/>
+        <input type="checkbox" id={`category-toggle-${catIndex}`} className="toggle substituted" />
 
         {/* Actionnement du filtre */}
         <label 
         htmlFor={`category-toggle-${catIndex}`} 
         className="label" 
+        aria-hidden="true" 
+        onChange={(event) => handleCheckboxChange(catIndex, category.category, event)}
         >
 
           <div className="arrow-container"><span className="arrow"></span></div>
@@ -205,8 +216,6 @@ function Navbar(props) {
     </>
   );
 }
-
-
 
 
 Navbar.defaultProps = {
