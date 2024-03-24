@@ -23,7 +23,7 @@ function Login() {
                 // Les informations de l'utilisateur connecté
                 const user = result.user;
                 // ...
-                navigation('Home'); // Redirigez l'utilisateur où vous voulez après la connexion
+                navigation('/'); // Redirigez l'utilisateur où vous voulez après la connexion
             }).catch((error) => {
                 // Gérez les erreurs ici.
                 const errorCode = error.code;

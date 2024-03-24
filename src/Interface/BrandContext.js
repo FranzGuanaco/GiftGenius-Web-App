@@ -9,18 +9,33 @@ export const useSeller = () => useContext(SellerContext);
 export const useCategory = () => useContext(CategoryContext);
 
 export const BrandProvider = ({ children }) => {
-  const [selectedBrand, setSelectedBrand] = useState('');
-  const [selectedSeller, setSelectedSeller] = useState('');
+  const [selectedBrand, setSelectedBrand] = useState([]);
+  const [selectedSeller, setSelectedSeller] = useState([]);
   // Maintient seulement une liste pour les catégories sélectionnées
   const [selectedCategory, setSelectedCategory] = useState([]);
 
   const selectBrand = (brand) => {
-    setSelectedBrand(brand);
+    setSelectedBrand(prevBrand => {
+        if (!prevBrand.includes(brand)){
+          return [...prevBrand, brand]
+        }
+    });
   };
 
   const selectSeller = (seller) => {
-    setSelectedSeller(seller);
+    setSelectedSeller(prevSellers => {
+      // Vérifie si le vendeur est déjà dans le tableau pour éviter les doublons
+      if (!prevSellers.includes(seller)) {
+        return [...prevSellers, seller]; // Ajoute le vendeur au tableau existant
+      }
+      return prevSellers; // Retourne le tableau inchangé si le vendeur est déjà présent
+    });
   };
+
+  const deselectSeller = (seller) => {
+    setSelectedSeller(prevSellers => prevSellers.filter(s => s !== seller));
+  };
+  
 
   // Ajoute une catégorie à la liste si elle n'est pas déjà présente
   const selectCategory = (category) => {
@@ -36,7 +51,7 @@ export const BrandProvider = ({ children }) => {
 
   return (
     <BrandContext.Provider value={{ selectedBrand, selectBrand }}>
-      <SellerContext.Provider value={{ selectedSeller, selectSeller }}>
+      <SellerContext.Provider value={{ selectedSeller, selectSeller, deselectSeller }}>
         <CategoryContext.Provider value={{ selectedCategory, selectCategory, deselectCategory }}>
           {children}
         </CategoryContext.Provider>

@@ -7,32 +7,50 @@ import { useBrand, useSeller, useCategory } from './BrandContext';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../Firebase';
 
+// if selected nom du filtre coloré verfier plusieurs filtres
 export default function Homepage(props) {
   const [products, setProducts] = useState([]);
   const [NumberOfProd, setNumberOfProd] = useState('aucun résultat trouvé')
   const { selectedBrand } = useBrand();
   const {selectedSeller} = useSeller();
   const {selectedCategory} = useCategory();
+  const { deselectCategory } = useCategory();
+  const [marque, setMarque] = useState();
+  const [vendeur, setVendeur] = useState();
+  const [categorie, setCategorie] = useState();
 
-  // lancer le filtre avec le context de la menubar
+
   // lancer le filtre avec le context de la menubar
 useEffect(() => {
   const fetchData = async () => {
     let queryParams = [];
-    if (selectedBrand) {
+    if (selectedBrand.length > 0) {
+      console.log('Brand currently selected:', selectedBrand)
       queryParams.push(`brand_name=${encodeURIComponent(selectedBrand)}`);
+      setMarque(selectedBrand)
     }
-    if (selectedSeller) {
-      queryParams.push(`seller_name=${encodeURIComponent(selectedSeller)}`);
+    if (selectedSeller.length > 0) {
+      const sellersJoined = selectedSeller.join(',');
+      queryParams.push(`seller_name=${encodeURIComponent(sellersJoined)}`);
+    
+      setVendeur(selectedSeller);
+      console.log('Seller currently selected:', selectedSeller)
     }
-    if (selectedCategory){
-      console.log('Category currently selected:', selectedCategory)
+    if (selectedCategory.length > 0){
+      console.log('Categories currently selected:', selectedCategory)
+      queryParams.push(`category_name=${encodeURIComponent(selectedCategory)}`);
+      setCategorie(selectedCategory.length)
     }
     let url = 'http://localhost:3001/api/products'; // URL par défaut
     if (queryParams.length > 0) {
-      const baseApiUrl = selectedSeller && selectedBrand ? '/api/Filtre/vendeur/marque' : selectedSeller ? '/api/Filtrevendeur' : '/api/Filtremarque';
+      const baseApiUrl =  selectedSeller.length > 0 && selectedBrand.length > 0 && selectedCategory.length > 0 ? '/api/Filtre/vendeur/marque/categorie' : 
+                          selectedSeller.length > 0 && selectedBrand.length > 0 ? '/api/Filtre/vendeur/marque': 
+                          selectedSeller.length > 0 ? '/api/Filtrevendeur' : 
+                          selectedBrand.length > 0 ? '/api/Filtremarque': '/api/categoriesfilter'
       url = `http://localhost:3001${baseApiUrl}?${queryParams.join('&')}`;     
     }
+
+    console.log("URL utilisée pour la requête:", url);
 
     try {
       const response = await fetch(url);
@@ -96,6 +114,9 @@ useEffect(() => {
   )
 }
       </div>
+      <h3>marque {marque}</h3>
+      <h3>vendeur {vendeur}</h3>
+      <h3>categorie {categorie}</h3>
       <div className="MenuStyle">
       {
       // La prop 'name' sera utilisée pour afficher le nom de chaque catégorie

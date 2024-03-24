@@ -212,7 +212,6 @@ function Navbar(props) {
     </div>
 </div>
 
-
     </>
   );
 }
