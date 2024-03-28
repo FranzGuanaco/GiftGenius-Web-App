@@ -22,6 +22,10 @@ export const BrandProvider = ({ children }) => {
     });
   };
 
+  const deselectBrand = (brand) => {
+    setSelectedSeller(prevBrand => prevBrand.filter(s => s !== brand));
+  };
+
   const selectSeller = (seller) => {
     setSelectedSeller(prevSellers => {
       // Vérifie si le vendeur est déjà dans le tableau pour éviter les doublons
@@ -50,7 +54,7 @@ export const BrandProvider = ({ children }) => {
   };
 
   return (
-    <BrandContext.Provider value={{ selectedBrand, selectBrand }}>
+    <BrandContext.Provider value={{ selectedBrand, selectBrand, deselectBrand }}>
       <SellerContext.Provider value={{ selectedSeller, selectSeller, deselectSeller }}>
         <CategoryContext.Provider value={{ selectedCategory, selectCategory, deselectCategory }}>
           {children}

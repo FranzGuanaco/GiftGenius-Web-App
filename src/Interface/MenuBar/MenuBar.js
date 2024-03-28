@@ -7,10 +7,7 @@ function MenuBar(props) {
 
   const [Brand, setBrand] = useState([]);
   const [Seller, setSeller] = useState([]);
- 
-
   const { selectBrand } = useBrand(); // Utilisez selectBrand pour mettre à jour la marque sélectionnée
-  const {selectedSeller} = useSeller();
   const { selectSeller } = useSeller();
 
   const BrandFilter = async (brand) => {

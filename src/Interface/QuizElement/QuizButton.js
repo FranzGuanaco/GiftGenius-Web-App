@@ -15,11 +15,13 @@ const QuizButton = () => {
 };
 
   return (
+    
           <div className="circle-slice">
             <div className="flat-angle">
               <img src={questionnaire_icon} alt="Center" onClick={goToQuiz}/>
             </div>
           </div>
+          
       );
     };
 

@@ -16,32 +16,45 @@ const Quiz = ({ question }) => {
   };
 
   return (
-    <div className="App" style={{ display: 'flex', flexDirection: 'column' }}>
-      <Navbar width={"100%"} style={{ top: '0', zIndex: '2' }}></Navbar>
+    <div className="App" >
 
-
-    <div className="QuestionStyle" style={{ textAlign: 'center', marginTop: '8%' }}>
-        <h3>{question}</h3>
-      </div>
-
-      <div style={{ display: 'flex', alignItems: 'center', height: '80vh', marginLeft:"25%"}}>
-        <div style={{ border: '2px solid red', padding: '10px', width: '40%', height: '80%'}}>
-          <QuestionBox onClick={handleQuestionBoxClick}/>
-        
-
-        <div style={{ top: '100%', paddingLeft: "30%", zIndex: '1' }}>
-          <ProgressBar trigger={triggered} />
-          </div>
-          
+<Navbar width={"100%"} style={{ top: '0', zIndex: '2' }}></Navbar>
       
-        
-        </div>
-        </div>
-  
-     
-  
-
+<div className="Container" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+  <div className="QuestionStyle" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', marginTop: '10%' }}>
+    <div style={{ position: 'absolute', left: '30%' }}> 
+      <ButtonBack />
+    </div>
+    <div style={{ paddingLeft: '50px', textAlign: 'center' }}> 
+      <h3>{question}</h3>
+    </div>
   </div>
+
+
+      <div className="QuizStyle" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100vh'}}>
+      
+  <div className="QuizGrid" >
+    <div className="QuizItem">
+      <QuestionBox onClick={handleQuestionBoxClick}/>
+    </div>
+    <div className="QuizItem">
+      <QuestionBox onClick={handleQuestionBoxClick}/>
+    </div>
+    <div className="QuizItem">
+      <QuestionBox onClick={handleQuestionBoxClick}/>
+    </div>
+    <div className="QuizItem">
+      <QuestionBox onClick={handleQuestionBoxClick}/>
+    </div>
+  </div>
+
+  <div style={{ top: '60%', paddingLeft: "70%", zIndex: '1', position:'absolute' }}>
+    <ProgressBar trigger={triggered} />
+  </div>
+</div>
+</div>
+</div>
+
   
   );
   }  

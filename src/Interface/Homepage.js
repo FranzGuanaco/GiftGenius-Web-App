@@ -25,26 +25,30 @@ useEffect(() => {
   const fetchData = async () => {
     let queryParams = [];
     if (selectedBrand.length > 0) {
-      console.log('Brand currently selected:', selectedBrand)
-      queryParams.push(`brand_name=${encodeURIComponent(selectedBrand)}`);
+      const brandJoined = selectedBrand.join(',');
+      queryParams.push(`brand_name=${encodeURIComponent(brandJoined)}`);
       setMarque(selectedBrand)
+      console.log('Brand currently selected:', selectedBrand)
     }
     if (selectedSeller.length > 0) {
       const sellersJoined = selectedSeller.join(',');
       queryParams.push(`seller_name=${encodeURIComponent(sellersJoined)}`);
-    
       setVendeur(selectedSeller);
       console.log('Seller currently selected:', selectedSeller)
     }
     if (selectedCategory.length > 0){
+      const categoryJoined = selectedCategory.join(',');
+      queryParams.push(`category_name=${encodeURIComponent(categoryJoined)}`);
+      setCategorie(selectedCategory)
       console.log('Categories currently selected:', selectedCategory)
-      queryParams.push(`category_name=${encodeURIComponent(selectedCategory)}`);
-      setCategorie(selectedCategory.length)
+      
     }
     let url = 'http://localhost:3001/api/products'; // URL par défaut
     if (queryParams.length > 0) {
       const baseApiUrl =  selectedSeller.length > 0 && selectedBrand.length > 0 && selectedCategory.length > 0 ? '/api/Filtre/vendeur/marque/categorie' : 
                           selectedSeller.length > 0 && selectedBrand.length > 0 ? '/api/Filtre/vendeur/marque': 
+                          selectedCategory.length > 0 && selectedBrand.length > 0 ? '/api/Filtre/category/marque':
+                          selectedCategory.length > 0 && selectedSeller.length > 0 ? '/api/Filtre/category/vendeur':
                           selectedSeller.length > 0 ? '/api/Filtrevendeur' : 
                           selectedBrand.length > 0 ? '/api/Filtremarque': '/api/categoriesfilter'
       url = `http://localhost:3001${baseApiUrl}?${queryParams.join('&')}`;     
