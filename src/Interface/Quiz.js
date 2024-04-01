@@ -6,6 +6,9 @@ import QuestionBox from './Question/QuestionBox';
 import ProgressBar from './Jauge/ProgessBar';
 import questions from './QuizQuestion';
 import answer from './QuizAnswers';
+import { dbRealtime } from '../Firebase';
+import { getDatabase, ref, onValue, get  } from "firebase/database";
+
 
 const Quiz = ({ question }) => {
 
@@ -46,6 +49,29 @@ const Quiz = ({ question }) => {
     }
   }
 
+
+
+    const [data, setData] = useState({});
+  
+    useEffect(() => {
+      const fetchData = async () => {
+        const starCountRef = ref(dbRealtime, 'Quiz/Budget/50€');
+        const snapshot = await get(starCountRef); // En supposant l'utilisation de `get` au lieu de `onValue`
+        const newData = snapshot.val();
+        setData(newData);
+      };
+    
+      fetchData();
+    }, []);
+    
+  
+    // Rendu du composant...
+  
+  
+    // Rendu du composant...
+    
+  
+
   return (
     <div className="App" >
 
@@ -64,7 +90,7 @@ const Quiz = ({ question }) => {
       <div className="QuizStyle" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100vh'}}>
   <div className="QuizGrid" >
     <div className="QuizItem">
-      <QuestionBox onClick={() => handleQuestionBoxClick(0)} answer={answer[0].responses[0].answerText}/>
+      <QuestionBox onClick={() => handleQuestionBoxClick(0)} answer={answer[0].responses[0].answerText} imageUrl={data}/>
     </div>
     <div className="QuizItem">
       <QuestionBox onClick={() => handleQuestionBoxClick(1)} answer={answer[0].responses[1].answerText}/>
@@ -89,3 +115,10 @@ Quiz.defaultProps = {
 };
 
 export default Quiz;
+
+
+// Ajoutez de fausse image sur firebase
+// faire le lien de firebase à l'interface
+// regler taille des cases
+// faire un map 
+// trouver id pour verifier la reponse et faire une requete sql
