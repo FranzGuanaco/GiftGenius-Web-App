@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar/navbar';
-import NewsBox from './NewsBox/NewsBox';
 import ButtonBack from './ButtonBack/ButtonBack';
 import QuestionBox from './Question/QuestionBox';
 import ProgressBar from './Jauge/ProgessBar';
 import questions from './QuizQuestion';
 import answer from './QuizAnswers';
 import { dbRealtime } from '../Firebase';
-import { getDatabase, ref, onValue, get  } from "firebase/database";
+import { ref, get  } from "firebase/database";
 
 
 const Quiz = ({ question }) => {
@@ -28,7 +27,7 @@ const Quiz = ({ question }) => {
   const handleQuestionBoxClick = (boxIndex) => {
     setTriggered(true);
     const nextIndex = currentIndex + 1;
-    if (nextIndex < questions.length && nextIndex<7) {
+    if (nextIndex < questions.length && nextIndex < 7) {
       setCurrentIndex(nextIndex);
     } else if (nextIndex === 7 && boxIndex === 1) { // boxIndex === 1 signifie que c'est la deuxième QuestionBox qui a été cliquée
       console.log('Message spécial pour la deuxième QuestionBox à la 7ème question');
@@ -49,66 +48,56 @@ const Quiz = ({ question }) => {
     }
   }
 
-
-
-    const [data, setData] = useState({});
+    const [data, setData] = useState([]);
   
     useEffect(() => {
       const fetchData = async () => {
-        const starCountRef = ref(dbRealtime, 'Quiz/Budget/50€');
+        const starCountRef = ref(dbRealtime, 'Quiz/Budget');
         const snapshot = await get(starCountRef); // En supposant l'utilisation de `get` au lieu de `onValue`
         const newData = snapshot.val();
-        setData(newData);
+        const dataArray = Object.values(newData);
+        setData(dataArray);
+        console.log(dataArray)
       };
     
       fetchData();
     }, []);
     
-  
-    // Rendu du composant...
-  
-  
-    // Rendu du composant...
-    
-  
 
   return (
-    <div className="App" >
+    <div className="App">
+    <Navbar width={"100%"} style={{ top: '0', zIndex: '2' }}></Navbar>
+    
+    <div className="Container" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <div className="QuestionStyle" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', marginTop: '10%' }}>
+        <div style={{ position: 'absolute', left: '30%' }}> 
+          <ButtonBack onClick={handleButtonBackClick}/>
+        </div>
+        <div style={{ paddingLeft: '50px', textAlign: 'center' }}> 
+          <h3>{questionText}</h3>
+        </div>
+      </div>
 
-<Navbar width={"100%"} style={{ top: '0', zIndex: '2' }}></Navbar>
-      
-<div className="Container" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-  <div className="QuestionStyle" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', marginTop: '10%' }}>
-    <div style={{ position: 'absolute', left: '30%' }}> 
-      <ButtonBack onClick={handleButtonBackClick}/>
+      {data && data.length > 0 ? (
+        <div className="QuizStyle" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100vh'}}>
+          <div className="QuizGrid">
+            {data.map((image, index) => (
+              <div key={index} className="QuizItem">
+                {/* Note: Le key={index} sur <QuestionBox> est redondant puisque vous l'avez déjà sur <div>. */}
+                <QuestionBox onClick={() => handleQuestionBoxClick()}  imageUrl={image} />
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : <p>Chargement des données...</p>}
     </div>
-    <div style={{ paddingLeft: '50px', textAlign: 'center' }}> 
-      <h3>{questionText}</h3>
+    
+    <div style={{ top: '60%', paddingLeft: "70%", zIndex: '1', position:'absolute' }}>
+      <ProgressBar trigger={triggered} />
     </div>
   </div>
-
-      <div className="QuizStyle" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100vh'}}>
-  <div className="QuizGrid" >
-    <div className="QuizItem">
-      <QuestionBox onClick={() => handleQuestionBoxClick(0)} answer={answer[0].responses[0].answerText} imageUrl={data}/>
-    </div>
-    <div className="QuizItem">
-      <QuestionBox onClick={() => handleQuestionBoxClick(1)} answer={answer[0].responses[1].answerText}/>
-    </div>
-    <div className="QuizItem">
-      <QuestionBox onClick={handleQuestionBoxClick}/>
-    </div>
- 
-  </div>
-
-  <div style={{ top: '60%', paddingLeft: "70%", zIndex: '1', position:'absolute' }}>
-    <ProgressBar trigger={triggered} />
-  </div>
-</div>
-</div>
-</div>
-  );
-  }  
+);
+} 
 
 Quiz.defaultProps = {
   question: "Question par défaut", // Ajoutez votre valeur par défaut ici
