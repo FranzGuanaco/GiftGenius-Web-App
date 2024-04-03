@@ -15,6 +15,8 @@ const Quiz = ({ question }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [questionText, setQuestionText] = useState(questions[0].questionText)
   const [answerText, setAnswerText] = useState(answer[0].responses[0].answerText)
+  const [branch, setBranch] = useState(questions[0].theme) // ensemble des noms de branches
+  const [data, setData] = useState({}); // donnée de chaque branche pour afficher les images correspondant à chaque question
 
   useEffect(() => {
     setQuestionText(questions[currentIndex].questionText);
@@ -24,9 +26,13 @@ const Quiz = ({ question }) => {
     }
   }, [currentIndex]);
 
-  const handleQuestionBoxClick = (boxIndex) => {
+  // fonction pour passer a la question suivante
+  const handleQuestionBoxClick = async (boxIndex) => {
     setTriggered(true);
     const nextIndex = currentIndex + 1;
+    const nextTheme = questions[nextIndex].theme;
+    setBranch(nextTheme);
+    
     if (nextIndex < questions.length && nextIndex < 7) {
       setCurrentIndex(nextIndex);
     } else if (nextIndex === 7 && boxIndex === 1) { // boxIndex === 1 signifie que c'est la deuxième QuestionBox qui a été cliquée
@@ -37,6 +43,20 @@ const Quiz = ({ question }) => {
     }
   };
 
+  // fonctionn pour afficher les proposition de reponses
+  useEffect(() => {
+      const fetchData = async () => {
+      const starCountRef = ref(dbRealtime, `Quiz/${branch}`);
+      const snapshot = await get(starCountRef); // En supposant l'utilisation de `get` au lieu de `onValue`
+      const newData = snapshot.val();
+      setData(newData);
+      console.log(newData)
+      }; 
+      fetchData();
+    }, [branch]);
+    
+
+  // fonction pour retourner a la question precedente
   const handleButtonBackClick = () => {
     if (currentIndex > 0) {
     const backIndex = currentIndex - 1;
@@ -47,22 +67,6 @@ const Quiz = ({ question }) => {
       console.log('pas de retour possible')
     }
   }
-
-    const [data, setData] = useState([]);
-  
-    useEffect(() => {
-      const fetchData = async () => {
-        const starCountRef = ref(dbRealtime, 'Quiz/Budget');
-        const snapshot = await get(starCountRef); // En supposant l'utilisation de `get` au lieu de `onValue`
-        const newData = snapshot.val();
-        const dataArray = Object.values(newData);
-        setData(dataArray);
-        console.log(dataArray)
-      };
-    
-      fetchData();
-    }, []);
-    
 
   return (
     <div className="App">
@@ -78,10 +82,10 @@ const Quiz = ({ question }) => {
         </div>
       </div>
 
-      {data && data.length > 0 ? (
+      {Object.keys(data).length > 0 ? (
         <div className="QuizStyle" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100vh'}}>
           <div className="QuizGrid">
-            {data.map((image, index) => (
+            {Object.values(data).map((image, index) => (
               <div key={index} className="QuizItem">
                 {/* Note: Le key={index} sur <QuestionBox> est redondant puisque vous l'avez déjà sur <div>. */}
                 <QuestionBox onClick={() => handleQuestionBoxClick()}  imageUrl={image} />
@@ -92,7 +96,7 @@ const Quiz = ({ question }) => {
       ) : <p>Chargement des données...</p>}
     </div>
     
-    <div style={{ top: '60%', paddingLeft: "70%", zIndex: '1', position:'absolute' }}>
+    <div style={{ top: '60%', paddingLeft: "70%", zIndex: '1', position:'fixed' }}>
       <ProgressBar trigger={triggered} />
     </div>
   </div>
@@ -106,8 +110,6 @@ Quiz.defaultProps = {
 export default Quiz;
 
 
-// Ajoutez de fausse image sur firebase
-// faire le lien de firebase à l'interface
-// regler taille des cases
-// faire un map 
 // trouver id pour verifier la reponse et faire une requete sql
+// faire les differente branche du questionnaire dans Firebase
+// quand une question a été repondu on passe à l'array suivant
