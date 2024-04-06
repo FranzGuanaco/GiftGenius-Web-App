@@ -21,8 +21,7 @@
 
 .flat-angle img {
   width: 134px;
-  margin-top: 100%; /* Ajustez la marge supérieure en conséquence si nécessaire */
-  margin-left: 100%; /* Ajustez la marge gauche en conséquence si nécessaire */
+  margin-left: 50%; /* Ajustez la marge gauche en conséquence si nécessaire */
   transform: translateX(-20%); /* Centrez l'image horizontalement */
 }
 

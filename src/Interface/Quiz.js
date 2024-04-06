@@ -32,7 +32,7 @@ const Quiz = ({ question }) => {
     const nextIndex = currentIndex + 1;
     const nextTheme = questions[nextIndex].theme;
     setBranch(nextTheme);
-    
+
     if (nextIndex < questions.length && nextIndex < 7) {
       setCurrentIndex(nextIndex);
     } else if (nextIndex === 7 && boxIndex === 1) { // boxIndex === 1 signifie que c'est la deuxième QuestionBox qui a été cliquée
@@ -60,6 +60,9 @@ const Quiz = ({ question }) => {
   const handleButtonBackClick = () => {
     if (currentIndex > 0) {
     const backIndex = currentIndex - 1;
+
+    const nextTheme = questions[backIndex].theme;
+    setBranch(nextTheme);
     setCurrentIndex(backIndex)
     console.log('backIndex')
     }
@@ -85,10 +88,11 @@ const Quiz = ({ question }) => {
       {Object.keys(data).length > 0 ? (
         <div className="QuizStyle" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100vh'}}>
           <div className="QuizGrid">
-            {Object.values(data).map((image, index) => (
+            {Object.entries(data).map(([amount, image], index) => (
               <div key={index} className="QuizItem">
                 {/* Note: Le key={index} sur <QuestionBox> est redondant puisque vous l'avez déjà sur <div>. */}
-                <QuestionBox onClick={() => handleQuestionBoxClick()}  imageUrl={image} />
+                <QuestionBox onClick={() => handleQuestionBoxClick()}  imageUrl={image} answer={'rr'}/>
+              
               </div>
             ))}
           </div>
@@ -112,4 +116,3 @@ export default Quiz;
 
 // trouver id pour verifier la reponse et faire une requete sql
 // faire les differente branche du questionnaire dans Firebase
-// quand une question a été repondu on passe à l'array suivant
