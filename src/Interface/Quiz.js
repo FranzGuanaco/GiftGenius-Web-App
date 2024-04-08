@@ -60,9 +60,8 @@ const Quiz = ({ question }) => {
   const handleButtonBackClick = () => {
     if (currentIndex > 0) {
     const backIndex = currentIndex - 1;
-
     const nextTheme = questions[backIndex].theme;
-    setBranch(nextTheme);
+    setBranch(nextTheme); // changement du domaine de la question
     setCurrentIndex(backIndex)
     console.log('backIndex')
     }
@@ -88,10 +87,10 @@ const Quiz = ({ question }) => {
       {Object.keys(data).length > 0 ? (
         <div className="QuizStyle" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100vh'}}>
           <div className="QuizGrid">
-            {Object.entries(data).map(([amount, image], index) => (
+            {Object.entries(data).map(([key, value], index) => (
               <div key={index} className="QuizItem">
                 {/* Note: Le key={index} sur <QuestionBox> est redondant puisque vous l'avez déjà sur <div>. */}
-                <QuestionBox onClick={() => handleQuestionBoxClick()}  imageUrl={image} answer={'rr'}/>
+                <QuestionBox onClick={() => handleQuestionBoxClick()}  imageUrl={value.image} answer={value.answer}/>
               
               </div>
             ))}
@@ -113,6 +112,8 @@ Quiz.defaultProps = {
 
 export default Quiz;
 
-
+// mettre les reponses dans le firebase
+// gerer le flux des questions et des reponses
+// gerer la progressbar
 // trouver id pour verifier la reponse et faire une requete sql
 // faire les differente branche du questionnaire dans Firebase

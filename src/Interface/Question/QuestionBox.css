@@ -21,22 +21,22 @@
   .questionBox-image {
     position: absolute;
     bottom: 0;
-    width: 70%;
-    height: 70%;
+    width: 50%;
+    height: 60%;
     object-fit: cover;
     border-radius: 15px;
     padding: 5%;
-    transform: translate(10%, 0%);
+    transform: translate(30%, 0%);
   }
   
   .imageText {
     position: absolute;
-    top: 3%; /* Centre le texte verticalement */
+    top: 10%; /* Centre le texte verticalement */
     left: 50%; /* Centre le texte horizontalement */
     transform: translate(-50%, -50%); /* Ajuste précisément le centrage du texte */
     color: white; /* Changez la couleur selon le besoin */
     text-align: center; /* Pour s'assurer que le texte est centré s'il prend plus d'une ligne */
-    font-size: 35px;
+    font-size: 25px;
   }
   
   @media (max-width: 600px) {
