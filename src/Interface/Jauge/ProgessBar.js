@@ -1,30 +1,29 @@
 import React, { useEffect } from 'react';
 import gsap from 'gsap';
 import './Jauge.css';
+import { useProgressBar } from './ProgressBarContext'; // Assurez-vous que le chemin d'import est correct
 
-const ProgressBar = ({ trigger }) => {
+const ProgressBar = () => {
+  const { progression } = useProgressBar();
+
   useEffect(() => {
-    if (trigger) {
-      const progressBar = document.querySelector('.progress-bar');
-      const progressBarText = document.querySelector('.progress-bar__text');
+    const progressBar = document.querySelector('.progress-bar');
+    const progressBarWidth = `${progression}%`;
 
-      gsap.to(progressBar, {
-        x: `100%`,
-        scaleY: 1,
-        duration: 1,
-        backgroundColor: '#4895ef',
-    
-        onComplete: () => {
-          
-          progressBar.style.boxShadow = '0 0 1px #4895ef';
-        },
-      });
-    }
-  }, [trigger]);
+    gsap.to(progressBar, {
+      x: progressBarWidth,
+      scaleY: 1,
+      duration: 1,
+      backgroundColor: '#4895ef',
+      onComplete: () => {
+        progressBar.style.boxShadow = '0 0 1px #4895ef';
+      },
+    });
+  }, [progression]);
 
   return (
     <div className="progress-bar__container">
-      <div className="progress-bar">
+      <div className="progress-bar" >
         <span className="progress-bar__text">Uploaded Successfully!</span>
       </div>
     </div>
@@ -32,5 +31,10 @@ const ProgressBar = ({ trigger }) => {
 };
 
 export default ProgressBar;
+
+
+
+
+
 
 

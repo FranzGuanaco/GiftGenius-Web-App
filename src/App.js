@@ -13,6 +13,7 @@ import Match from './Interface/Match';
 import CreateAccount from './Interface/CreateAccount';
 import { BrandProvider } from './Interface/BrandContext';
 import { AuthProvider } from './Interface/AuthContext';
+import { ProgressBarProvider } from './Interface/Jauge/ProgressBarContext';
 import MenuBar from './Interface/MenuBar/MenuBar';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <div className="App">
           <AuthProvider>
             <BrandProvider>
+            <ProgressBarProvider>
               <BrowserRouter>
                 <Routes>
           
@@ -36,6 +38,7 @@ function App() {
             
             </Routes>
           </BrowserRouter>
+          </ProgressBarProvider>
         </BrandProvider>
       </AuthProvider>
       </div>

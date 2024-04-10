@@ -7,6 +7,7 @@ import questions from './QuizQuestion';
 import answer from './QuizAnswers';
 import { dbRealtime } from '../Firebase';
 import { ref, get  } from "firebase/database";
+import { useProgressBar } from './Jauge/ProgressBarContext';
 
 
 const Quiz = ({ question }) => {
@@ -17,7 +18,9 @@ const Quiz = ({ question }) => {
   const [answerText, setAnswerText] = useState(answer[0].responses[0].answerText)
   const [branch, setBranch] = useState(questions[0].theme) // ensemble des noms de branches
   const [data, setData] = useState({}); // donnée de chaque branche pour afficher les images correspondant à chaque question
+  const { handleClick } = useProgressBar();
 
+  
   useEffect(() => {
     setQuestionText(questions[currentIndex].questionText);
     // Ajustez ici selon la structure de votre données
@@ -32,9 +35,10 @@ const Quiz = ({ question }) => {
     const nextIndex = currentIndex + 1;
     const nextTheme = questions[nextIndex].theme;
     setBranch(nextTheme);
-
+    handleClick()
     if (nextIndex < questions.length && nextIndex < 7) {
       setCurrentIndex(nextIndex);
+      
     } else if (nextIndex === 7 && boxIndex === 1) { // boxIndex === 1 signifie que c'est la deuxième QuestionBox qui a été cliquée
       console.log('Message spécial pour la deuxième QuestionBox à la 7ème question');
       setCurrentIndex(11)
@@ -100,7 +104,7 @@ const Quiz = ({ question }) => {
     </div>
     
     <div style={{ top: '60%', paddingLeft: "70%", zIndex: '1', position:'fixed' }}>
-      <ProgressBar trigger={triggered} />
+      <ProgressBar/>
     </div>
   </div>
 );
@@ -112,7 +116,7 @@ Quiz.defaultProps = {
 
 export default Quiz;
 
-// mettre les reponses dans le firebase
+
 // gerer le flux des questions et des reponses
 // gerer la progressbar
 // trouver id pour verifier la reponse et faire une requete sql
