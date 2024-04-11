@@ -18,7 +18,7 @@ const Quiz = ({ question }) => {
   const [answerText, setAnswerText] = useState(answer[0].responses[0].answerText)
   const [branch, setBranch] = useState(questions[0].theme) // ensemble des noms de branches
   const [data, setData] = useState({}); // donnée de chaque branche pour afficher les images correspondant à chaque question
-  const { handleClick } = useProgressBar();
+  const { incrementProgressBar, decrementProgressBar } = useProgressBar();
 
   
   useEffect(() => {
@@ -35,7 +35,8 @@ const Quiz = ({ question }) => {
     const nextIndex = currentIndex + 1;
     const nextTheme = questions[nextIndex].theme;
     setBranch(nextTheme);
-    handleClick()
+    incrementProgressBar()
+    console.log(`voici la boxindex ${boxIndex}`)
     if (nextIndex < questions.length && nextIndex < 7) {
       setCurrentIndex(nextIndex);
       
@@ -67,6 +68,7 @@ const Quiz = ({ question }) => {
     const nextTheme = questions[backIndex].theme;
     setBranch(nextTheme); // changement du domaine de la question
     setCurrentIndex(backIndex)
+    decrementProgressBar()
     console.log('backIndex')
     }
     else{
@@ -94,7 +96,7 @@ const Quiz = ({ question }) => {
             {Object.entries(data).map(([key, value], index) => (
               <div key={index} className="QuizItem">
                 {/* Note: Le key={index} sur <QuestionBox> est redondant puisque vous l'avez déjà sur <div>. */}
-                <QuestionBox onClick={() => handleQuestionBoxClick()}  imageUrl={value.image} answer={value.answer}/>
+                <QuestionBox onClick={() => handleQuestionBoxClick(value.answer)}  imageUrl={value.image} answer={value.answer}/>
               
               </div>
             ))}
@@ -117,7 +119,8 @@ Quiz.defaultProps = {
 export default Quiz;
 
 
-// gerer le flux des questions et des reponses
-// gerer la progressbar
-// trouver id pour verifier la reponse et faire une requete sql
-// faire les differente branche du questionnaire dans Firebase
+// 1- ajouter des produits de differents types
+// 2_ faire les premieres requête avec le quiz et les api pour les quiz
+// 3- trouver id pour verifier la reponse et faire une requete sql
+// 4- gerer le flux des questions et des reponses
+// 5- faire les differente branche du questionnaire dans Firebase
