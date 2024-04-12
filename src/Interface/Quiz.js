@@ -19,6 +19,7 @@ const Quiz = ({ question }) => {
   const [branch, setBranch] = useState(questions[0].theme) // ensemble des noms de branches
   const [data, setData] = useState({}); // donnée de chaque branche pour afficher les images correspondant à chaque question
   const { incrementProgressBar, decrementProgressBar } = useProgressBar();
+  const [budget, setBudget] = useState(0);
 
   
   useEffect(() => {
@@ -76,6 +77,22 @@ const Quiz = ({ question }) => {
     }
   }
 
+  // fonction pour filtrer les produit selon les reponses au quiz
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const limit = encodeURIComponent(budget);
+        const url = `http://localhost:3001/api/quiz?limit=${limit}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log(`voici la data pour le quiz budget ${data}`); // Stockez les données des marques dans l'état
+      } catch (error) {
+        console.error("Erreur lors de la récupération des données:", error);
+      }
+    };
+    fetchData();
+  }, );
+
   return (
     <div className="App">
     <Navbar width={"100%"} style={{ top: '0', zIndex: '2' }}></Navbar>
@@ -96,8 +113,8 @@ const Quiz = ({ question }) => {
             {Object.entries(data).map(([key, value], index) => (
               <div key={index} className="QuizItem">
                 {/* Note: Le key={index} sur <QuestionBox> est redondant puisque vous l'avez déjà sur <div>. */}
-                <QuestionBox onClick={() => handleQuestionBoxClick(value.answer)}  imageUrl={value.image} answer={value.answer}/>
-              
+                <QuestionBox onClick={() => handleQuestionBoxClick(value.answer)}  max={value.max} imageUrl={value.image} answer={value.answer}/>
+              setbudget = value.max
               </div>
             ))}
           </div>
