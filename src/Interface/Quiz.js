@@ -19,7 +19,7 @@ const Quiz = ({ question }) => {
   const [branch, setBranch] = useState(questions[0].theme) // ensemble des noms de branches
   const [data, setData] = useState({}); // donnée de chaque branche pour afficher les images correspondant à chaque question
   const { incrementProgressBar, decrementProgressBar } = useProgressBar();
-  const [budget, setBudget] = useState(0);
+  const [productData, setProductData] = useState([]);
 
   
   useEffect(() => {
@@ -30,24 +30,38 @@ const Quiz = ({ question }) => {
     }
   }, [currentIndex]);
 
+
   // fonction pour passer a la question suivante
-  const handleQuestionBoxClick = async (boxIndex) => {
+  const handleQuestionBoxClick = async (boxIndex, budgetMax, elementSelected, index) => {
     setTriggered(true);
     const nextIndex = currentIndex + 1;
     const nextTheme = questions[nextIndex].theme;
     setBranch(nextTheme);
-    incrementProgressBar()
-    console.log(`voici la boxindex ${boxIndex}`)
+    incrementProgressBar();
+  
+    try {
+      const limitBudget = encodeURIComponent(budgetMax); // Utilisez budgetMax plutôt que budget pour l'encodage
+      const url = `http://localhost:3001/api/quiz?limitBudget=${limitBudget}`;
+      const response = await fetch(url);
+      const data = await response.json();
+      setProductData(data);
+      console.log(`Voici les données pour le quiz avec un budget maximum de ${budgetMax}:`, productData); // Mettez à jour le message de console pour inclure le budgetMax
+    } catch (error) {
+      console.error("Erreur lors de la récupération des données:", error);
+    }
+  
+    console.log(`Voici l'index de la boîte: ${boxIndex}`); // Corrigez la syntaxe pour afficher la boxIndex
+  
     if (nextIndex < questions.length && nextIndex < 7) {
       setCurrentIndex(nextIndex);
-      
-    } else if (nextIndex === 7 && boxIndex === 1) { // boxIndex === 1 signifie que c'est la deuxième QuestionBox qui a été cliquée
+    } else if (nextIndex === 7 && boxIndex === 1) {
       console.log('Message spécial pour la deuxième QuestionBox à la 7ème question');
-      setCurrentIndex(11)
+      setCurrentIndex(11);
     } else {
       console.log("Fin des questions");
-    }
+    } // Appel de la fonction fetchData() après la vérification des conditions
   };
+  
 
   // fonctionn pour afficher les proposition de reponses
   useEffect(() => {
@@ -78,20 +92,7 @@ const Quiz = ({ question }) => {
   }
 
   // fonction pour filtrer les produit selon les reponses au quiz
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const limit = encodeURIComponent(budget);
-        const url = `http://localhost:3001/api/quiz?limit=${limit}`;
-        const response = await fetch(url);
-        const data = await response.json();
-        console.log(`voici la data pour le quiz budget ${data}`); // Stockez les données des marques dans l'état
-      } catch (error) {
-        console.error("Erreur lors de la récupération des données:", error);
-      }
-    };
-    fetchData();
-  }, );
+  
 
   return (
     <div className="App">
@@ -113,8 +114,8 @@ const Quiz = ({ question }) => {
             {Object.entries(data).map(([key, value], index) => (
               <div key={index} className="QuizItem">
                 {/* Note: Le key={index} sur <QuestionBox> est redondant puisque vous l'avez déjà sur <div>. */}
-                <QuestionBox onClick={() => handleQuestionBoxClick(value.answer)}  max={value.max} imageUrl={value.image} answer={value.answer}/>
-              setbudget = value.max
+                <QuestionBox onClick={() => handleQuestionBoxClick(value.answer, value.max, value.elementSelected, index)}  max={value.max} imageUrl={value.image} answer={value.answer} elementSelected={value.elementSelected}/>
+              
               </div>
             ))}
           </div>

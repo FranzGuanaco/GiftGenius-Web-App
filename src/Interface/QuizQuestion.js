@@ -1,7 +1,7 @@
 
 const questions = [
     { id: 1, questionText: "Quel est votre budget?", theme: "Budget" },
-    { id: 2, questionText: "Pour quelle occasion faites vous ce cadeau ?", theme: "test" },
+    { id: 2, questionText: "Pour quelle occasion faites vous ce cadeau ?", theme: "Occasion" },
     { id: 3, questionText: "Quelle relation avez vous avec le destinataire du cadeau", theme: "deuxieme" },
     { id: 4, questionText: "Quel est le sexe du destinataire ?", theme: "Jupiter" },
     { id: 5, questionText: "Quel est l'âge du destinataire ?", theme: "Victor Hugo" },
