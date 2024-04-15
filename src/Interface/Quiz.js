@@ -32,24 +32,43 @@ const Quiz = ({ question }) => {
 
 
   // fonction pour passer a la question suivante
-  const handleQuestionBoxClick = async (boxIndex, budgetMax, elementSelected, index) => {
+  const handleQuestionBoxClick = async (boxIndex, elementToFilter, index) => {
     setTriggered(true);
     const nextIndex = currentIndex + 1;
     const nextTheme = questions[nextIndex].theme;
     setBranch(nextTheme);
     incrementProgressBar();
   
+    if(!productData.length)
     try {
-      const limitBudget = encodeURIComponent(budgetMax); // Utilisez budgetMax plutôt que budget pour l'encodage
+      const limitBudget = encodeURIComponent(elementToFilter); // Utilisez budgetMax plutôt que budget pour l'encodage
       const url = `http://localhost:3001/api/quiz?limitBudget=${limitBudget}`;
       const response = await fetch(url);
       const data = await response.json();
       setProductData(data);
-      console.log(`Voici les données pour le quiz avec un budget maximum de ${budgetMax}:`, productData); // Mettez à jour le message de console pour inclure le budgetMax
+      const test = data.product
+      console.log(`voici le pk des produits`, test)
+      console.log(`Voici les données pour le quiz avec un budget maximum de ${elementToFilter}:`, productData); // Mettez à jour le message de console pour inclure le budgetMax
+      
     } catch (error) {
       console.error("Erreur lors de la récupération des données:", error);
     }
-  
+    if (productData.length) 
+      try {
+        const productIds = productData.map(product => product.product); // Crée un tableau d'identifiants
+        const productIdIntegers = productIds.map(id => parseInt(id, 10)); // Convertit chaque identifiant en entier
+        const productIdsString = productIdIntegers.join(','); // Crée une chaîne d'identifiants entiers séparés par des virgules
+        const reviewsResponse = await fetch(`http://localhost:3001/api/reviews?productIds=${encodeURIComponent(productIdsString)}`);
+        const reviewsData = await reviewsResponse.json();
+        console.log(`voici le productid`, productIdsString)
+        console.log(`Voici le résultat du deuxième filtre:`, reviewsData);
+      } 
+      catch (error) {
+        console.error("Erreur lors de la récupération des données:", error);
+      }
+      else {
+        console.log("Aucun produit trouvé pour ce budget");
+      }
     console.log(`Voici l'index de la boîte: ${boxIndex}`); // Corrigez la syntaxe pour afficher la boxIndex
   
     if (nextIndex < questions.length && nextIndex < 7) {
@@ -114,7 +133,7 @@ const Quiz = ({ question }) => {
             {Object.entries(data).map(([key, value], index) => (
               <div key={index} className="QuizItem">
                 {/* Note: Le key={index} sur <QuestionBox> est redondant puisque vous l'avez déjà sur <div>. */}
-                <QuestionBox onClick={() => handleQuestionBoxClick(value.answer, value.max, value.elementSelected, index)}  max={value.max} imageUrl={value.image} answer={value.answer} elementSelected={value.elementSelected}/>
+                <QuestionBox onClick={() => handleQuestionBoxClick(value.answer, value.elementToFilter, index)}  filterBy={value.elementToFilter} imageUrl={value.image} answer={value.answer} />
               
               </div>
             ))}
@@ -138,7 +157,7 @@ export default Quiz;
 
 
 // 1- ajouter des produits de differents types
-// 2_ faire les premieres requête avec le quiz et les api pour les quiz
+// 2- faire les premieres requête avec le quiz et les api pour les quiz
 // 3- trouver id pour verifier la reponse et faire une requete sql
 // 4- gerer le flux des questions et des reponses
 // 5- faire les differente branche du questionnaire dans Firebase
