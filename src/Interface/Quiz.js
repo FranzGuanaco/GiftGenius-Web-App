@@ -10,7 +10,7 @@ import { ref, get  } from "firebase/database";
 import { useProgressBar } from './Jauge/ProgressBarContext';
 
 
-const Quiz = ({ question }) => {
+const Quiz = () => {
 
   const [triggered, setTriggered] = useState(false); // État pour contrôler le déclenchement
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -21,7 +21,8 @@ const Quiz = ({ question }) => {
   const { incrementProgressBar, decrementProgressBar } = useProgressBar();
   const [productData, setProductData] = useState([]);
 
-  
+
+
   useEffect(() => {
     setQuestionText(questions[currentIndex].questionText);
     // Ajustez ici selon la structure de votre données
@@ -30,57 +31,65 @@ const Quiz = ({ question }) => {
     }
   }, [currentIndex]);
 
-
   // fonction pour passer a la question suivante
   const handleQuestionBoxClick = async (boxIndex, elementToFilter, index) => {
-    setTriggered(true);
-    const nextIndex = currentIndex + 1;
-    const nextTheme = questions[nextIndex].theme;
-    setBranch(nextTheme);
-    incrementProgressBar();
-  
-    if(!productData.length)
-    try {
-      const limitBudget = encodeURIComponent(elementToFilter); // Utilisez budgetMax plutôt que budget pour l'encodage
-      const url = `http://localhost:3001/api/quiz?limitBudget=${limitBudget}`;
-      const response = await fetch(url);
-      const data = await response.json();
-      setProductData(data);
-      const test = data.product
-      console.log(`voici le pk des produits`, test)
-      console.log(`Voici les données pour le quiz avec un budget maximum de ${elementToFilter}:`, productData); // Mettez à jour le message de console pour inclure le budgetMax
-      
-    } catch (error) {
-      console.error("Erreur lors de la récupération des données:", error);
+    setTriggered(true); // Active un indicateur pour signifier que la fonction a été déclenchée
+    const nextIndex = currentIndex + 1; // Détermine l'indice suivant pour la prochaine question
+    const nextTheme = questions[nextIndex].theme; // Obtient le thème de la prochaine question
+    setBranch(nextTheme); // Met à jour le thème actuel avec celui de la prochaine question
+    incrementProgressBar(); // Incrémente la barre de progression
+    console.log(`index de branch est egal à:`, nextIndex);
+
+    // Bloc initial pour charger les données de produit si productData est vide et que l'indice est < 3
+    if (!productData.length) {
+        try {
+            const limitBudget = encodeURIComponent(elementToFilter);
+            const url = `http://localhost:3001/api/quiz?limitBudget=${limitBudget}`;
+            const response = await fetch(url);
+            const data = await response.json();
+            setProductData(data); // Met à jour les données de produit avec les données reçues
+            console.log(`voici les données pour le quiz avec un budget maximum de ${elementToFilter}:`, data);
+        } catch (error) {
+            console.error("Erreur lors de la récupération des données:", error);
+        }
     }
-    if (productData.length) 
-      try {
-        const productIds = productData.map(product => product.product); // Crée un tableau d'identifiants
-        const productIdIntegers = productIds.map(id => parseInt(id, 10)); // Convertit chaque identifiant en entier
-        const productIdsString = productIdIntegers.join(','); // Crée une chaîne d'identifiants entiers séparés par des virgules
-        const reviewsResponse = await fetch(`http://localhost:3001/api/reviews?productIds=${encodeURIComponent(productIdsString)}`);
-        const reviewsData = await reviewsResponse.json();
-        console.log(`voici le productid`, productIdsString)
-        console.log(`Voici le résultat du deuxième filtre:`, reviewsData);
-      } 
-      catch (error) {
-        console.error("Erreur lors de la récupération des données:", error);
-      }
-      else {
-        console.log("Aucun produit trouvé pour ce budget");
-      }
-    console.log(`Voici l'index de la boîte: ${boxIndex}`); // Corrigez la syntaxe pour afficher la boxIndex
-  
-    if (nextIndex < questions.length && nextIndex < 7) {
-      setCurrentIndex(nextIndex);
-    } else if (nextIndex === 7 && boxIndex === 1) {
-      console.log('Message spécial pour la deuxième QuestionBox à la 7ème question');
-      setCurrentIndex(11);
+    // Bloc pour traiter les données si productData contient des éléments
+    if (productData.length && nextIndex < 1) {
+        try {
+            const productIds = productData.map(product => product.product);
+            const productIdIntegers = productIds.map(id => parseInt(id, 10));
+            const productIdsString = productIdIntegers.join(',');
+            const reviewsResponse = await fetch(`http://localhost:3001/api/reviews?productIds=${encodeURIComponent(productIdsString)}&occasionType=${encodeURIComponent(elementToFilter)}`);
+            const reviewsData = await reviewsResponse.json();
+            console.log(`Voici le résultat du deuxième filtre:`, reviewsData);
+            console.log(`je met ici l'element a filtrer:`, elementToFilter)
+        } catch (error) {
+            console.error("Erreur lors de la récupération des données:", error);
+        }
     } else {
-      console.log("Fin des questions");
-    } // Appel de la fonction fetchData() après la vérification des conditions
-  };
+        // Ces blocs else if sont maintenant correctement chaînés après un 'if' ou 'else' valide
+        if (nextIndex > 1) {
+            console.log("Aucun produit trouvé pour ce budget");
+        } else if (nextIndex === 1) {
+          console.log(`voici l'element qui a été selectionné`, elementToFilter)
+          if (elementToFilter === 'fete_des_peres_mere')
+            console.log("Attention element à filtrer est fete_des_peres_mere");
+            const nextThem = questions[1].theme;
+            setBranch(nextThem);
+        }
+    }
+    console.log(`Voici l'index de la boîte: ${boxIndex}`);
   
+    // Gestion de l'index courant et des transitions entre les questions
+    if (nextIndex < questions.length && nextIndex < 7) {
+        setCurrentIndex(nextIndex); // Met à jour currentIndex pour la prochaine question
+    } else if (nextIndex === 7 && boxIndex === 1) {
+        console.log('Message spécial pour la deuxième QuestionBox à la 7ème question');
+        setCurrentIndex(11); // Saute à un autre indice pour des cas spécifiques
+    } else {
+        console.log("Fin des questions");
+    }
+};
 
   // fonctionn pour afficher les proposition de reponses
   useEffect(() => {
@@ -133,7 +142,10 @@ const Quiz = ({ question }) => {
             {Object.entries(data).map(([key, value], index) => (
               <div key={index} className="QuizItem">
                 {/* Note: Le key={index} sur <QuestionBox> est redondant puisque vous l'avez déjà sur <div>. */}
-                <QuestionBox onClick={() => handleQuestionBoxClick(value.answer, value.elementToFilter, index)}  filterBy={value.elementToFilter} imageUrl={value.image} answer={value.answer} />
+                <QuestionBox onClick={() => handleQuestionBoxClick(value.answer, value.elementToFilter, index)}  
+                                                                    filterBy={value.elementToFilter} 
+                                                                    imageUrl={value.image} 
+                                                                    answer={value.answer} />
               
               </div>
             ))}

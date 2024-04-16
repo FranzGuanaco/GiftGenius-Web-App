@@ -2,9 +2,9 @@
 const questions = [
     { id: 1, questionText: "Quel est votre budget?", theme: "Budget" },
     { id: 2, questionText: "Pour quelle occasion faites vous ce cadeau ?", theme: "Occasion" },
-    { id: 3, questionText: "Quelle relation avez vous avec le destinataire du cadeau", theme: "test" },
-    { id: 4, questionText: "Quel est le sexe du destinataire ?", theme: "Jupiter" },
-    { id: 5, questionText: "Quel est l'âge du destinataire ?", theme: "Victor Hugo" },
+    { id: 3, questionText: "la question 2", theme: "Destinataire" },
+    { id: 4, questionText: "la question 3 ?", theme: "Budget" },
+    { id: 5, questionText: "Quel est l'âge du destinataire ?", theme: "Sexe" },
     { id: 6, questionText: "Quel type de cadeau cherchez vous ?", theme: "Rome" },
     { id: 7, questionText: "Le destinataire a t il l'une de ces passions ?", theme: "1969" },
     { id: 8, questionText: "Quels sont les cadeaux les plus pertinents selon vous ?", theme: "Le Nil" },
