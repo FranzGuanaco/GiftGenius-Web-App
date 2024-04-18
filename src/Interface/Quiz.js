@@ -31,15 +31,17 @@ const Quiz = () => {
     }
   }, [currentIndex]);
 
-  // fonction pour passer a la question suivante
+
   const handleQuestionBoxClick = async (boxIndex, elementToFilter, index) => {
     setTriggered(true); // Active un indicateur pour signifier que la fonction a été déclenchée
     const nextIndex = currentIndex + 1; // Détermine l'indice suivant pour la prochaine question
     const nextTheme = questions[nextIndex].theme; // Obtient le thème de la prochaine question
+    setCurrentIndex(nextIndex);
     setBranch(nextTheme); // Met à jour le thème actuel avec celui de la prochaine question
     incrementProgressBar(); // Incrémente la barre de progression
-    console.log(`index de branch est egal à:`, nextIndex);
-
+    console.log(`index suivant est egal à:`, nextIndex);
+    console.log('Current Index:', currentIndex);
+    console.log('branch est égal à:', branch);
     // Bloc initial pour charger les données de produit si productData est vide et que l'indice est < 3
     if (!productData.length) {
         try {
@@ -54,7 +56,7 @@ const Quiz = () => {
         }
     }
     // Bloc pour traiter les données si productData contient des éléments
-    if (productData.length && nextIndex < 1) {
+    if (productData.length && nextIndex < 2) {
         try {
             const productIds = productData.map(product => product.product);
             const productIdIntegers = productIds.map(id => parseInt(id, 10));
@@ -68,28 +70,16 @@ const Quiz = () => {
         }
     } else {
         // Ces blocs else if sont maintenant correctement chaînés après un 'if' ou 'else' valide
-        if (nextIndex > 1) {
+        if (nextIndex > 10) {
             console.log("Aucun produit trouvé pour ce budget");
-        } else if (nextIndex === 1) {
+        } else if (nextIndex === 2) {
           console.log(`voici l'element qui a été selectionné`, elementToFilter)
           if (elementToFilter === 'fete_des_peres_mere')
             console.log("Attention element à filtrer est fete_des_peres_mere");
-            const nextThem = questions[1].theme;
-            setBranch(nextThem);
+            setCurrentIndex(3) 
         }
-    }
-    console.log(`Voici l'index de la boîte: ${boxIndex}`);
-  
-    // Gestion de l'index courant et des transitions entre les questions
-    if (nextIndex < questions.length && nextIndex < 7) {
-        setCurrentIndex(nextIndex); // Met à jour currentIndex pour la prochaine question
-    } else if (nextIndex === 7 && boxIndex === 1) {
-        console.log('Message spécial pour la deuxième QuestionBox à la 7ème question');
-        setCurrentIndex(11); // Saute à un autre indice pour des cas spécifiques
-    } else {
-        console.log("Fin des questions");
-    }
-};
+      }
+    };
 
   // fonctionn pour afficher les proposition de reponses
   useEffect(() => {
