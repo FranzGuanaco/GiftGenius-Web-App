@@ -32,7 +32,7 @@ const Quiz = () => {
   }, [currentIndex]);
 
 
-  const handleQuestionBoxClick = async (boxIndex, elementToFilter, index) => {
+  const handleQuestionBoxClick = async (boxIndex, elementToFilter, firstEntryKey) => {
     setTriggered(true); // Active un indicateur pour signifier que la fonction a été déclenchée
     const nextIndex = currentIndex + 1; // Détermine l'indice suivant pour la prochaine question
     const nextTheme = questions[nextIndex].theme; // Obtient le thème de la prochaine question
@@ -42,6 +42,7 @@ const Quiz = () => {
     console.log(`index suivant est egal à:`, nextIndex);
     console.log('Current Index:', currentIndex);
     console.log('branch est égal à:', branch);
+    console.log (`quel est le boxindes ${boxIndex} quel est l'element to filter ${elementToFilter} et quel est l'index ${firstEntryKey}`)
     // Bloc initial pour charger les données de produit si productData est vide et que l'indice est < 3
     if (!productData.length) {
         try {
@@ -77,6 +78,7 @@ const Quiz = () => {
           if (elementToFilter === 'fete_des_peres_mere')
             console.log("Attention element à filtrer est fete_des_peres_mere");
             setCurrentIndex(3) 
+            setBranch(questions[3].theme);
         }
       }
     };
@@ -111,7 +113,6 @@ const Quiz = () => {
 
   // fonction pour filtrer les produit selon les reponses au quiz
   
-
   return (
     <div className="App">
     <Navbar width={"100%"} style={{ top: '0', zIndex: '2' }}></Navbar>
@@ -129,21 +130,32 @@ const Quiz = () => {
       {Object.keys(data).length > 0 ? (
         <div className="QuizStyle" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100vh'}}>
           <div className="QuizGrid">
-            {Object.entries(data).map(([key, value], index) => (
-              <div key={index} className="QuizItem">
-                {/* Note: Le key={index} sur <QuestionBox> est redondant puisque vous l'avez déjà sur <div>. */}
-                <QuestionBox onClick={() => handleQuestionBoxClick(value.answer, value.elementToFilter, index)}  
-                                                                    filterBy={value.elementToFilter} 
-                                                                    imageUrl={value.image} 
-                                                                    answer={value.answer} />
-              
+          {Object.entries(data).map(([branch, value], index) => {
+            // Ici, nous prenons la première clé de l'objet de la branche
+            console.log(branch, value);
+            const answer = value.answer;
+            const elementToFilter = value.elementToFilter
+            const image = value.image;
+
+            if (!answer || !elementToFilter || !image) {
+              return null; // Ceci va empêcher le rendu d'une QuestionBox pour des données manquantes ou incorrectes
+            }
+
+            return (
+            <div key={index} className="QuizItem">
+            <QuestionBox
+                onClick={() => handleQuestionBoxClick(answer, elementToFilter, index)}
+                filterBy={elementToFilter}
+                imageUrl={image} // Change 'alternativeImageUrl' to your desired URL or logic
+                answer={answer}
+              />
               </div>
-            ))}
+            );
+            })}
           </div>
         </div>
       ) : <p>Chargement des données...</p>}
     </div>
-    
     <div style={{ top: '60%', paddingLeft: "70%", zIndex: '1', position:'fixed' }}>
       <ProgressBar/>
     </div>
