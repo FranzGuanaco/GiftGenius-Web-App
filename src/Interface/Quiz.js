@@ -6,7 +6,7 @@ import ProgressBar from './Jauge/ProgessBar';
 import questions from './QuizQuestion';
 import answer from './QuizAnswers';
 import { dbRealtime } from '../Firebase';
-import { ref, get  } from "firebase/database";
+import { ref, get } from "firebase/database";
 import { useProgressBar } from './Jauge/ProgressBarContext';
 
 
@@ -33,55 +33,60 @@ const Quiz = () => {
 
 
   const handleQuestionBoxClick = async (boxIndex, elementToFilter, firstEntryKey) => {
-    setTriggered(true); // Active un indicateur pour signifier que la fonction a été déclenchée
-    const nextIndex = currentIndex + 1; // Détermine l'indice suivant pour la prochaine question
-    const nextTheme = questions[nextIndex].theme; // Obtient le thème de la prochaine question
+    setTriggered(true); // Indique que la fonction a été déclenchée
+    const nextIndex = currentIndex + 1;
+    console.log(`Index suivant est égal à: ${nextIndex}`, `Current Index: ${currentIndex}`);
+  
     setCurrentIndex(nextIndex);
-    setBranch(nextTheme); // Met à jour le thème actuel avec celui de la prochaine question
-    incrementProgressBar(); // Incrémente la barre de progression
-    console.log(`index suivant est egal à:`, nextIndex);
-    console.log('Current Index:', currentIndex);
-    console.log('branch est égal à:', branch);
-    console.log (`quel est le boxindes ${boxIndex} quel est l'element to filter ${elementToFilter} et quel est l'index ${firstEntryKey}`)
-    // Bloc initial pour charger les données de produit si productData est vide et que l'indice est < 3
-    if (!productData.length) {
-        try {
-            const limitBudget = encodeURIComponent(elementToFilter);
-            const url = `http://localhost:3001/api/quiz?limitBudget=${limitBudget}`;
-            const response = await fetch(url);
-            const data = await response.json();
-            setProductData(data); // Met à jour les données de produit avec les données reçues
-            console.log(`voici les données pour le quiz avec un budget maximum de ${elementToFilter}:`, data);
-        } catch (error) {
-            console.error("Erreur lors de la récupération des données:", error);
-        }
-    }
-    // Bloc pour traiter les données si productData contient des éléments
-    if (productData.length && nextIndex < 2) {
-        try {
-            const productIds = productData.map(product => product.product);
-            const productIdIntegers = productIds.map(id => parseInt(id, 10));
-            const productIdsString = productIdIntegers.join(',');
-            const reviewsResponse = await fetch(`http://localhost:3001/api/reviews?productIds=${encodeURIComponent(productIdsString)}&occasionType=${encodeURIComponent(elementToFilter)}`);
-            const reviewsData = await reviewsResponse.json();
-            console.log(`Voici le résultat du deuxième filtre:`, reviewsData);
-            console.log(`je met ici l'element a filtrer:`, elementToFilter)
-        } catch (error) {
-            console.error("Erreur lors de la récupération des données:", error);
-        }
-    } else {
-        // Ces blocs else if sont maintenant correctement chaînés après un 'if' ou 'else' valide
-        if (nextIndex > 10) {
-            console.log("Aucun produit trouvé pour ce budget");
-        } else if (nextIndex === 2) {
-          console.log(`voici l'element qui a été selectionné`, elementToFilter)
-          if (elementToFilter === 'fete_des_peres_mere')
-            console.log("Attention element à filtrer est fete_des_peres_mere");
-            setCurrentIndex(3) 
-            setBranch(questions[3].theme);
-        }
+    setBranch(questions[nextIndex].theme);
+    incrementProgressBar();
+  
+    // Tente de charger des données en fonction de la disponibilité de productData
+    if (!productData.length && nextIndex < 3) {
+      // Si aucune donnée produit et index inférieur à 3, charge des données
+      await fetchQuizData(elementToFilter);
+    } else if (productData.length && nextIndex === 2) {
+      // Si données présentes et index à 2, procède à l'analyse des reviews
+      await fetchAndProcessReviews(elementToFilter);
+      if (elementToFilter === 'fete_des_peres_mere') {
+        console.log("Attention, élément à filtrer est fête_des_pères_mère");
+        setCurrentIndex(3);
+        setBranch(questions[3].theme);
       }
-    };
+    }
+  
+    // Gère le cas où l'index dépasse une certaine limite
+    if (nextIndex > 10) {
+      console.log("Aucun produit trouvé pour ce budget");
+    }
+  };
+  
+  async function fetchQuizData(elementToFilter) {
+    try {
+      const limitBudget = encodeURIComponent(elementToFilter);
+      const url = `http://localhost:3001/api/quiz/budget?limitBudget=${limitBudget}`;
+      const response = await fetch(url);
+      const data = await response.json();
+      setProductData(data);
+      console.log(`Données pour le quiz avec un budget maximum de ${elementToFilter}:`, data);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des données:", error);
+    }
+  }
+  
+  async function fetchAndProcessReviews(elementToFilter) {
+    try {
+      const productIds = productData.map(product => product.product);
+      const productIdIntegers = productIds.map(id => parseInt(id, 10));
+      const productIdsString = productIdIntegers.join(',');
+      const reviewsResponse = await fetch(`http://localhost:3001/api/reviews?productIds=${encodeURIComponent(productIdsString)}&occasionType=${encodeURIComponent(elementToFilter)}`);
+      const reviewsData = await reviewsResponse.json();
+      console.log(`Résultat du deuxième filtre:`, reviewsData);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des reviews:", error);
+    }
+  }
+  
 
   // fonctionn pour afficher les proposition de reponses
   useEffect(() => {
@@ -99,17 +104,18 @@ const Quiz = () => {
   // fonction pour retourner a la question precedente
   const handleButtonBackClick = () => {
     if (currentIndex > 0) {
-    const backIndex = currentIndex - 1;
-    const nextTheme = questions[backIndex].theme;
-    setBranch(nextTheme); // changement du domaine de la question
-    setCurrentIndex(backIndex)
-    decrementProgressBar()
-    console.log('backIndex')
+        let stepBack = currentIndex === 3 ? 2 : 1;  // If currentIndex is 3, step back by 2, otherwise by 1
+        const backIndex = currentIndex - stepBack;
+        const nextTheme = questions[backIndex].theme;
+        setBranch(nextTheme); // Update the question domain
+        setCurrentIndex(backIndex);
+        decrementProgressBar();
+        console.log('backIndex', backIndex); // Log the new index
+    } else {
+        console.log('No backward movement possible');
     }
-    else{
-      console.log('pas de retour possible')
-    }
-  }
+};
+
 
   // fonction pour filtrer les produit selon les reponses au quiz
   
