@@ -15,7 +15,6 @@ const Quiz = () => {
   const [triggered, setTriggered] = useState(false); // État pour contrôler le déclenchement
   const [currentIndex, setCurrentIndex] = useState(0);
   const [questionText, setQuestionText] = useState(questions[0].questionText)
-  const [answerText, setAnswerText] = useState(answer[0].responses[0].answerText)
   const [branch, setBranch] = useState(questions[0].theme) // ensemble des noms de branches
   const [data, setData] = useState({}); // donnée de chaque branche pour afficher les images correspondant à chaque question
   const { incrementProgressBar, decrementProgressBar } = useProgressBar();
@@ -26,9 +25,8 @@ const Quiz = () => {
   useEffect(() => {
     setQuestionText(questions[currentIndex].questionText);
     // Ajustez ici selon la structure de votre données
-    if (answer[0] && answer[0].responses && answer[0].responses[currentIndex]) {
-      setAnswerText(answer[0].responses[currentIndex].answerText);
-    }
+    console.log(`VOIla Current Index: ${currentIndex}`);
+
   }, [currentIndex]);
 
 
@@ -36,11 +34,14 @@ const Quiz = () => {
     setTriggered(true); // Indique que la fonction a été déclenchée
     const nextIndex = currentIndex + 1;
     console.log(`Index suivant est égal à: ${nextIndex}`, `Current Index: ${currentIndex}`);
+
+      // Vérification doit être faite ici avant d'incrémenter
+      
   
     setCurrentIndex(nextIndex);
     setBranch(questions[nextIndex].theme);
     incrementProgressBar();
-  
+ 
     // Tente de charger des données en fonction de la disponibilité de productData
     if (!productData.length && nextIndex < 3) {
       // Si aucune donnée produit et index inférieur à 3, charge des données
@@ -54,13 +55,15 @@ const Quiz = () => {
         setBranch(questions[3].theme);
       }
     }
-  
+    if (currentIndex === 3){
+      console.log(`nouvelle question sur sex currentIndex est égal à ${currentIndex}`);
+    }
+   
     // Gère le cas où l'index dépasse une certaine limite
     if (nextIndex > 10) {
-      console.log("Aucun produit trouvé pour ce budget");
+     
     }
   };
-  
   async function fetchQuizData(elementToFilter) {
     try {
       const limitBudget = encodeURIComponent(elementToFilter);
@@ -79,7 +82,7 @@ const Quiz = () => {
       const productIds = productData.map(product => product.product);
       const productIdIntegers = productIds.map(id => parseInt(id, 10));
       const productIdsString = productIdIntegers.join(',');
-      const reviewsResponse = await fetch(`http://localhost:3001/api/reviews?productIds=${encodeURIComponent(productIdsString)}&occasionType=${encodeURIComponent(elementToFilter)}`);
+      const reviewsResponse = await fetch(`http://localhost:3001/api/quiz/occasion?productIds=${encodeURIComponent(productIdsString)}&occasionType=${encodeURIComponent(elementToFilter)}`);
       const reviewsData = await reviewsResponse.json();
       console.log(`Résultat du deuxième filtre:`, reviewsData);
     } catch (error) {
@@ -95,7 +98,6 @@ const Quiz = () => {
       const snapshot = await get(starCountRef); // En supposant l'utilisation de `get` au lieu de `onValue`
       const newData = snapshot.val();
       setData(newData);
-      console.log(newData)
       }; 
       fetchData();
     }, [branch]);
@@ -138,7 +140,7 @@ const Quiz = () => {
           <div className="QuizGrid">
           {Object.entries(data).map(([branch, value], index) => {
             // Ici, nous prenons la première clé de l'objet de la branche
-            console.log(branch, value);
+            
             const answer = value.answer;
             const elementToFilter = value.elementToFilter
             const image = value.image;
