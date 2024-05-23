@@ -20,13 +20,10 @@ const Quiz = () => {
   const { incrementProgressBar, decrementProgressBar } = useProgressBar();
   const [productData, setProductData] = useState([]);
 
-
-
   useEffect(() => {
     setQuestionText(questions[currentIndex].questionText);
     // Ajustez ici selon la structure de votre données
     console.log(`VOIla Current Index: ${currentIndex}`);
-
   }, [currentIndex]);
 
 
@@ -36,8 +33,6 @@ const Quiz = () => {
     console.log(`Index suivant est égal à: ${nextIndex}`, `Current Index: ${currentIndex}`);
 
       // Vérification doit être faite ici avant d'incrémenter
-      
-  
     setCurrentIndex(nextIndex);
     setBranch(questions[nextIndex].theme);
     incrementProgressBar();
@@ -54,19 +49,19 @@ const Quiz = () => {
         setCurrentIndex(3);
         setBranch(questions[3].theme);
       }
+    
     }
     if (currentIndex === 3){
       console.log(`nouvelle question sur sex currentIndex est égal à ${currentIndex}`);
     }
-   
     // Gère le cas où l'index dépasse une certaine limite
-    if (nextIndex > 10) {
-     
+    if (nextIndex > 10) { 
     }
   };
+
   async function fetchQuizData(elementToFilter) {
     try {
-      const limitBudget = encodeURIComponent(elementToFilter);
+      const limitBudget = encodeURIComponent(elementToFilter); // recupération de la valeur pour faire un tri sur les prod par rapport au udget
       const url = `http://localhost:3001/api/quiz/budget?limitBudget=${limitBudget}`;
       const response = await fetch(url);
       const data = await response.json();
@@ -79,7 +74,7 @@ const Quiz = () => {
   
   async function fetchAndProcessReviews(elementToFilter) {
     try {
-      const productIds = productData.map(product => product.product);
+      const productIds = productData.map(product => product.product); // recuperation des produits deja filtré par la requête anterieure
       const productIdIntegers = productIds.map(id => parseInt(id, 10));
       const productIdsString = productIdIntegers.join(',');
       const reviewsResponse = await fetch(`http://localhost:3001/api/quiz/occasion?productIds=${encodeURIComponent(productIdsString)}&occasionType=${encodeURIComponent(elementToFilter)}`);
