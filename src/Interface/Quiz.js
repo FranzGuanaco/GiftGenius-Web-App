@@ -49,9 +49,9 @@ const Quiz = () => {
         setCurrentIndex(3);
         setBranch(questions[3].theme);
       }
-    
     }
     if (currentIndex === 3){
+      await fetchQuizGender(elementToFilter);
       console.log(`nouvelle question sur sex currentIndex est égal à ${currentIndex}`);
     }
     // Gère le cas où l'index dépasse une certaine limite
@@ -78,6 +78,19 @@ const Quiz = () => {
       const productIdIntegers = productIds.map(id => parseInt(id, 10));
       const productIdsString = productIdIntegers.join(',');
       const reviewsResponse = await fetch(`http://localhost:3001/api/quiz/occasion?productIds=${encodeURIComponent(productIdsString)}&occasionType=${encodeURIComponent(elementToFilter)}`);
+      const reviewsData = await reviewsResponse.json();
+      console.log(`Résultat du deuxième filtre:`, reviewsData);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des reviews:", error);
+    }
+  }
+
+  async function fetchQuizGender(elementToFilter) {
+    try {
+      const productIds = productData.map(product => product.product); // recuperation des produits deja filtré par la requête anterieure
+      const productIdIntegers = productIds.map(id => parseInt(id, 10));
+      const productIdsString = productIdIntegers.join(',');
+      const reviewsResponse = await fetch(`http://localhost:3001/api/quiz/gender?productIds=${encodeURIComponent(productIdsString)}&sexe_destinataire=${encodeURIComponent(elementToFilter)}`);
       const reviewsData = await reviewsResponse.json();
       console.log(`Résultat du deuxième filtre:`, reviewsData);
     } catch (error) {
@@ -137,7 +150,7 @@ const Quiz = () => {
             // Ici, nous prenons la première clé de l'objet de la branche
             
             const answer = value.answer;
-            const elementToFilter = value.elementToFilter
+            const elementToFilter = value.elementToFilter;
             const image = value.image;
 
             if (!answer || !elementToFilter || !image) {
