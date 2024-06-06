@@ -33,7 +33,7 @@ const Quiz = () => {
     console.log(`Index suivant est égal à: ${nextIndex}`, `Current Index: ${currentIndex}`);
 
       // Vérification doit être faite ici avant d'incrémenter
-    setCurrentIndex(nextIndex);
+    setCurrentIndex(nextIndex); // Vchangement pour passer à la question suivante grace au useffect plus haut
     setBranch(questions[nextIndex].theme);
     incrementProgressBar();
  
@@ -54,6 +54,11 @@ const Quiz = () => {
       await fetchQuizGender(elementToFilter);
       console.log(`nouvelle question sur sex currentIndex est égal à ${currentIndex}`);
     }
+
+    if (currentIndex === 4){
+      await fetchQuizAge(elementToFilter);
+      console.log(`nouvelle question sur age currentIndex est égal à ${currentIndex}`);
+    }
     // Gère le cas où l'index dépasse une certaine limite
     if (nextIndex > 10) { 
     }
@@ -61,7 +66,7 @@ const Quiz = () => {
 
   async function fetchQuizData(elementToFilter) {
     try {
-      const limitBudget = encodeURIComponent(elementToFilter); // recupération de la valeur pour faire un tri sur les prod par rapport au udget
+      const limitBudget = encodeURIComponent(elementToFilter); // recupération de la valeur pour faire un tri sur les prod par rapport au budget
       const url = `http://localhost:3001/api/quiz/budget?limitBudget=${limitBudget}`;
       const response = await fetch(url);
       const data = await response.json();
@@ -93,6 +98,19 @@ const Quiz = () => {
       const reviewsResponse = await fetch(`http://localhost:3001/api/quiz/gender?productIds=${encodeURIComponent(productIdsString)}&sexe_destinataire=${encodeURIComponent(elementToFilter)}`);
       const reviewsData = await reviewsResponse.json();
       console.log(`Résultat du deuxième filtre:`, reviewsData);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des reviews:", error);
+    }
+  }
+
+  async function fetchQuizAge(elementToFilter) {
+    try {
+      const productIds = productData.map(product => product.product); // recuperation des produits deja filtré par la requête anterieure
+      const productIdIntegers = productIds.map(id => parseInt(id, 10));
+      const productIdsString = productIdIntegers.join(',');
+      const reviewsResponse = await fetch(`http://localhost:3001/api/quiz/age?productIds=${encodeURIComponent(productIdsString)}&age_destinataire=${encodeURIComponent(elementToFilter)}`);
+      const reviewsData = await reviewsResponse.json();
+      console.log(`Résultat du troisieme filtre:`, reviewsData);
     } catch (error) {
       console.error("Erreur lors de la récupération des reviews:", error);
     }
