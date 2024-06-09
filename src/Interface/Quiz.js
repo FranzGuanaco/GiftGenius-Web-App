@@ -59,6 +59,11 @@ const Quiz = () => {
       await fetchQuizAge(elementToFilter);
       console.log(`nouvelle question sur age currentIndex est égal à ${currentIndex}`);
     }
+
+    if (currentIndex === 5){
+      await fetchQuizPresentKind(elementToFilter);
+      console.log(`nouvelle question sur le type de cadeau currentIndex est égal à ${currentIndex}`);
+    }
     // Gère le cas où l'index dépasse une certaine limite
     if (nextIndex > 10) { 
     }
@@ -97,7 +102,7 @@ const Quiz = () => {
       const productIdsString = productIdIntegers.join(',');
       const reviewsResponse = await fetch(`http://localhost:3001/api/quiz/gender?productIds=${encodeURIComponent(productIdsString)}&sexe_destinataire=${encodeURIComponent(elementToFilter)}`);
       const reviewsData = await reviewsResponse.json();
-      console.log(`Résultat du deuxième filtre:`, reviewsData);
+      console.log(`Résultat du troisieme filtre:`, reviewsData);
     } catch (error) {
       console.error("Erreur lors de la récupération des reviews:", error);
     }
@@ -110,11 +115,28 @@ const Quiz = () => {
       const productIdsString = productIdIntegers.join(',');
       const reviewsResponse = await fetch(`http://localhost:3001/api/quiz/age?productIds=${encodeURIComponent(productIdsString)}&age_destinataire=${encodeURIComponent(elementToFilter)}`);
       const reviewsData = await reviewsResponse.json();
-      console.log(`Résultat du troisieme filtre:`, reviewsData);
+      console.log(`Résultat du quatrième filtre:`, reviewsData);
     } catch (error) {
       console.error("Erreur lors de la récupération des reviews:", error);
     }
   }
+
+  async function fetchQuizPresentKind(elementToFilter) {
+    try {
+      const productIds = productData.map(product => product.product); // recuperation des produits deja filtré par la requête anterieure
+      const productIdIntegers = productIds.map(id => parseInt(id, 10));
+      const productIdsString = productIdIntegers.join(',');
+      const reviewsResponse = await fetch(`http://localhost:3001/api/quiz/present_kind?productIds=${encodeURIComponent(productIdsString)}&cadeau_type=${encodeURIComponent(elementToFilter)}`);
+      if (!reviewsResponse.ok) {
+        throw new Error(`Server responded with status ${reviewsResponse.status}`);
+      }
+      const reviewsData = await reviewsResponse.json();
+      console.log(`Résultat du cinquieme filtre:`, reviewsData);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des reviews:", error);
+    }
+  }
+  
   
 
   // fonctionn pour afficher les proposition de reponses
