@@ -6,9 +6,9 @@ const questions = [
     { id: 4, questionText: "Quel est le sexe du destinataire ?", theme: "Sexe" },
     { id: 5, questionText: "Quel est l'âge du destinataire ?", theme: "Age" },
     { id: 6, questionText: "Quel type de cadeau cherchez vous ?", theme: "KindOfPresent" },
-    { id: 7, questionText: "Le destinataire a t il l'une de ces passions ?", theme: "Sexe" },
-    { id: 8, questionText: "Quels sont les cadeaux les plus pertinents selon vous ?", theme: "Le Nil" },
-    { id: 9, questionText: "Quels cadeaux pourriez vous offrir?", theme: "Albert Einstein" },
+    { id: 7, questionText: "Cadeau Passion ou pratique ?", theme: "PassionOrPractical" },
+    { id: 8, questionText: "Category?", theme: "Category" },
+    { id: 9, questionText: "Quels cadeaux pourriez vous offrir?", theme: "Sexe" },
     { id: 10, questionText: "A t il deja ce cadeau ?", theme: "Chine" },
     { id: 11, questionText: " ?", theme: "Budget" },
     { id: 12, questionText: " ?", theme: "Budget" }

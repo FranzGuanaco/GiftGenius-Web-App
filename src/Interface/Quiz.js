@@ -19,6 +19,7 @@ const Quiz = () => {
   const [data, setData] = useState({}); // donnée de chaque branche pour afficher les images correspondant à chaque question
   const { incrementProgressBar, decrementProgressBar } = useProgressBar();
   const [productData, setProductData] = useState([]);
+  const [productCat, setProductCat] = useState([]);
 
   useEffect(() => {
     setQuestionText(questions[currentIndex].questionText);
@@ -27,7 +28,7 @@ const Quiz = () => {
   }, [currentIndex]);
 
 
-  const handleQuestionBoxClick = async (boxIndex, elementToFilter, firstEntryKey) => {
+  const handleQuestionBoxClick = async (boxIndex, elementToFilter, secondElementToFilter) => {
     setTriggered(true); // Indique que la fonction a été déclenchée
     const nextIndex = currentIndex + 1;
     console.log(`Index suivant est égal à: ${nextIndex}`, `Current Index: ${currentIndex}`);
@@ -40,7 +41,7 @@ const Quiz = () => {
     // Tente de charger des données en fonction de la disponibilité de productData
     if (!productData.length && nextIndex < 3) {
       // Si aucune donnée produit et index inférieur à 3, charge des données
-      await fetchQuizData(elementToFilter);
+      await fetchQuizData(elementToFilter, secondElementToFilter);
     } else if (productData.length && nextIndex === 2) {
       // Si données présentes et index à 2, procède à l'analyse des reviews
       await fetchAndProcessReviews(elementToFilter);
@@ -64,23 +65,33 @@ const Quiz = () => {
       await fetchQuizPresentKind(elementToFilter);
       console.log(`nouvelle question sur le type de cadeau currentIndex est égal à ${currentIndex}`);
     }
-    // Gère le cas où l'index dépasse une certaine limite
-    if (nextIndex > 10) { 
+
+    if (currentIndex === 6){
+      await fetchQuizPresentType(elementToFilter);
+      console.log(`nouvelle question sur le type de cadeau currentIndex est égal à ${currentIndex}`);
     }
+
+    if (currentIndex === 7){
+      await fetchQuizCategory(elementToFilter);
+      console.log(`nouvelle question sur la categorie du cadeau currentIndex est égal à ${currentIndex}`);
+    }
+    // Gère le cas où l'index dépasse une certaine limite
   };
 
-  async function fetchQuizData(elementToFilter) {
+  async function fetchQuizData(elementToFilter, secondElementToFilter) {
     try {
-      const limitBudget = encodeURIComponent(elementToFilter); // recupération de la valeur pour faire un tri sur les prod par rapport au budget
-      const url = `http://localhost:3001/api/quiz/budget?limitBudget=${limitBudget}`;
-      const response = await fetch(url);
+      const minBudget = encodeURIComponent(elementToFilter);
+      const maxBudget = encodeURIComponent(secondElementToFilter);
+      
+      const response = await fetch(`http://localhost:3001/api/quiz/budget?minBudget=${minBudget}&maxBudget=${maxBudget}`);
       const data = await response.json();
       setProductData(data);
-      console.log(`Données pour le quiz avec un budget maximum de ${elementToFilter}:`, data);
+      console.log(`Data for the quiz with a maximum budget of ${secondElementToFilter}:`, data);
     } catch (error) {
-      console.error("Erreur lors de la récupération des données:", error);
+      console.error("Error while fetching data:", error);
     }
   }
+  
   
   async function fetchAndProcessReviews(elementToFilter) {
     try {
@@ -132,6 +143,35 @@ const Quiz = () => {
       }
       const reviewsData = await reviewsResponse.json();
       console.log(`Résultat du cinquieme filtre:`, reviewsData);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des reviews:", error);
+    }
+  }
+
+  async function fetchQuizPresentType(elementToFilter) {  //practical or passion
+    try {
+      const productIds = productData.map(product => product.product); // recuperation des produits deja filtré par la requête anterieure
+      const productIdIntegers = productIds.map(id => parseInt(id, 10));
+      const productIdsString = productIdIntegers.join(',');
+      const reviewsResponse = await fetch(`http://localhost:3001/api/quiz/passion_practical?productIds=${encodeURIComponent(productIdsString)}&cadeau_type=${encodeURIComponent(elementToFilter)}`);
+      if (!reviewsResponse.ok) {
+        throw new Error(`Server responded with status ${reviewsResponse.status}`);
+      }
+      const reviewsData = await reviewsResponse.json();
+      const productCat = productData.map(product => product.category); // recuperation des categories restantes apres le filtre
+      setProductCat(productCat); // Sauvegarde les catégories de produits
+      console.log(`Résultat du cinquieme filtre avec les categories restantes:`, productCat);
+      console.log(`Résultat du cinquieme filtre:`, reviewsData);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des reviews:", error);
+    }
+  }
+
+
+  async function fetchQuizCategory(elementToFilter) {  //practical or passion
+    try {
+      const productCat = productData.map(product => product.category); // recuperation des categories restantes apres le filtre
+      console.log(`Résultat du cinquieme filtre:`, productCat);
     } catch (error) {
       console.error("Erreur lors de la récupération des reviews:", error);
     }
@@ -191,16 +231,21 @@ const Quiz = () => {
             
             const answer = value.answer;
             const elementToFilter = value.elementToFilter;
+            const secondElementToFilter = value.secondElementToFilter;
             const image = value.image;
 
             if (!answer || !elementToFilter || !image) {
               return null; // Ceci va empêcher le rendu d'une QuestionBox pour des données manquantes ou incorrectes
             }
 
+            if (currentIndex === 7 && !productCat.includes(elementToFilter)) {
+              return null; 
+            }
+
             return (
             <div key={index} className="QuizItem">
             <QuestionBox
-                onClick={() => handleQuestionBoxClick(answer, elementToFilter, index)}
+                onClick={() => handleQuestionBoxClick(answer, elementToFilter, secondElementToFilter, index)}
                 filterBy={elementToFilter}
                 imageUrl={image} // Change 'alternativeImageUrl' to your desired URL or logic
                 answer={answer}
@@ -226,8 +271,7 @@ Quiz.defaultProps = {
 export default Quiz;
 
 
-// 1- ajouter des produits de differents types
-// 2- faire les premieres requête avec le quiz et les api pour les quiz
-// 3- trouver id pour verifier la reponse et faire une requete sql
-// 4- gerer le flux des questions et des reponses
-// 5- faire les differente branche du questionnaire dans Firebase
+// 1- faire la categorie
+// 2- faire la sous categorie
+// 3- poser des question personnel sur le type de produit
+// 4- a t-il deja
