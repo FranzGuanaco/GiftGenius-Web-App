@@ -75,6 +75,11 @@ const Quiz = () => {
       await fetchQuizCategory(elementToFilter);
       console.log(`nouvelle question sur la categorie du cadeau currentIndex est égal à ${currentIndex}`);
     }
+
+    if (currentIndex === 8){
+      await fetchQuizSubcategory(elementToFilter);
+      console.log(`nouvelle question sur la categorie du cadeau currentIndex est égal à ${currentIndex}`);
+    }
     // Gère le cas où l'index dépasse une certaine limite
   };
 
@@ -95,12 +100,18 @@ const Quiz = () => {
   
   async function fetchAndProcessReviews(elementToFilter) {
     try {
-      const productIds = productData.map(product => product.product); // recuperation des produits deja filtré par la requête anterieure
+      const productIds = productData.map(product => product.product_id); // recuperation des produits deja filtré par la requête anterieure
+      console.log(`productIds:`, productIds);
       const productIdIntegers = productIds.map(id => parseInt(id, 10));
       const productIdsString = productIdIntegers.join(',');
       const reviewsResponse = await fetch(`http://localhost:3001/api/quiz/occasion?productIds=${encodeURIComponent(productIdsString)}&occasionType=${encodeURIComponent(elementToFilter)}`);
-      const reviewsData = await reviewsResponse.json();
-      console.log(`Résultat du deuxième filtre:`, reviewsData);
+      if (!reviewsResponse.ok) {
+        throw new Error(`Server responded with status ${reviewsResponse.status}`);
+      }
+      const data = await reviewsResponse.json();
+      setProductData(data);
+      
+      console.log(`Résultat du deuxième filtre:`, data);
     } catch (error) {
       console.error("Erreur lors de la récupération des reviews:", error);
     }
@@ -108,12 +119,19 @@ const Quiz = () => {
 
   async function fetchQuizGender(elementToFilter) {
     try {
-      const productIds = productData.map(product => product.product); // recuperation des produits deja filtré par la requête anterieure
+      const productIds = productData.map(product => product.product_id); // recuperation des produits deja filtré par la requête anterieure
+      console.log(`productIds:`, productIds);
       const productIdIntegers = productIds.map(id => parseInt(id, 10));
       const productIdsString = productIdIntegers.join(',');
       const reviewsResponse = await fetch(`http://localhost:3001/api/quiz/gender?productIds=${encodeURIComponent(productIdsString)}&sexe_destinataire=${encodeURIComponent(elementToFilter)}`);
-      const reviewsData = await reviewsResponse.json();
-      console.log(`Résultat du troisieme filtre:`, reviewsData);
+      
+      if (!reviewsResponse.ok) {
+        throw new Error(`Server responded with status ${reviewsResponse.status}`);
+      }
+      const data = await reviewsResponse.json();
+      setProductData(data);
+
+      console.log(`Résultat du troisieme filtre:`, data);
     } catch (error) {
       console.error("Erreur lors de la récupération des reviews:", error);
     }
@@ -121,12 +139,19 @@ const Quiz = () => {
 
   async function fetchQuizAge(elementToFilter) {
     try {
-      const productIds = productData.map(product => product.product); // recuperation des produits deja filtré par la requête anterieure
+      const productIds = productData.map(product => product.product_id); // recuperation des produits deja filtré par la requête anterieure
+      console.log(`productIds:`, productIds);
       const productIdIntegers = productIds.map(id => parseInt(id, 10));
       const productIdsString = productIdIntegers.join(',');
       const reviewsResponse = await fetch(`http://localhost:3001/api/quiz/age?productIds=${encodeURIComponent(productIdsString)}&age_destinataire=${encodeURIComponent(elementToFilter)}`);
-      const reviewsData = await reviewsResponse.json();
-      console.log(`Résultat du quatrième filtre:`, reviewsData);
+      
+      if (!reviewsResponse.ok) {
+        throw new Error(`Server responded with status ${reviewsResponse.status}`);
+      }
+      const data = await reviewsResponse.json();
+      setProductData(data);
+
+      console.log(`Résultat du quatrième filtre:`, data);
     } catch (error) {
       console.error("Erreur lors de la récupération des reviews:", error);
     }
@@ -134,15 +159,16 @@ const Quiz = () => {
 
   async function fetchQuizPresentKind(elementToFilter) {
     try {
-      const productIds = productData.map(product => product.product); // recuperation des produits deja filtré par la requête anterieure
+      const productIds = productData.map(product => product.product_id); // recuperation des produits deja filtré par la requête anterieure
       const productIdIntegers = productIds.map(id => parseInt(id, 10));
       const productIdsString = productIdIntegers.join(',');
       const reviewsResponse = await fetch(`http://localhost:3001/api/quiz/present_kind?productIds=${encodeURIComponent(productIdsString)}&cadeau_type=${encodeURIComponent(elementToFilter)}`);
       if (!reviewsResponse.ok) {
         throw new Error(`Server responded with status ${reviewsResponse.status}`);
       }
-      const reviewsData = await reviewsResponse.json();
-      console.log(`Résultat du cinquieme filtre:`, reviewsData);
+      const data = await reviewsResponse.json();
+      setProductData(data);
+      console.log(`Résultat du cinquieme filtre:`, data);
     } catch (error) {
       console.error("Erreur lors de la récupération des reviews:", error);
     }
@@ -150,18 +176,19 @@ const Quiz = () => {
 
   async function fetchQuizPresentType(elementToFilter) {  //practical or passion
     try {
-      const productIds = productData.map(product => product.product); // recuperation des produits deja filtré par la requête anterieure
+      const productIds = productData.map(product => product.product_id); // recuperation des produits deja filtré par la requête anterieure
       const productIdIntegers = productIds.map(id => parseInt(id, 10));
       const productIdsString = productIdIntegers.join(',');
       const reviewsResponse = await fetch(`http://localhost:3001/api/quiz/passion_practical?productIds=${encodeURIComponent(productIdsString)}&cadeau_type=${encodeURIComponent(elementToFilter)}`);
       if (!reviewsResponse.ok) {
         throw new Error(`Server responded with status ${reviewsResponse.status}`);
       }
-      const reviewsData = await reviewsResponse.json();
+      const data = await reviewsResponse.json();
       const productCat = productData.map(product => product.category); // recuperation des categories restantes apres le filtre
       setProductCat(productCat); // Sauvegarde les catégories de produits
-      console.log(`Résultat du cinquieme filtre avec les categories restantes:`, productCat);
-      console.log(`Résultat du cinquieme filtre:`, reviewsData);
+      setProductData(data);
+      console.log(`Résultat du sixieme filtre avec les categories restantes:`, productCat);
+      console.log(`Résultat du sixieme filtre:`, data);
     } catch (error) {
       console.error("Erreur lors de la récupération des reviews:", error);
     }
@@ -170,14 +197,48 @@ const Quiz = () => {
 
   async function fetchQuizCategory(elementToFilter) {  //practical or passion
     try {
-      const productCat = productData.map(product => product.category); // recuperation des categories restantes apres le filtre
-      console.log(`Résultat du cinquieme filtre:`, productCat);
-    } catch (error) {
-      console.error("Erreur lors de la récupération des reviews:", error);
-    }
+      const productIds = productData.map(product => product.product_id);
+      const productIdIntegers = productIds.map(id => parseInt(id, 10));
+      const productIdsString = productIdIntegers.join(',');
+      const reviewsResponse = await fetch(`http://localhost:3001/api/quiz/category?productIds=${encodeURIComponent(productIdsString)}&products_category=${encodeURIComponent(elementToFilter)}`);
+      if (!reviewsResponse.ok) {
+        throw new Error(`Server responded with status ${reviewsResponse.status}`);
+      }
+      const data = await reviewsResponse.json();
+      setProductData(data);
+      const productSubCat = productData.map(product => product.subcategory); 
+      setProductCat(productSubCat); // Sauvegarde les catégories de produits
+      console.log(`Résultat du sixieme filtre avec les categories restantes:`, productCat);
+      console.log(`Résultat du sixieme filtre:`, data);
+     // recuperation des produits deja filtré par la requête anterieure
+    
+  } catch (error) {
+    console.error("Erreur lors de la récupération des reviews:", error);
   }
+}
+
+
+async function fetchQuizSubcategory(elementToFilter) {  //practical or passion
+  try {
+    const productIds = productData.map(product => product.product_id);
+    const productIdIntegers = productIds.map(id => parseInt(id, 10));
+    const productIdsString = productIdIntegers.join(',');
+    const reviewsResponse = await fetch(`http://localhost:3001/api/quiz/subcategory?productIds=${encodeURIComponent(productIdsString)}&products_subcategory=${encodeURIComponent(elementToFilter)}`);
+    if (!reviewsResponse.ok) {
+      throw new Error(`Server responded with status ${reviewsResponse.status}`);
+    }
+    const data = await reviewsResponse.json();
+    setProductData(data);
+    const productSubCat = productData.map(product => product.subcategory); 
+    setProductCat(productSubCat); // Sauvegarde les catégories de produits
+    console.log(`Résultat du sixieme filtre avec les categories restantes:`, productCat);
+    console.log(`Résultat du sixieme filtre:`, data);
+   // recuperation des produits deja filtré par la requête anterieure
   
-  
+} catch (error) {
+  console.error("Erreur lors de la récupération des reviews:", error);
+}
+}
 
   // fonctionn pour afficher les proposition de reponses
   useEffect(() => {
@@ -238,7 +299,7 @@ const Quiz = () => {
               return null; // Ceci va empêcher le rendu d'une QuestionBox pour des données manquantes ou incorrectes
             }
 
-            if (currentIndex === 7 && !productCat.includes(elementToFilter)) {
+            if (currentIndex >= 7 && !productCat.includes(elementToFilter)) {
               return null; 
             }
 
