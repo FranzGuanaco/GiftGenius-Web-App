@@ -43,14 +43,14 @@ useEffect(() => {
       console.log('Categories currently selected:', selectedCategory)
       
     }
-    let url = 'http://localhost:3001/api/products'; // URL par défaut
+    let url = 'http://localhost:3001/api/interface/products'; // URL par défaut
     if (queryParams.length > 0) {
-      const baseApiUrl =  selectedSeller.length > 0 && selectedBrand.length > 0 && selectedCategory.length > 0 ? '/api/Filtre/vendeur/marque/categorie' : 
-                          selectedSeller.length > 0 && selectedBrand.length > 0 ? '/api/Filtre/vendeur/marque': 
-                          selectedCategory.length > 0 && selectedBrand.length > 0 ? '/api/Filtre/category/marque':
-                          selectedCategory.length > 0 && selectedSeller.length > 0 ? '/api/Filtre/category/vendeur':
-                          selectedSeller.length > 0 ? '/api/Filtrevendeur' : 
-                          selectedBrand.length > 0 ? '/api/Filtremarque': '/api/categoriesfilter'
+      const baseApiUrl =  selectedSeller.length > 0 && selectedBrand.length > 0 && selectedCategory.length > 0 ? '/api/interface/Filtre/vendeur/marque/categorie' : 
+                          selectedSeller.length > 0 && selectedBrand.length > 0 ? '/api/interface/Filtre/vendeur/marque': 
+                          selectedCategory.length > 0 && selectedBrand.length > 0 ? '/api/interface/Filtre/category/marque':
+                          selectedCategory.length > 0 && selectedSeller.length > 0 ? '/api/interface/Filtre/category/vendeur':
+                          selectedSeller.length > 0 ? '/api/interface/Filtrevendeur' : 
+                          selectedBrand.length > 0 ? '/api/Filtremarque': '/api/interface/categoriesfilter'
       url = `http://localhost:3001${baseApiUrl}?${queryParams.join('&')}`;     
     }
 

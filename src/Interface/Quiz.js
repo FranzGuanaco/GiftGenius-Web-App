@@ -78,7 +78,12 @@ const Quiz = () => {
 
     if (currentIndex === 8){
       await fetchQuizSubcategory(elementToFilter);
-      console.log(`nouvelle question sur la categorie du cadeau currentIndex est égal à ${currentIndex}`);
+      console.log(`nouvelle question sur la sous categorie du cadeau currentIndex est égal à ${currentIndex}`);
+    }
+
+    if (currentIndex === 9){
+      await fetchQuizSubsubcategory(elementToFilter);
+      console.log(`nouvelle question sur la sous sous categorie du cadeau currentIndex est égal à ${currentIndex}`);
     }
     // Gère le cas où l'index dépasse une certaine limite
   };
@@ -229,9 +234,32 @@ async function fetchQuizSubcategory(elementToFilter) {  //practical or passion
     }
     const data = await reviewsResponse.json();
     setProductData(data);
-    const productSubCat = productData.map(product => product.subcategory); 
+    const productSubCat = productData.map(product => product.subsubcategory); 
     setProductCat(productSubCat); // Sauvegarde les catégories de produits
-    console.log(`Résultat du sixieme filtre avec les categories restantes:`, productCat);
+    console.log(`voici ce qu'affiche productcat`, productCat);
+    console.log(`Résultat du sixieme filtre:`, data);
+   // recuperation des produits deja filtré par la requête anterieure
+  
+} catch (error) {
+  console.error("Erreur lors de la récupération des reviews:", error);
+}
+}
+
+
+async function fetchQuizSubsubcategory(elementToFilter) {  //practical or passion
+  try {
+    const productIds = productData.map(product => product.product_id);
+    const productIdIntegers = productIds.map(id => parseInt(id, 10));
+    const productIdsString = productIdIntegers.join(',');
+    const reviewsResponse = await fetch(`http://localhost:3001/api/quiz/s.subcategory?productIds=${encodeURIComponent(productIdsString)}&products_subcategory=${encodeURIComponent(elementToFilter)}`);
+    if (!reviewsResponse.ok) {
+      throw new Error(`Server responded with status ${reviewsResponse.status}`);
+    }
+    const data = await reviewsResponse.json();
+    setProductData(data);
+    const productSubCat = productData.map(product => product.subsubcategory); 
+    setProductCat(productSubCat); // Sauvegarde les catégories de produits
+    console.log(`voici ce qu'affiche productcat`, productCat);
     console.log(`Résultat du sixieme filtre:`, data);
    // recuperation des produits deja filtré par la requête anterieure
   
@@ -332,7 +360,5 @@ Quiz.defaultProps = {
 export default Quiz;
 
 
-// 1- faire la categorie
-// 2- faire la sous categorie
 // 3- poser des question personnel sur le type de produit
 // 4- a t-il deja

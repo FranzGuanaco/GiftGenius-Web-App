@@ -59,7 +59,7 @@ function Navbar(props) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/category/subcategory/subsubcategory');
+        const response = await fetch('http://localhost:3001/api/interface/category/subcategory/subsubcategory');
         const data = await response.json();
         setCategory(data); // Stockez les données des marques dans l'état
       } catch (error) {

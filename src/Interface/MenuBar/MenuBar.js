@@ -34,7 +34,7 @@ function MenuBar(props) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/marques');
+        const response = await fetch('http://localhost:3001/api/interface/marques');
         const data = await response.json();
         setBrand(data); // Stockez les données des marques dans l'état
       } catch (error) {
@@ -48,7 +48,7 @@ function MenuBar(props) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/vendeur');
+        const response = await fetch('http://localhost:3001/api/interface/vendeur');
         const data = await response.json();
         setSeller(data); // Stockez les données des marques dans l'état
       } catch (error) {
