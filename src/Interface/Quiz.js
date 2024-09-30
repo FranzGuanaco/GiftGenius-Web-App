@@ -20,16 +20,18 @@ const Quiz = () => {
   const { incrementProgressBar, decrementProgressBar } = useProgressBar();
   const [productData, setProductData] = useState([]);
   const [productCat, setProductCat] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
 
   useEffect(() => {
     // Si currentIndex n'est pas 6, on utilise la question directement depuis le tableau
-    if (currentIndex !== 7) {
+    if (currentIndex !== 19) {
       setQuestionText(questions[currentIndex].questionText);
       console.log(`Question à l'index ${currentIndex}: ${questions[currentIndex].questionText}`);
     } else {
       // Si currentIndex est égal à 6, on appelle la fonction fetch pour récupérer le prompt via l'API
       const fetchPromptForQuestion = async () => {
+        setIsLoading(true)
         try {
           // Appel à l'API pour récupérer le prompt via Claude ou autre
           const questionResponse = await fetch(`http://localhost:3001/api/claude/generate`, {
@@ -39,19 +41,19 @@ const Quiz = () => {
             },
             body: JSON.stringify({ prompt: 'Pose uniquement une question directement à l\'utilisateur pour savoir si la categorie de cadeau restant peut lui convenir' }),
           });
-  
           if (!questionResponse.ok) {
             throw new Error(`Server responded with status ${questionResponse.status}`);
           }
-  
           const questionData = await questionResponse.json();
           setQuestionText(questionData.generatedText);  // Mettre à jour le texte de la question avec la réponse de l'API
           console.log(`Question générée par Claude : ${questionData.generatedText}`);
         } catch (error) {
           console.error("Erreur lors de la récupération du prompt via l'API :", error);
         }
+        finally{
+          setIsLoading(false)
+        }
       };
-  
       fetchPromptForQuestion(); // Appel de la fonction asynchrone pour récupérer la question
     }
   }, [currentIndex]);  // Déclenche le useEffect à chaque changement de currentIndex
@@ -62,18 +64,17 @@ const Quiz = () => {
     setTriggered(true); // Indique que la fonction a été déclenchée
     const nextIndex = currentIndex + 1;
     console.log(`Index suivant est égal à: ${nextIndex}`, `Current Index: ${currentIndex}`);
-
       // Vérification doit être faite ici avant d'incrémenter
     setCurrentIndex(nextIndex); // Vchangement pour passer à la question suivante grace au useffect plus haut
     setBranch(questions[nextIndex].theme);
     incrementProgressBar();
- 
+    console.log(`voici la branch de firebase ${branch}`)
     // Tente de charger des données en fonction de la disponibilité de productData
     if (!productData.length && nextIndex < 3) {
       // Si aucune donnée produit et index inférieur à 3, charge des données
       await fetchQuizData(elementToFilter, secondElementToFilter);
-     
-    } else if (productData.length && nextIndex === 2) {
+    } 
+    else if (productData.length && nextIndex === 2) {
       // Si données présentes et index à 2, procède à l'analyse des reviews
       await fetchAndProcessReviews(elementToFilter);
       if (elementToFilter === 'fete_des_peres_mere') {
@@ -83,33 +84,30 @@ const Quiz = () => {
       }
     }
     if (currentIndex === 3){
-      
       await fetchQuizGender(elementToFilter);
       console.log(`nouvelle question sur sex currentIndex est égal à ${currentIndex}`);
     }
 
     if (currentIndex === 4){
-    
       await fetchQuizAge(elementToFilter);
       console.log(`nouvelle question sur age currentIndex est égal à ${currentIndex}`);
     }
 
     if (currentIndex === 5){
-
       await fetchQuizPresentKind(elementToFilter);
       console.log(`nouvelle question sur le type de cadeau currentIndex est égal à ${currentIndex}`);
     }
 
     if (currentIndex === 6){
-     
       await fetchQuizPresentType(elementToFilter);
-      console.log(`nouvelle question sur le type de cadeau currentIndex est égal à ${currentIndex}`);
+      console.log(`fetchQuizPresentType nouvelle question sur le type de cadeau currentIndex est égal à ${currentIndex}`);
+     
     }
 
     if (currentIndex === 7){
-
       await fetchQuizCategory(elementToFilter);
       console.log(`nouvelle question sur la categorie du cadeau currentIndex est égal à ${currentIndex}`);
+      
     }
 
     if (currentIndex === 8){
@@ -237,51 +235,24 @@ const Quiz = () => {
 
   async function fetchQuizCategory(elementToFilter) {  
     try {
-      // Transforme les IDs de produit en chaînes
       const productIds = productData.map(product => product.product_id);
       const productIdIntegers = productIds.map(id => parseInt(id, 10));
       const productIdsString = productIdIntegers.join(',');
-  
-      // Appel à l'API quiz/category
-      const reviewsResponse = await fetch(`http://localhost:3001/api/quiz/category?productIds=${encodeURIComponent(productIdsString)}&products_category=${encodeURIComponent(elementToFilter)}`);
-      
-      if (!reviewsResponse.ok) {
+      const reviewsResponse = await fetch(`http://localhost:3001/api/quiz/category?productIds=${encodeURIComponent(productIdsString)}&products_subcategory=${encodeURIComponent(elementToFilter)}`);
+    if (!reviewsResponse.ok) {
         throw new Error(`Server responded with status ${reviewsResponse.status}`);
       }
-      
-      // Récupérer les données de l'API quiz/category
       const data = await reviewsResponse.json();
-      
-      // Mettre à jour les données produit avec celles récupérées
       setProductData(data);
-      
-      // Appel à l'API Claude pour générer une question
-      const questionResponse = await fetch(`http://localhost:3000/api/claude/generate`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ prompt: 'Quel cadeau recommanderiez-vous ?' }),
-      });
-  
-      if (!questionResponse.ok) {
-        throw new Error(`Server responded with status ${questionResponse.status}`);
-      }
-  
-      const questionData = await questionResponse.json();
-      
-      // Mettre à jour la branche (le prompt de question)
-      setBranch(questionData.generatedText);  // Assure-toi que setBranch est définie
-  
-      // Extraire et sauvegarder les sous-catégories de produits
-      const productSubCat = data.map(product => product.subcategory); 
-      setProductCat(productSubCat);
-  
-      console.log(`Résultat du sixième filtre avec les catégories restantes:`, productCat);
-      console.log(`Résultat du sixième filtre:`, data);
-    } catch (error) {
-      console.error("Erreur lors de la récupération des reviews ou de la question:", error);
-    }
+      const productSubCat = productData.map(product => product.subcategory); 
+      setProductCat(productSubCat); // Sauvegarde les catégories de produits
+      console.log(`voici ce qu'affiche productcat`, productCat);
+      console.log(`Résultat du sixieme filtre:`, data);
+     // recuperation des produits deja filtré par la requête anterieure
+    
+  } catch (error) {
+    console.error("Erreur lors de la récupération des reviews:", error);
+  }
   }
   
 
@@ -375,6 +346,12 @@ async function fetchQuizSubsubcategory(elementToFilter) {  //practical or passio
         </div>
       </div>
 
+      {isLoading ? (
+        <div className="loader">Loading...</div>  
+      ) : (
+        <p></p>  
+      )}
+
       {Object.keys(data).length > 0 ? (
         <div className="QuizStyle" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100vh'}}>
           <div className="QuizGrid">
@@ -390,7 +367,7 @@ async function fetchQuizSubsubcategory(elementToFilter) {  //practical or passio
               return null; // Ceci va empêcher le rendu d'une QuestionBox pour des données manquantes ou incorrectes
             }
 
-            if (currentIndex >= 7 && !productCat.includes(elementToFilter)) {
+            if (currentIndex >= 10 && !productCat.includes(elementToFilter)) {
               return null; 
             }
 
