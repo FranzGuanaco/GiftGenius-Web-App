@@ -21,17 +21,20 @@ const Quiz = () => {
   const [productData, setProductData] = useState([]);
   const [productCat, setProductCat] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [answerData, setAnswerData] = useState(false);
 
 
   useEffect(() => {
     // Si currentIndex n'est pas 6, on utilise la question directement depuis le tableau
-    if (currentIndex !== 19) {
+    if (currentIndex <=9) {
       setQuestionText(questions[currentIndex].questionText);
       console.log(`Question à l'index ${currentIndex}: ${questions[currentIndex].questionText}`);
     } else {
       // Si currentIndex est égal à 6, on appelle la fonction fetch pour récupérer le prompt via l'API
       const fetchPromptForQuestion = async () => {
         setIsLoading(true)
+        
+        
         try {
           // Appel à l'API pour récupérer le prompt via Claude ou autre
           const questionResponse = await fetch(`http://localhost:3001/api/claude/generate`, {
@@ -39,12 +42,16 @@ const Quiz = () => {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ prompt: 'Pose uniquement une question directement à l\'utilisateur pour savoir si la categorie de cadeau restant peut lui convenir' }),
-          });
+            body: JSON.stringify({ 
+              prompt: 'Pose uniquement une question directement à l\'utilisateur pour déterminer quel cadeau parmi la liste lui convient le mieux' }),      
+        });
+        
+
           if (!questionResponse.ok) {
-            throw new Error(`Server responded with status ${questionResponse.status}`);
+            throw new Error(`Error Server responded with status ${questionResponse.status}`);
           }
           const questionData = await questionResponse.json();
+          
           setQuestionText(questionData.generatedText);  // Mettre à jour le texte de la question avec la réponse de l'API
           console.log(`Question générée par Claude : ${questionData.generatedText}`);
         } catch (error) {
@@ -52,6 +59,7 @@ const Quiz = () => {
         }
         finally{
           setIsLoading(false)
+          setAnswerData(true)
         }
       };
       fetchPromptForQuestion(); // Appel de la fonction asynchrone pour récupérer la question
@@ -238,7 +246,7 @@ const Quiz = () => {
       const productIds = productData.map(product => product.product_id);
       const productIdIntegers = productIds.map(id => parseInt(id, 10));
       const productIdsString = productIdIntegers.join(',');
-      const reviewsResponse = await fetch(`http://localhost:3001/api/quiz/category?productIds=${encodeURIComponent(productIdsString)}&products_subcategory=${encodeURIComponent(elementToFilter)}`);
+      const reviewsResponse = await fetch(`http://localhost:3001/api/quiz/category?productIds=${encodeURIComponent(productIdsString)}&products_category=${encodeURIComponent(elementToFilter)}`);
     if (!reviewsResponse.ok) {
         throw new Error(`Server responded with status ${reviewsResponse.status}`);
       }
@@ -247,7 +255,7 @@ const Quiz = () => {
       const productSubCat = productData.map(product => product.subcategory); 
       setProductCat(productSubCat); // Sauvegarde les catégories de produits
       console.log(`voici ce qu'affiche productcat`, productCat);
-      console.log(`Résultat du sixieme filtre:`, data);
+      console.log(`Résultat du septieme filtre:`, data);
      // recuperation des produits deja filtré par la requête anterieure
     
   } catch (error) {
@@ -255,7 +263,6 @@ const Quiz = () => {
   }
   }
   
-
 
 async function fetchQuizSubcategory(elementToFilter) {  //practical or passion
   try {
@@ -278,7 +285,6 @@ async function fetchQuizSubcategory(elementToFilter) {  //practical or passion
   console.error("Erreur lors de la récupération des reviews:", error);
 }
 }
-
 
 async function fetchQuizSubsubcategory(elementToFilter) {  //practical or passion
   try {
@@ -346,52 +352,65 @@ async function fetchQuizSubsubcategory(elementToFilter) {  //practical or passio
         </div>
       </div>
 
-      {isLoading ? (
-        <div className="loader">Loading...</div>  
-      ) : (
-        <p></p>  
-      )}
-
       {Object.keys(data).length > 0 ? (
-        <div className="QuizStyle" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100vh'}}>
-          <div className="QuizGrid">
-          {Object.entries(data).map(([branch, value], index) => {
-            // Ici, nous prenons la première clé de l'objet de la branche
-            
-            const answer = value.answer;
-            const elementToFilter = value.elementToFilter;
-            const secondElementToFilter = value.secondElementToFilter;
-            const image = value.image;
+  <div className="QuizStyle" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100vh' }}>
+    <div className="QuizGrid">
+      {Object.entries(data).map(([branch, value], index) => {
+        const answer = value.answer;
+        const elementToFilter = value.elementToFilter;
+        const secondElementToFilter = value.secondElementToFilter;
+        const image = value.image;
 
-            if (!answer || !elementToFilter || !image) {
-              return null; // Ceci va empêcher le rendu d'une QuestionBox pour des données manquantes ou incorrectes
-            }
+        if (!answer || !elementToFilter || !image) {
+          return null; // Empêche le rendu d'une QuestionBox pour des données manquantes ou incorrectes
+        }
 
-            if (currentIndex >= 10 && !productCat.includes(elementToFilter)) {
-              return null; 
-            }
+        if (currentIndex >= 11 && !productCat.includes(elementToFilter)) {
+          return null; 
+        }
 
-            return (
-            <div key={index} className="QuizItem">
-            <QuestionBox
-                onClick={() => handleQuestionBoxClick(answer, elementToFilter, secondElementToFilter, index)}
-                filterBy={elementToFilter}
-                imageUrl={image} // Change 'alternativeImageUrl' to your desired URL or logic
-                answer={answer}
-              />
-              </div>
-            );
-            })}
+        console.log("isLoading:", isLoading);
+        console.log("answerData:", answerData);
+
+        return (
+          <div key={index} className="QuizItem">
+            {isLoading ? (
+              <>
+                <div style={{top: '10%'}}>Chargement...</div>
+                {console.log("Affichage du chargement car isLoading est true")}
+              </>
+            ) : answerData ? (
+              <>
+                <div>erjvnekvnkrejn...</div>
+                {console.log("Affichage du H1 car answerData est true et isLoading est false")}
+              </>
+            ) : (
+              <>
+                <QuestionBox
+                  onClick={() => handleQuestionBoxClick(answer, elementToFilter, secondElementToFilter, index)}
+                  filterBy={elementToFilter}
+                  imageUrl={image}
+                  answer={answer}
+                />
+                {console.log("Affichage de QuestionBox : isLoading est false et answerData est false")}
+              </>
+            )}
           </div>
-        </div>
-      ) : <p>Chargement des données...</p>}
-    </div>
-    <div style={{ top: '60%', paddingLeft: "70%", zIndex: '1', position:'fixed' }}>
-      <ProgressBar/>
+        );
+      })}
     </div>
   </div>
-);
-} 
+) : (
+  <p>Chargement des données...</p>
+)}
+
+       </div>
+      <div style={{ top: '60%', paddingLeft: "70%", zIndex: '1', position:'fixed' }}>
+        <ProgressBar/>
+      </div>
+    </div>
+    );} 
+
 
 Quiz.defaultProps = {
   question: "Question par défaut", // Ajoutez votre valeur par défaut ici
@@ -400,5 +419,6 @@ Quiz.defaultProps = {
 export default Quiz;
 
 
-// 3- poser des question personnel sur le type de produit
-// 4- a t-il deja
+// aller jusqu'à subcategory
+// cocher les boutons
+// reparer le retour qui fonctionne mal
