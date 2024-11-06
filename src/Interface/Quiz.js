@@ -22,6 +22,8 @@ const Quiz = () => {
   const [productCat, setProductCat] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [answerData, setAnswerData] = useState(false);
+  const [propositions, setPropositions] = useState([]); // État pour stocker les propositions de réponse
+
 
 
   useEffect(() => {
@@ -34,8 +36,11 @@ const Quiz = () => {
       const fetchPromptForQuestion = async () => {
         setIsLoading(true)
         
-        
         try {
+
+          const questionPrompt = 'Pose uniquement une question directement à l\'utilisateur pour déterminer quel cadeau parmi la liste lui convient le mieux';
+          // Remplacez ce texte par votre prompt pour les propositions de réponse
+          const responsePrompt = 'Donnez quelques propositions de réponse possibles pour le cadeau.';
           // Appel à l'API pour récupérer le prompt via Claude ou autre
           const questionResponse = await fetch(`http://localhost:3001/api/claude/generate`, {
             method: 'POST',
@@ -43,7 +48,8 @@ const Quiz = () => {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({ 
-              prompt: 'Pose uniquement une question directement à l\'utilisateur pour déterminer quel cadeau parmi la liste lui convient le mieux' }),      
+              prompt: questionPrompt,
+              responsePrompt: responsePrompt }),    
         });
         
 
@@ -53,6 +59,7 @@ const Quiz = () => {
           const questionData = await questionResponse.json();
           
           setQuestionText(questionData.generatedText);  // Mettre à jour le texte de la question avec la réponse de l'API
+          setPropositions(questionData.propositions); 
           console.log(`Question générée par Claude : ${questionData.generatedText}`);
         } catch (error) {
           console.error("Erreur lors de la récupération du prompt via l'API :", error);
@@ -374,28 +381,29 @@ async function fetchQuizSubsubcategory(elementToFilter) {  //practical or passio
 
         return (
           <div key={index} className="QuizItem">
-            {isLoading ? (
-              <>
-                <div style={{top: '10%'}}>Chargement...</div>
-                {console.log("Affichage du chargement car isLoading est true")}
-              </>
-            ) : answerData ? (
-              <>
-                <div>erjvnekvnkrejn...</div>
-                {console.log("Affichage du H1 car answerData est true et isLoading est false")}
-              </>
-            ) : (
-              <>
-                <QuestionBox
-                  onClick={() => handleQuestionBoxClick(answer, elementToFilter, secondElementToFilter, index)}
-                  filterBy={elementToFilter}
-                  imageUrl={image}
-                  answer={answer}
-                />
-                {console.log("Affichage de QuestionBox : isLoading est false et answerData est false")}
-              </>
-            )}
-          </div>
+          {isLoading ? (
+            <>
+              <div style={{top: '10%'}}>Chargement...</div>
+              {console.log("Affichage du chargement car isLoading est true")}
+            </>
+          ) : answerData ? (
+            <>
+           
+            <QuestionBox
+              onClick={() => handleQuestionBoxClick(answer, elementToFilter, secondElementToFilter, index)}
+              answer='ee' 
+            />
+            
+            </>
+          ) : (
+            <QuestionBox
+              onClick={() => handleQuestionBoxClick(answer, elementToFilter, secondElementToFilter, index)}
+              filterBy={elementToFilter}
+              imageUrl={image}
+              answer={answer}
+            />
+          )}
+        </div>        
         );
       })}
     </div>
