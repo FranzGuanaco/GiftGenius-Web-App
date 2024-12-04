@@ -24,7 +24,13 @@ const Quiz = () => {
   const [answerData, setAnswerData] = useState(false);
   const [propositions, setPropositions] = useState([]); // État pour stocker les propositions de réponse
 
-
+  useEffect(() => {
+    console.log('Propositions mises à jour :', propositions);
+    console.log('Type de propositions :', typeof propositions);
+    console.log('Est-ce un tableau ?', Array.isArray(propositions));
+    console.log('Contenu de propositions :', propositions);
+    console.log(propositions.map((item) => item)); // Doit afficher les éléments
+  }, [propositions]); 
 
   useEffect(() => {
     // Si currentIndex n'est pas 6, on utilise la question directement depuis le tableau
@@ -40,16 +46,14 @@ const Quiz = () => {
 
           const questionPrompt = 'Pose uniquement une question directement à l\'utilisateur pour déterminer quel cadeau parmi la liste lui convient le mieux';
           // Remplacez ce texte par votre prompt pour les propositions de réponse
-          const responsePrompt = 'Donnez quelques propositions de réponse possibles pour le cadeau.';
+          const responsePrompt = 'Donne 10 propositions (de 3 mots maximum) de réponse possibles pour le cadeau en format array sans aucune formule d\'introduction.';
           // Appel à l'API pour récupérer le prompt via Claude ou autre
           const questionResponse = await fetch(`http://localhost:3001/api/claude/generate`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ 
-              prompt: questionPrompt,
-              responsePrompt: responsePrompt }),    
+            body: JSON.stringify({ prompt: questionPrompt}),    
         });
         
 
@@ -59,8 +63,24 @@ const Quiz = () => {
           const questionData = await questionResponse.json();
           
           setQuestionText(questionData.generatedText);  // Mettre à jour le texte de la question avec la réponse de l'API
-          setPropositions(questionData.propositions); 
           console.log(`Question générée par Claude : ${questionData.generatedText}`);
+
+          // Appel pour générer les propositions
+          const propositionsResponse = await fetch(`http://localhost:3001/api/claude/generate/propositions`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json',},
+          body: JSON.stringify({ prompt: responsePrompt }),
+          });
+
+          if (!propositionsResponse.ok) {
+            throw new Error(`Error Server responded with status ${propositionsResponse.status}`);
+              }
+
+          const propositionsData = await propositionsResponse.json();
+          setPropositions(JSON.parse(propositionsData.generatedText)); // Met à jour les propositions
+          console.log(`Propositions générées par Claude : ${propositionsData.generatedText}`);
+
+
         } catch (error) {
           console.error("Erreur lors de la récupération du prompt via l'API :", error);
         }
@@ -375,7 +395,6 @@ async function fetchQuizSubsubcategory(elementToFilter) {  //practical or passio
         if (currentIndex >= 11 && !productCat.includes(elementToFilter)) {
           return null; 
         }
-
         console.log("isLoading:", isLoading);
         console.log("answerData:", answerData);
 
@@ -388,12 +407,14 @@ async function fetchQuizSubsubcategory(elementToFilter) {  //practical or passio
             </>
           ) : answerData ? (
             <>
-           
+           {Array.isArray(propositions) && propositions.map((response, index) => (
             <QuestionBox
+              key={index} // Une clé unique pour chaque élément
               onClick={() => handleQuestionBoxClick(answer, elementToFilter, secondElementToFilter, index)}
-              answer='ee' 
+             
+              answer={response} // Propriété réponse passée au composant 
             />
-            
+          ))}
             </>
           ) : (
             <QuestionBox
@@ -427,6 +448,5 @@ Quiz.defaultProps = {
 export default Quiz;
 
 
-// aller jusqu'à subcategory
 // cocher les boutons
 // reparer le retour qui fonctionne mal
