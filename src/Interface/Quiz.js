@@ -44,9 +44,11 @@ const Quiz = () => {
         
         try {
 
-          const questionPrompt = 'Pose uniquement une question directement à l\'utilisateur pour déterminer quel cadeau parmi la liste lui convient le mieux';
+          const questionPrompt = 'Pose uniquement une question directement à l\'utilisateur pour déterminer quel cadeau parmi la liste ' + 
+          'lui convient le mieux';
           // Remplacez ce texte par votre prompt pour les propositions de réponse
-          const responsePrompt = 'Donne 10 propositions (de 3 mots maximum) de réponse possibles pour le cadeau en format array sans aucune formule d\'introduction.';
+          const responsePrompt = 'Donne maximum 10 propositions (de 3 mots maximum) de réponses possibles à la question '+
+          'en format array sans aucune formule d\'introduction il faut que cela permette d\'éliminer des élément de la liste';
           // Appel à l'API pour récupérer le prompt via Claude ou autre
           const questionResponse = await fetch(`http://localhost:3001/api/claude/generate`, {
             method: 'POST',
@@ -69,7 +71,7 @@ const Quiz = () => {
           const propositionsResponse = await fetch(`http://localhost:3001/api/claude/generate/propositions`, {
           method: 'POST',
           headers: {'Content-Type': 'application/json',},
-          body: JSON.stringify({ prompt: responsePrompt }),
+          body: JSON.stringify({ prompt: responsePrompt, contextQuestion: questionData.generatedText  }),
           });
 
           if (!propositionsResponse.ok) {
