@@ -23,6 +23,8 @@ const Quiz = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [answerData, setAnswerData] = useState(false);
   const [propositions, setPropositions] = useState([]); // État pour stocker les propositions de réponse
+  const tests = ["Option 1", "Option 2", "Option 3", "Option 4"];
+
 
   useEffect(() => {
     console.log('Propositions mises à jour :', propositions);
@@ -30,6 +32,7 @@ const Quiz = () => {
     console.log('Est-ce un tableau ?', Array.isArray(propositions));
     console.log('Contenu de propositions :', propositions);
     console.log(propositions.map((item) => item)); // Doit afficher les éléments
+    console.log("useEffect exécuté !");
   }, [propositions]); 
 
   useEffect(() => {
@@ -47,7 +50,7 @@ const Quiz = () => {
           const questionPrompt = 'Pose uniquement une question directement à l\'utilisateur pour déterminer quel cadeau parmi la liste ' + 
           'lui convient le mieux';
           // Remplacez ce texte par votre prompt pour les propositions de réponse
-          const responsePrompt = 'Donne maximum 10 propositions (de 3 mots maximum) de réponses possibles à la question '+
+          const responsePrompt = 'Donne maximum 5 propositions (de 3 mots maximum) de réponses possibles à la question '+
           'en format array sans aucune formule d\'introduction il faut que cela permette d\'éliminer des élément de la liste';
           // Appel à l'API pour récupérer le prompt via Claude ou autre
           const questionResponse = await fetch(`http://localhost:3001/api/claude/generate`, {
@@ -364,84 +367,93 @@ async function fetchQuizSubsubcategory(elementToFilter) {  //practical or passio
     }
 };
 
+// Fonction pour filtrer les produits selon les réponses au quiz
 
-  // fonction pour filtrer les produit selon les reponses au quiz
-  
-  return (
-    <div className="App">
+return (
+  <div className="App">
     <Navbar width={"100%"} style={{ top: '0', zIndex: '2' }}></Navbar>
-    
+
     <div className="Container" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      {/* Zone de la question */}
       <div className="QuestionStyle" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', marginTop: '10%' }}>
-        <div style={{ position: 'absolute', left: '30%' }}> 
-          <ButtonBack onClick={handleButtonBackClick}/>
+        <div style={{ position: 'absolute', left: '30%' }}>
+          <ButtonBack onClick={handleButtonBackClick} />
         </div>
-        <div style={{ paddingLeft: '50px', textAlign: 'center' }}> 
+        <div style={{ paddingLeft: '50px', textAlign: 'center' }}>
           <h3>{questionText}</h3>
         </div>
       </div>
 
+      {/* Contenu principal */}
       {Object.keys(data).length > 0 ? (
-  <div className="QuizStyle" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100vh' }}>
-    <div className="QuizGrid">
-      {Object.entries(data).map(([branch, value], index) => {
-        const answer = value.answer;
-        const elementToFilter = value.elementToFilter;
-        const secondElementToFilter = value.secondElementToFilter;
-        const image = value.image;
+        <div className="QuizStyle" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100vh' }}>
+          <div className="QuizGrid">
+            {Object.entries(data).map(([branch, value], index) => {
+              const answer = value.answer;
+              const elementToFilter = value.elementToFilter;
+              const secondElementToFilter = value.secondElementToFilter;
+              const image = value.image;
 
-        if (!answer || !elementToFilter || !image) {
-          return null; // Empêche le rendu d'une QuestionBox pour des données manquantes ou incorrectes
-        }
+              if (!answer || !elementToFilter || !image) {
+                return null; // Empêche le rendu d'une QuestionBox pour des données manquantes
+              }
 
-        if (currentIndex >= 11 && !productCat.includes(elementToFilter)) {
-          return null; 
-        }
-        console.log("isLoading:", isLoading);
-        console.log("answerData:", answerData);
+              if (currentIndex >= 11 && !productCat.includes(elementToFilter)) {
+                return null;
+              }
 
-        return (
-          <div key={index} className="QuizItem">
-          {isLoading ? (
-            <>
-              <div style={{top: '10%'}}>Chargement...</div>
-              {console.log("Affichage du chargement car isLoading est true")}
-            </>
-          ) : answerData ? (
-            <>
-           {Array.isArray(propositions) && propositions.map((response, index) => (
-            <QuestionBox
-              key={index} // Une clé unique pour chaque élément
-              onClick={() => handleQuestionBoxClick(answer, elementToFilter, secondElementToFilter, index)}
-             
-              answer={response} // Propriété réponse passée au composant 
-            />
-          ))}
-            </>
-          ) : (
-            <QuestionBox
-              onClick={() => handleQuestionBoxClick(answer, elementToFilter, secondElementToFilter, index)}
-              filterBy={elementToFilter}
-              imageUrl={image}
-              answer={answer}
-            />
-          )}
-        </div>        
-        );
-      })}
-    </div>
-  </div>
-) : (
-  <p>Chargement des données...</p>
-)}
+              return (
+                <div key={index} className="QuizItem">
+                  <div className="QuestionBoxContainer">
+                    <div className="QuestionBoxGrid">
+                    {isLoading ? (
+                            <div style={{ top: '10%' }}>Chargement...</div>
+                            ) : answerData && propositions.length > 0 ? (
+                             (() => {
+                                    console.log('Propositions actuelles :', propositions);
+                                    console.log('Type de propositions :', typeof propositions);
 
-       </div>
-      <div style={{ top: '60%', paddingLeft: "70%", zIndex: '1', position:'fixed' }}>
-        <ProgressBar/>
+                                return propositions.map((response, idx) => {
+                                console.log(`Mapping proposition:`, response );
+                                console.log(`Mapping proposition:` );
+                                return (
+                               <div className="QuestionBoxWrapper" key={`proposition-${idx}`}>
+                                <QuestionBox answer={response} />
+                                </div>
+                                  );
+                                });
+                              })()
+                            ) : (
+                        <div className="QuestionBoxWrapper">
+                          <QuestionBox
+                            onClick={() =>
+                              handleQuestionBoxClick(answer, elementToFilter, secondElementToFilter, index)
+                            }
+                            filterBy={elementToFilter}
+                            imageUrl={image}
+                            answer={answer}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ) : (
+        <p>Chargement des données...</p>
+      )}
+
+      {/* Barre de progression */}
+      <div style={{ top: '60%', paddingLeft: "70%", zIndex: '1', position: 'fixed' }}>
+        <ProgressBar />
       </div>
     </div>
-    );} 
-
+  </div>
+);
+}
 
 Quiz.defaultProps = {
   question: "Question par défaut", // Ajoutez votre valeur par défaut ici
