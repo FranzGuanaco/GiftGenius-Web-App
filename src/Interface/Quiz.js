@@ -8,6 +8,8 @@ import answer from './QuizAnswers';
 import { dbRealtime } from '../Firebase';
 import { ref, get } from "firebase/database";
 import { useProgressBar } from './Jauge/ProgressBarContext';
+import QuestionBoxProps from './Question/QuestionBoxProps';
+import { useNavigate } from 'react-router-dom';
 
 
 const Quiz = () => {
@@ -24,6 +26,7 @@ const Quiz = () => {
   const [answerData, setAnswerData] = useState(false);
   const [propositions, setPropositions] = useState([]); // État pour stocker les propositions de réponse
   const tests = ["Option 1", "Option 2", "Option 3", "Option 4"];
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -36,69 +39,73 @@ const Quiz = () => {
   }, [propositions]); 
 
   useEffect(() => {
-    // Si currentIndex n'est pas 6, on utilise la question directement depuis le tableau
-    if (currentIndex <=9) {
-      setQuestionText(questions[currentIndex].questionText);
-      console.log(`Question à l'index ${currentIndex}: ${questions[currentIndex].questionText}`);
-    } else {
-      // Si currentIndex est égal à 6, on appelle la fonction fetch pour récupérer le prompt via l'API
+    if (currentIndex > 9) {
       const fetchPromptForQuestion = async () => {
-        setIsLoading(true)
-        
+        setIsLoading(true);
+  
         try {
-
-          const questionPrompt = 'Pose uniquement une question directement à l\'utilisateur pour déterminer quel cadeau parmi la liste ' + 
-          'lui convient le mieux';
-          // Remplacez ce texte par votre prompt pour les propositions de réponse
-          const responsePrompt = 'Donne maximum 5 propositions (de 3 mots maximum) de réponses possibles à la question '+
-          'en format array sans aucune formule d\'introduction il faut que cela permette d\'éliminer des élément de la liste';
-          // Appel à l'API pour récupérer le prompt via Claude ou autre
+          const questionPrompt = "Pose uniquement une question directement à l'utilisateur pour déterminer quel cadeau parmi la liste lui convient le mieux";
+          const responsePrompt = "Donne maximum 5 propositions (de 3 mots maximum) de réponses possibles à la question en format array sans aucune formule d'introduction. Il faut que cela permette d'éliminer des éléments de la liste.";
+  
           const questionResponse = await fetch(`http://localhost:3001/api/claude/generate`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ prompt: questionPrompt}),    
-        });
-        
-
-          if (!questionResponse.ok) {
-            throw new Error(`Error Server responded with status ${questionResponse.status}`);
-          }
-          const questionData = await questionResponse.json();
-          
-          setQuestionText(questionData.generatedText);  // Mettre à jour le texte de la question avec la réponse de l'API
-          console.log(`Question générée par Claude : ${questionData.generatedText}`);
-
-          // Appel pour générer les propositions
-          const propositionsResponse = await fetch(`http://localhost:3001/api/claude/generate/propositions`, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json',},
-          body: JSON.stringify({ prompt: responsePrompt, contextQuestion: questionData.generatedText  }),
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ prompt: questionPrompt }),
           });
-
+  
+          if (!questionResponse.ok) {
+            throw new Error(`Erreur : Statut ${questionResponse.status}`);
+          }
+  
+          const questionData = await questionResponse.json();
+          setQuestionText(questionData.generatedText);
+          console.log(`Question générée : ${questionData.generatedText}`);
+  
+          // Génération des propositions
+          const propositionsResponse = await fetch(`http://localhost:3001/api/claude/generate/propositions`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ prompt: responsePrompt, contextQuestion: questionData.generatedText }),
+          });
+  
           if (!propositionsResponse.ok) {
-            throw new Error(`Error Server responded with status ${propositionsResponse.status}`);
-              }
-
+            throw new Error(`Erreur : Statut ${propositionsResponse.status}`);
+          }
+  
           const propositionsData = await propositionsResponse.json();
-          setPropositions(JSON.parse(propositionsData.generatedText)); // Met à jour les propositions
-          console.log(`Propositions générées par Claude : ${propositionsData.generatedText}`);
-
-
+          let parsedPropositions = [];
+  
+          try {
+            parsedPropositions = JSON.parse(propositionsData.generatedText);
+            if (!Array.isArray(parsedPropositions)) {
+              throw new Error("Le format des propositions n'est pas un tableau.");
+            }
+          } catch (error) {
+            console.error("Erreur de parsing JSON des propositions :", error);
+            parsedPropositions = []; // Assurez-vous que ce n'est pas undefined
+          }
+  
+          setPropositions(parsedPropositions);
+          console.log("Propositions générées :", parsedPropositions);
+  
+          // Navigation uniquement si les propositions existent
+          if (parsedPropositions.length > 0) {
+            navigate("/NewQuiz", { state: { propositions: parsedPropositions } });
+          } else {
+            console.error("Propositions vides, navigation annulée.");
+          }
         } catch (error) {
-          console.error("Erreur lors de la récupération du prompt via l'API :", error);
-        }
-        finally{
-          setIsLoading(false)
-          setAnswerData(true)
+          console.error("Erreur lors de la récupération des données :", error);
+        } finally {
+          setIsLoading(false);
+          setAnswerData(true);
         }
       };
-      fetchPromptForQuestion(); // Appel de la fonction asynchrone pour récupérer la question
-    }
-  }, [currentIndex]);  // Déclenche le useEffect à chaque changement de currentIndex
   
-
+      fetchPromptForQuestion();
+    }
+  }, [currentIndex, navigate]);
+  
 
   const handleQuestionBoxClick = async (boxIndex, elementToFilter, secondElementToFilter) => {
     setTriggered(true); // Indique que la fonction a été déclenchée
@@ -367,6 +374,10 @@ async function fetchQuizSubsubcategory(elementToFilter) {  //practical or passio
     }
 };
 
+Object.entries(propositions).map(([key, propValue], propIndex) => {
+  console.log(`voila le resultat apres 9 questions: ${propValue} ;`)
+});
+
 // Fonction pour filtrer les produits selon les réponses au quiz
 
 return (
@@ -394,10 +405,14 @@ return (
               const secondElementToFilter = value.secondElementToFilter;
               const image = value.image;
 
+              
+
+              // Empêche le rendu si certaines données essentielles sont manquantes
               if (!answer || !elementToFilter || !image) {
-                return null; // Empêche le rendu d'une QuestionBox pour des données manquantes
+                return null;
               }
 
+              // Filtrage des catégories si nécessaire
               if (currentIndex >= 11 && !productCat.includes(elementToFilter)) {
                 return null;
               }
@@ -406,28 +421,24 @@ return (
                 <div key={index} className="QuizItem">
                   <div className="QuestionBoxContainer">
                     <div className="QuestionBoxGrid">
-                    {isLoading ? (
-                            <div style={{ top: '10%' }}>Chargement...</div>
-                            ) : answerData && propositions.length > 0 ? (
-                             (() => {
-                                    console.log('Propositions actuelles :', propositions);
-                                    console.log('Type de propositions :', typeof propositions);
-
-                                return propositions.map((response, idx) => {
-                                console.log(`Mapping proposition:`, response );
-                                console.log(`Mapping proposition:` );
-                                return (
-                               <div className="QuestionBoxWrapper" key={`proposition-${idx}`}>
-                                <QuestionBox answer={response} />
-                                </div>
-                                  );
-                                });
-                              })()
-                            ) : (
+                      {isLoading ? (
+                        <div style={{ top: '10%' }}>Chargement...</div>
+                      ) : answerData && propositions.length > 0 ? (
+                        // Rendu des propositions via map()
+                        propositions.map((propValue, propIndex) => (
+                          <QuestionBoxProps  proposition = {propValue}/>
+                        ))
+                      ) : (
+                        // Cas par défaut si aucune proposition n'est disponible
                         <div className="QuestionBoxWrapper">
                           <QuestionBox
                             onClick={() =>
-                              handleQuestionBoxClick(answer, elementToFilter, secondElementToFilter, index)
+                              handleQuestionBoxClick(
+                                answer,
+                                elementToFilter,
+                                secondElementToFilter,
+                                index
+                              )
                             }
                             filterBy={elementToFilter}
                             imageUrl={image}
@@ -456,7 +467,7 @@ return (
 }
 
 Quiz.defaultProps = {
-  question: "Question par défaut", // Ajoutez votre valeur par défaut ici
+question: "Question par défaut", // Ajoutez votre valeur par défaut ici
 };
 
 export default Quiz;

@@ -15,6 +15,7 @@ import { BrandProvider } from './Interface/BrandContext';
 import { AuthProvider } from './Interface/AuthContext';
 import { ProgressBarProvider } from './Interface/Jauge/ProgressBarContext';
 import MenuBar from './Interface/MenuBar/MenuBar';
+import NewQuiz from './Interface/NewQuiz';
 
 function App() {
 
@@ -28,7 +29,8 @@ function App() {
                 <Routes>
           
             <Route path='/' element={<><Homepage/></>} />
-            <Route path='/quiz' exact element={<Quiz/>} /> quiz details
+            <Route path='/quiz' exact element={<Quiz/>} />
+            <Route path='/newquiz' exact element={<NewQuiz/>} /> quiz details
             <Route path='/product details' exact element={<Productdetails/>} /> afficher image, description, vendeur, prix, nom 
             <Route path='/login' exact element={<Login/>} />
             <Route path='/create account' exact element={<CreateAccount/>} />
