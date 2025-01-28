@@ -7,6 +7,7 @@ import QuestionBoxProps from './Question/QuestionBoxProps';
 const NewQuiz = () => {
     const location = useLocation();
     const propositions = location.state?.propositions || []; // Récupération des propositions
+    const questionText = location.state?.question || [];
     console.log(`newquiz voici les propostions ${propositions}`)
 
     return (
@@ -17,7 +18,9 @@ const NewQuiz = () => {
                 <div className="QuestionStyle">
                     <ButtonBack />
                 </div>
-
+                <div style={{ paddingLeft: '50px', textAlign: 'center' }}>
+          <h3>{questionText}</h3>
+        </div>
                 {propositions.length > 0 ? (
                     propositions.map((propValue, propIndex) => (
                         <QuestionBoxProps key={propIndex} proposition={propValue} />

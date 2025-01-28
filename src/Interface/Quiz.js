@@ -25,7 +25,6 @@ const Quiz = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [answerData, setAnswerData] = useState(false);
   const [propositions, setPropositions] = useState([]); // État pour stocker les propositions de réponse
-  const tests = ["Option 1", "Option 2", "Option 3", "Option 4"];
   const navigate = useNavigate();
 
 
@@ -39,7 +38,12 @@ const Quiz = () => {
   }, [propositions]); 
 
   useEffect(() => {
-    if (currentIndex > 9) {
+
+    if (currentIndex <=9) {
+      setQuestionText(questions[currentIndex].questionText);
+      console.log(`Question à l'index ${currentIndex}: ${questions[currentIndex].questionText}`);
+    } 
+    else {
       const fetchPromptForQuestion = async () => {
         setIsLoading(true);
   
@@ -90,7 +94,9 @@ const Quiz = () => {
   
           // Navigation uniquement si les propositions existent
           if (parsedPropositions.length > 0) {
-            navigate("/NewQuiz", { state: { propositions: parsedPropositions } });
+            console.log(`le questiontext est égal ${questionText}`)
+            navigate("/NewQuiz", { state: { propositions: parsedPropositions, question: questionData.generatedText } });
+            
           } else {
             console.error("Propositions vides, navigation annulée.");
           }
@@ -116,6 +122,7 @@ const Quiz = () => {
     setBranch(questions[nextIndex].theme);
     incrementProgressBar();
     console.log(`voici la branch de firebase ${branch}`)
+    
     // Tente de charger des données en fonction de la disponibilité de productData
     if (!productData.length && nextIndex < 3) {
       // Si aucune donnée produit et index inférieur à 3, charge des données
